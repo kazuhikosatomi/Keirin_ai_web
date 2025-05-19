@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>荒れ度スコア一覧</title>
+    <style>
+        body { font-family: sans-serif; font-size: 14px; }
+        form { margin-bottom: 20px; }
+        ul { padding-left: 1em; }
+        li { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <h2>開催日・場コードを指定して一覧取得</h2>
+    <form method="post">
+        <label>日付 (YYYYMMDD):</label>
+        <input type="text" name="date" required>
+        <label>場コード:</label>
+        <input type="text" name="venue_id" required>
+        <button type="submit">一覧取得</button>
+    </form>
+
+    {% if result %}
+        <h3>荒れ度スコア一覧</h3>
+        <ul>
+            {% for race, score, riders in result %}
+                <li>{{ race }}R: {{ score }}（{{ riders }}）</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>出走表（場所・日付分離）</title>
+    <style>
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 4px 8px; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <h1>出走表URLから選手情報を表示</h1>
+    <form method="post">
+        <input type="text" name="url" size="60" placeholder="https://..." required>
+        <button type="submit">取得</button>
+    </form>
+
+    {% if result %}
+    <h2>結果</h2>
+    {% if result.error %}
+        <p style="color:red;">{{ result.error }}</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>枠番</th><th>車番</th><th>名前</th>
+                <th>年齢</th><th>府県</th><th>期別</th><th>級班</th><th>脚質</th><th>ギア</th>
+                <th>得点</th><th>1着</th><th>2着</th><th>3着</th><th>着外</th>
+                <th>勝率</th><th>2連対</th><th>3連対</th>
+                <th>逃</th><th>捲</th><th>差</th><th>マ</th>
+                <th>S</th><th>B</th>
+                <th>Line</th><th>Pos</th>
+                <th>場所1</th><th>日付1</th><th>結果1</th><th>結果2</th><th>結果3</th><th>結果4</th>
+                <th>場所2</th><th>日付2</th><th>結果1</th><th>結果2</th><th>結果3</th><th>結果4</th>
+                <th>場所3</th><th>日付3</th><th>結果1</th><th>結果2</th><th>結果3</th><th>結果4</th>
+                <th>コメント</th>
+            </tr>
+            {% for r in result.entries %}
+            <tr>
+                <td>{{ r.frame_number }}</td>
+                <td>{{ r.car_number }}</td>
+                <td>{{ r.name }}</td>
+                <td>{{ r.age }}</td>
+                <td>{{ r.prefecture }}</td>
+                <td>{{ r.term }}</td>
+                <td>{{ r.grade }}</td>
+                <td>{{ r.leg_type }}</td>
+                <td>{{ r.gear }}</td>
+                <td>{{ r.score }}</td>
+                <td>{{ r.first_places }}</td>
+                <td>{{ r.second_places }}</td>
+                <td>{{ r.third_places }}</td>
+                <td>{{ r.outs }}</td>
+                <td>{{ r.win_rate }}</td>
+                <td>{{ r.top2_rate }}</td>
+                <td>{{ r.top3_rate }}</td>
+                <td>{{ r.style_escape }}</td>
+                <td>{{ r.style_sprint }}</td>
+                <td>{{ r.style_chase }}</td>
+                <td>{{ r.style_other }}</td>
+                <td>{{ r.start_number }}</td>
+                <td>{{ r.back_number }}</td>
+                <td>{{ r.line_id }}</td>
+                <td>{{ r.line_pos }}</td>
+                <td>{{ r.recent_place1 }}</td>
+                <td>{{ r.recent_date1 }}</td>
+                <td>{{ r.recent_result1_1 }}</td>
+                <td>{{ r.recent_result1_2 }}</td>
+                <td>{{ r.recent_result1_3 }}</td>
+                <td>{{ r.recent_result1_4 }}</td>
+                <td>{{ r.recent_place2 }}</td>
+                <td>{{ r.recent_date2 }}</td>
+                <td>{{ r.recent_result2_1 }}</td>
+                <td>{{ r.recent_result2_2 }}</td>
+                <td>{{ r.recent_result2_3 }}</td>
+                <td>{{ r.recent_result2_4 }}</td>
+                <td>{{ r.recent_place3 }}</td>
+                <td>{{ r.recent_date3 }}</td>
+                <td>{{ r.recent_result3_1 }}</td>
+                <td>{{ r.recent_result3_2 }}</td>
+                <td>{{ r.recent_result3_3 }}</td>
+                <td>{{ r.recent_result3_4 }}</td>
+                <td>{{ r.comment }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% endif %}
+</body>
+</html>

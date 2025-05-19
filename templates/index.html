@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>出走表（絞り込み表示）</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { border-collapse: collapse; width: 100%; font-size: 13px; }
+        th, td { border: 1px solid #ccc; padding: 4px 6px; text-align: center; }
+        th { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h2>出走表URLから選手情報を表示</h2>
+    <form method="post">
+        <input type="text" name="url" size="50" placeholder="https://..." required>
+        <button type="submit">取得</button>
+    </form>
+
+    {% if result.meta %}
+        <p style="font-weight: bold; font-size: 15px;">
+          荒れ度スコア（予測）:
+          <span id="araredo-score">取得中...</span>
+        </p>
+        <script>
+          const url = `/araredo_predict?date={{ result.meta.date }}&venue_id={{ result.meta.place_code }}&race={{ result.meta.race_num }}`;
+          console.log("🔍 荒れ度取得URL:", url);
+
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              console.log("✅ 取得結果:", data);
+              document.getElementById('araredo-score').textContent = data.araredo_score ?? "取得失敗";
+            })
+            .catch(error => {
+              console.error("❌ fetchエラー:", error);
+              document.getElementById('araredo-score').textContent = "取得失敗";
+            });
+        </script>
+    {% endif %}
+
+    {% if result %}
+    {% if result.error %}
+        <p style="color:red;">{{ result.error }}</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>枠番</th><th>車番</th><th>名前</th><th>年齢</th><th>府県</th><th>期別</th><th>級班</th>
+                <th>脚質</th><th>ギア</th><th>得点</th><th>1着</th><th>2着</th><th>3着</th><th>着外</th>
+                <th>勝率</th><th>2連対</th><th>3連対</th>
+                <th>逃</th><th>捲</th><th>差</th><th>マ</th>
+                <th>S</th><th>B</th><th>Line</th><th>Pos</th>
+            </tr>
+            {% for r in result.entries %}
+            <tr>
+                <td>{{ r.frame_number }}</td>
+                <td>{{ r.car_number }}</td>
+                <td>{{ r.name }}</td>
+                <td>{{ r.age }}</td>
+                <td>{{ r.prefecture }}</td>
+                <td>{{ r.term }}</td>
+                <td>{{ r.grade }}</td>
+                <td>{{ r.leg_type }}</td>
+                <td>{{ r.gear }}</td>
+                <td>{{ r.score }}</td>
+                <td>{{ r.first_places }}</td>
+                <td>{{ r.second_places }}</td>
+                <td>{{ r.third_places }}</td>
+                <td>{{ r.outs }}</td>
+                <td>{{ r.win_rate }}</td>
+                <td>{{ r.top2_rate }}</td>
+                <td>{{ r.top3_rate }}</td>
+                <td>{{ r.style_escape }}</td>
+                <td>{{ r.style_sprint }}</td>
+                <td>{{ r.style_chase }}</td>
+                <td>{{ r.style_other }}</td>
+                <td>{{ r.start_number }}</td>
+                <td>{{ r.back_number }}</td>
+                <td>{{ r.line_id }}</td>
+                <td>{{ r.line_pos }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% endif %}
+</body>
+</html>
