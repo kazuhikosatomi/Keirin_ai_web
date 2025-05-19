@@ -2,12 +2,15 @@ from flask import Flask, request, render_template, jsonify
 from utils.entry_parser import fetch_entry_data  # 修正ポイント①
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
+import os
 import requests
 
 app = Flask(__name__)
 
 # DuckDBのDBファイルへのパス（適宜調整）
-con = duckdb.connect("/Users/satomi/Documents/keirin_ai/db/keirin_ai.duckdb")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "db", "keirin_ai.duckdb")
+con = duckdb.connect(DB_PATH)
 
 # 🔸出走表取得UI（index.html）
 @app.route('/', methods=['GET', 'POST'])
