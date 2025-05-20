@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, jsonify
-from utils.entry_parser import fetch_entry_data  # 修正ポイント①
+from utils.entry_parser import fetch_entry_data, extract_lineinfo_from_url  # 修正ポイント①
 
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
