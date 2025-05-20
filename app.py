@@ -1,10 +1,33 @@
 from flask import Flask, request, render_template, jsonify
 from utils.entry_parser import fetch_entry_data  # 修正ポイント①
-from utils.lineinfo_parser import extract_lineinfo_from_url  # 追加②: lineinfo関数のインポート（仮）
+
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
 import os
 import requests
+
+def extract_lineinfo_from_url(url):
+    import requests
+    from bs4 import BeautifulSoup
+
+    res = requests.get(url)
+    soup = BeautifulSoup(res.content, "html.parser")
+
+    result = {}
+    group_id = 1
+    pos = 1
+
+    td_tags = soup.select("div.g-flex table.table-border-none td")
+    for tag in td_tags:
+        if tag.find("span", class_="square"):
+            number = tag.text.strip()
+            result[number] = {"line_id": str(group_id), "line_pos": str(pos)}
+            pos += 1
+        elif "p10" in tag.get("class", []):
+            group_id += 1
+            pos = 1
+
+    return result
 
 app = Flask(__name__)
 
