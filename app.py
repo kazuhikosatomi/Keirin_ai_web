@@ -14,8 +14,8 @@ def extract_lineinfo_from_url(url):
     soup = BeautifulSoup(res.content, "html.parser")
 
     result = {}
-    group_id = 1
-    pos = 1
+    groups = []
+    current_group = []
 
     td_tags = soup.select("div.g-flex table.table-border-none td")
     for tag in td_tags:
@@ -24,12 +24,18 @@ def extract_lineinfo_from_url(url):
 
         if any(cls.startswith("square") for cls in classes):
             number = span.get_text(strip=True)
-            result[number] = {"line_id": str(group_id), "line_pos": str(pos)}
-            pos += 1
-
+            current_group.append(number)
         elif "p10" in classes:
-            group_id += 1
-            pos = 1
+            if current_group:
+                groups.append(current_group)
+                current_group = []
+
+    if current_group:
+        groups.append(current_group)
+
+    for line_id, group in enumerate(groups, 1):
+        for line_pos, number in enumerate(group, 1):
+            result[number] = {"line_id": str(line_id), "line_pos": str(line_pos)}
 
     return result
 
