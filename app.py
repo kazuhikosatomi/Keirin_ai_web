@@ -19,11 +19,15 @@ def extract_lineinfo_from_url(url):
 
     td_tags = soup.select("div.g-flex table.table-border-none td")
     for tag in td_tags:
-        if tag.find("span", class_="square"):
-            number = tag.text.strip()
+        span = tag.find("span")
+        classes = span.get("class", []) if span else []
+
+        if any(cls.startswith("square") for cls in classes):
+            number = span.get_text(strip=True)
             result[number] = {"line_id": str(group_id), "line_pos": str(pos)}
             pos += 1
-        elif "p10" in tag.get("class", []):
+
+        elif "p10" in classes:
             group_id += 1
             pos = 1
 
