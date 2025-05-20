@@ -5,45 +5,22 @@ from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
 import os
 import requests
+import gdown
 
-def extract_lineinfo_from_url(url):
-    import requests
-    from bs4 import BeautifulSoup
+GOOGLE_FILE_ID = "1j7jA0P4CP3J0-WGGCgVFNzvG7tCsiVDw"
+OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_ai.duckdb")
 
-    res = requests.get(url)
-    soup = BeautifulSoup(res.content, "html.parser")
-
-    result = {}
-    groups = []
-    current_group = []
-
-    td_tags = soup.select("div.g-flex table.table-border-none td")
-    for tag in td_tags:
-        span = tag.find("span")
-        classes = span.get("class", []) if span else []
-
-        if any(cls.startswith("square") for cls in classes):
-            number = span.get_text(strip=True)
-            current_group.append(number)
-        elif "p10" in classes:
-            if current_group:
-                groups.append(current_group)
-                current_group = []
-
-    if current_group:
-        groups.append(current_group)
-
-    for line_id, group in enumerate(groups, 1):
-        for line_pos, number in enumerate(group, 1):
-            result[number] = {"line_id": str(line_id), "line_pos": str(line_pos)}
-
-    return result
+# DuckDBが存在しない場合はGoogle Driveからダウンロード
+if not os.path.exists(OUTPUT_PATH):
+    print("⬇️ Downloading .duckdb file from Google Drive...")
+    url = f"https://drive.google.com/uc?id={GOOGLE_FILE_ID}"
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    gdown.download(url, OUTPUT_PATH, quiet=False)
 
 app = Flask(__name__)
 
 # DuckDBのDBファイルへのパス（適宜調整）
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "db", "keirin_ai.duckdb")
+DB_PATH = OUTPUT_PATH
 con = duckdb.connect(DB_PATH)
 
 # 🔸出走表取得UI（index.html）
