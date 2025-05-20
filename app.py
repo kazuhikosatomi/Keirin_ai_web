@@ -1,34 +1,10 @@
 from flask import Flask, request, render_template, jsonify
 from utils.entry_parser import fetch_entry_data  # 修正ポイント①
-
+from utils.lineinfo_parser import extract_lineinfo_from_url  # 追加②: lineinfo関数のインポート（仮）
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
 import os
 import requests
-
-# チャリロトHTMLからline_id, line_posを割り当てる簡易ロジック
-def extract_lineinfo_from_url(url):
-    import requests
-    from bs4 import BeautifulSoup
-
-    res = requests.get(url)
-    soup = BeautifulSoup(res.content, "html.parser")
-
-    result = {}
-    group_id = 1
-    pos = 1
-
-    td_tags = soup.select("div.g-flex table.table-border-none td")
-    for tag in td_tags:
-        if tag.find("span", class_="square"):
-            number = tag.text.strip()
-            result[number] = {"line_id": str(group_id), "line_pos": str(pos)}
-            pos += 1
-        elif "p10" in tag.get("class", []):
-            group_id += 1
-            pos = 1
-
-    return result
 
 app = Flask(__name__)
 
@@ -50,7 +26,7 @@ def index():
             else:
                 # 追加②: line_id, line_pos を entries に付加
                 lineinfo = extract_lineinfo_from_url(url)
-                lineinfo_dict = lineinfo if isinstance(lineinfo, dict) else {}
+                lineinfo_dict = {info['car_number']: info for info in lineinfo}
                 for entry in data["entries"]:
                     car_number = entry.get("car_number")
                     info = lineinfo_dict.get(car_number)
@@ -158,4 +134,4 @@ def list_predict():
     return render_template("list.html", result=result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5050, debug=False)  # ← debug=False に変更
+    app.run(host='0.0.0.0', port=5050, debug=False)  # ← debug=False に変更z
