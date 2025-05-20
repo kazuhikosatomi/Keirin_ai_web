@@ -50,7 +50,7 @@ def index():
             else:
                 # 追加②: line_id, line_pos を entries に付加
                 lineinfo = extract_lineinfo_from_url(url)
-                lineinfo_dict = {info['car_number']: info for info in lineinfo}
+                lineinfo_dict = lineinfo if isinstance(lineinfo, dict) else {}
                 for entry in data["entries"]:
                     car_number = entry.get("car_number")
                     info = lineinfo_dict.get(car_number)
