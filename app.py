@@ -51,7 +51,7 @@ def index():
                 lineinfo = extract_lineinfo_from_url(url)
                 lineinfo_dict = lineinfo if isinstance(lineinfo, dict) else {}
                 for entry in data["entries"]:
-                    car_number = entry.get("car_number")
+                    car_number = str(entry.get("car_number"))
                     info = lineinfo_dict.get(car_number)
                     if info:
                         entry["line_id"] = info.get("line_id")
