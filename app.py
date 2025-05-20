@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 from utils.entry_parser import fetch_entry_data  # 修正ポイント①
+from utils.lineinfo_parser import extract_lineinfo_from_url  # 追加②: lineinfo関数のインポート（仮）
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
 import os
@@ -23,6 +24,18 @@ def index():
             if "error" in data:
                 result = {"error": data["error"]}
             else:
+                # 追加②: line_id, line_pos を entries に付加
+                lineinfo = extract_lineinfo_from_url(url)
+                lineinfo_dict = {info['car_number']: info for info in lineinfo}
+                for entry in data["entries"]:
+                    car_number = entry.get("car_number")
+                    info = lineinfo_dict.get(car_number)
+                    if info:
+                        entry["line_id"] = info.get("line_id")
+                        entry["line_pos"] = info.get("line_pos")
+                    else:
+                        entry["line_id"] = None
+                        entry["line_pos"] = None
                 result = {
                     "entries": data["entries"],
                     "meta": data["meta"]
@@ -32,68 +45,68 @@ def index():
     return render_template('index.html', result=result)
 
 # 🔸荒れ度予測API（GETで使用）
-# @app.route('/araredo_predict', methods=['GET'])
-# def araredo_predict():
-#     date = request.args.get('date').replace('-', '')
-#     venue_id = request.args.get('venue_id')
-#     race_no = request.args.get('race')
-#
-#     if not all([date, venue_id, race_no]):
-#         return jsonify({"error": "Missing parameters"}), 400
-#
-#     query = f"""
-#     WITH odds_filtered AS (
-#       SELECT
-#         date,
-#         venue_id,
-#         race_no,
-#         odds1
-#       FROM odds
-#       WHERE bet_code = 3
-#         AND date = {date}
-#         AND venue_id = {venue_id}
-#         AND race_no = {race_no}
-#     ),
-#     agg AS (
-#       SELECT
-#         MIN(odds1) AS lowest_odds,
-#         MEDIAN(odds1) AS median_odds,
-#         SUM(odds1) AS total_sum
-#       FROM odds_filtered
-#     ),
-#     top3 AS (
-#       SELECT SUM(odds1) AS top3_sum
-#       FROM (
-#         SELECT odds1
-#         FROM odds_filtered
-#         ORDER BY odds1 ASC
-#         LIMIT 3
-#       )
-#     )
-#     SELECT
-#       agg.lowest_odds,
-#       agg.median_odds,
-#       ROUND(top3.top3_sum / agg.total_sum, 5) AS top3_ratio
-#     FROM agg, top3;
-#     """
-#
-#     result = con.execute(query).fetchone()
-#
-#     if not result or result[0] is None:
-#         return jsonify({"error": "No odds data found for this race"}), 404
-#
-#     lowest_odds, median_odds, top3_ratio = result
-#     score = calc_araredo(lowest_odds, median_odds, top3_ratio)
-#
-#     return jsonify({
-#         "date": date,
-#         "venue_id": venue_id,
-#         "race_no": race_no,
-#         "lowest_odds": lowest_odds,
-#         "median_odds": median_odds,
-#         "top3_ratio": top3_ratio,
-#         "araredo_score": score
-#     })
+@app.route('/araredo_predict', methods=['GET'])
+def araredo_predict():
+    date = request.args.get('date').replace('-', '')
+    venue_id = request.args.get('venue_id')
+    race_no = request.args.get('race')
+
+    if not all([date, venue_id, race_no]):
+        return jsonify({"error": "Missing parameters"}), 400
+
+    query = f"""
+    WITH odds_filtered AS (
+      SELECT
+        date,
+        venue_id,
+        race_no,
+        odds1
+      FROM odds
+      WHERE bet_code = 3
+        AND date = {date}
+        AND venue_id = {venue_id}
+        AND race_no = {race_no}
+    ),
+    agg AS (
+      SELECT
+        MIN(odds1) AS lowest_odds,
+        MEDIAN(odds1) AS median_odds,
+        SUM(odds1) AS total_sum
+      FROM odds_filtered
+    ),
+    top3 AS (
+      SELECT SUM(odds1) AS top3_sum
+      FROM (
+        SELECT odds1
+        FROM odds_filtered
+        ORDER BY odds1 ASC
+        LIMIT 3
+      )
+    )
+    SELECT
+      agg.lowest_odds,
+      agg.median_odds,
+      ROUND(top3.top3_sum / agg.total_sum, 5) AS top3_ratio
+    FROM agg, top3;
+    """
+
+    result = con.execute(query).fetchone()
+
+    if not result or result[0] is None:
+        return jsonify({"error": "No odds data found for this race"}), 404
+
+    lowest_odds, median_odds, top3_ratio = result
+    score = calc_araredo(lowest_odds, median_odds, top3_ratio)
+
+    return jsonify({
+        "date": date,
+        "venue_id": venue_id,
+        "race_no": race_no,
+        "lowest_odds": lowest_odds,
+        "median_odds": median_odds,
+        "top3_ratio": top3_ratio,
+        "araredo_score": score
+    })
 
 # 🔸Flaskアプリ起動
 
