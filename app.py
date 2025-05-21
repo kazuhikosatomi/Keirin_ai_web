@@ -30,7 +30,10 @@ def index():
     if request.method == 'POST':
         url = request.form['url']
         try:
+            print("✅ fetch_entry_data() 開始")
+            print("🔗 URL:", url)
             data = fetch_entry_data(url)
+            print("📦 登録データ件数:", len(data.get("entries", [])))
             if "error" in data:
                 result = {"error": data["error"]}
             else:
@@ -39,7 +42,8 @@ def index():
                     "meta": data["meta"]
                 }
         except Exception as e:
-            result = {'error': str(e)}
+            print("❌ エラー:", e)
+            result = {'error': f"Exception occurred: {str(e)}"}
     return render_template('index.html', result=result)
 
 # 🔸荒れ度予測API（GETで使用）
