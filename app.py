@@ -121,7 +121,7 @@ def list_predict():
         venue_id = request.form['venue_id']
         for race in range(1, 13):
             try:
-                url = f"http://localhost:5050/araredo_predict?date={date}&venue_id={venue_id}&race={race}"
+                url = f"{request.url_root}araredo_predict?date={date}&venue_id={venue_id}&race={race}"
                 r = requests.get(url)
                 if r.status_code == 200:
                     score = r.json().get("araredo_score", "N/A")
