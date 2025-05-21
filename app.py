@@ -7,7 +7,7 @@ import os
 import requests
 import gdown
 
-GOOGLE_FILE_ID = "1rNCRJ-W4tSPI7JX188s4qaGDbCNVvjiP"
+GOOGLE_FILE_ID = "1j7jA0P4CP3J0-WGGCgVFNzvG7tCsiVDw"
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_ai.duckdb")
 
 # DuckDBが存在しない場合はGoogle Driveからダウンロード
