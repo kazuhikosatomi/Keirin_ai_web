@@ -135,13 +135,7 @@ def list_predict():
                 break
     return render_template("list.html", result=result)
 
-if __name__ == '__main__':
-    import os
-    port = int(os.environ.get("PORT", 5050))  # Render用
-    app.run(host='0.0.0.0', port=port)
-
-from flask import request
-
+# ① Flaskルーティング定義をここに書く
 @app.route("/webhook", methods=["POST"])
 def webhook():
     body = request.json
@@ -157,3 +151,11 @@ def webhook():
         print("⚠️ エラー:", e)
 
     return "OK", 200
+
+# ② その下に Flask の起動条件を書く（Render用）
+if __name__ == '__main__':
+    import os
+    port = int(os.environ.get("PORT", 5050))  # Render用
+    app.run(host='0.0.0.0', port=port)
+
+from flask import request
