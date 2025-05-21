@@ -3,4 +3,4 @@ requests
 beautifulsoup4
 selenium
 duckdb>=1.2.0
-gdown
+gdownduckdb
