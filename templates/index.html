@@ -9,6 +9,8 @@
         th, td { border: 1px solid #ccc; padding: 4px 6px; text-align: center; }
         th { background: #f0f0f0; }
     </style>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#000000">
 </head>
 <body>
     <h2>出走表URLから選手情報を表示</h2>
@@ -84,4 +86,16 @@
     {% endif %}
     {% endif %}
 </body>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(function(reg) {
+          console.log("✅ Service Worker registered");
+        }).catch(function(err) {
+          console.log("❌ Service Worker registration failed:", err);
+        });
+    });
+  }
+</script>
 </html>
