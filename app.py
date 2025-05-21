@@ -139,3 +139,21 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get("PORT", 5050))  # Render用
     app.run(host='0.0.0.0', port=port)
+
+from flask import request
+
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    body = request.json
+    print("📥 Webhook受信:", body)
+
+    try:
+        events = body.get("events", [])
+        for event in events:
+            if event["type"] == "message":
+                user_id = event["source"]["userId"]
+                print(f"👤 userId: {user_id}")
+    except Exception as e:
+        print("⚠️ エラー:", e)
+
+    return "OK", 200
