@@ -143,8 +143,11 @@ def webhook():
 
     try:
         events = body.get("events", [])
+        print(f"📊 イベント数: {len(events)}")
+
         for event in events:
-            if event["type"] == "message":
+            print("🔸イベント内容:", event)
+            if event.get("type") == "message":
                 user_id = event["source"]["userId"]
                 print(f"👤 userId: {user_id}")
     except Exception as e:
@@ -157,5 +160,3 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get("PORT", 5050))  # Render用
     app.run(host='0.0.0.0', port=port)
-
-from flask import request
