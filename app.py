@@ -140,22 +140,22 @@ def list_predict():
 def webhook():
     try:
         raw_data = request.get_data()
-        print("📥 Webhook (raw):", raw_data)
+        print("📥 Webhook (raw):", raw_data, flush=True)
 
         import json
         body = json.loads(raw_data.decode("utf-8"))
-        print("📥 Webhook受信(JSON):", body)
+        print("📥 Webhook受信(JSON):", body, flush=True)
 
         events = body.get("events", [])
-        print(f"📊 イベント数: {len(events)}")
+        print(f"📊 イベント数: {len(events)}", flush=True)
 
         for event in events:
-            print("🔸イベント内容:", event)
+            print("🔸イベント内容:", event, flush=True)
             if event.get("type") == "message":
                 user_id = event["source"]["userId"]
-                print(f"👤 userId: {user_id}")
+                print(f"👤 userId: {user_id}", flush=True)
     except Exception as e:
-        print("⚠️ Webhook処理エラー:", e)
+        print("⚠️ Webhook処理エラー:", e, flush=True)
 
     return "OK", 200
 
