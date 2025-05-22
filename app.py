@@ -138,10 +138,14 @@ def list_predict():
 # ① Flaskルーティング定義をここに書く
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    body = request.json
-    print("📥 Webhook受信:", body)
-
     try:
+        raw_data = request.get_data()
+        print("📥 Webhook (raw):", raw_data)
+
+        import json
+        body = json.loads(raw_data.decode("utf-8"))
+        print("📥 Webhook受信(JSON):", body)
+
         events = body.get("events", [])
         print(f"📊 イベント数: {len(events)}")
 
@@ -151,7 +155,7 @@ def webhook():
                 user_id = event["source"]["userId"]
                 print(f"👤 userId: {user_id}")
     except Exception as e:
-        print("⚠️ エラー:", e)
+        print("⚠️ Webhook処理エラー:", e)
 
     return "OK", 200
 
