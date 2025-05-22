@@ -1,0 +1,29 @@
+name: Daily Odds Pipeline
+
+on:
+  schedule:
+    - cron: '30 22 * * *'  # JST 7:30 = UTC 22:30
+  workflow_dispatch:
+
+jobs:
+  scrape-and-slimify-odds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas beautifulsoup4 duckdb selenium
+
+      - name: Run odds scraper for yesterday
+        run: python3 scripts/odds/scrape_odds_headless.py --target $(date -d "yesterday" +%Y-%m-%d)
+
+      - name: Run odds slimify for yesterday
+        run: python3 scripts/odds/slimify_odds.py --target $(date -d "yesterday" +%Y-%m-%d)
