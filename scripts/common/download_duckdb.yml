@@ -1,0 +1,24 @@
+name: Download DuckDB
+
+on:
+  schedule:
+    - cron: '45 21 * * *'  # JST 6:45 = UTC 21:45
+  workflow_dispatch:       # 手動実行も可能にする
+
+jobs:
+  download_duckdb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Pythonセットアップ
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: requestsインストール
+        run: pip install requests
+
+      - name: .duckdb ファイルをダウンロードして保存
+        run: python scripts/download_duckdb.py
