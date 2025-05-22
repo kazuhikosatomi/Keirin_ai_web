@@ -1,36 +1,37 @@
+import os
 import requests
 import json
+import datetime
 
-# チャネルアクセストークン
-ACCESS_TOKEN = 'BwGrH6y8tZX64RYfQq1RMiBDrtx8AkyzWfw9433F5H/UxA2InnZ+v+ORa1hxa8jTqNL9tbKKYmgEsJZ8b8bF8kGqhNwp1vKd3/kBAzxn0sN/EuM0Mls20zUtQ+CBfFOlUfXkHbUuN64wsUTa9e7/UAdB04t89/1O/w1cDnyilFU='
+def should_send_today():
+    return datetime.datetime.now().weekday() != 2  # 水曜スキップ
 
-# 👇 新しい userId を使用！
-USER_ID = 'Ue9ad8031a3ed1611fa0c7c79a84ac45c'
+ACCESS_TOKEN = os.environ.get("LINE_TOKEN")
+USER_IDS = os.environ.get("LINE_USER_IDS", "").split(";")
 
-# メッセージデータ
-payload = {
-    "to": USER_ID,
-    "messages": [
-        {
-            "type": "text",
-            "text": "✅ アタルくんからの通知が届いたよ！"
-        }
-    ]
-}
-
-# ヘッダー情報
 headers = {
     "Authorization": f"Bearer {ACCESS_TOKEN}",
     "Content-Type": "application/json"
 }
 
-# APIに送信
-res = requests.post(
-    "https://api.line.me/v2/bot/message/push",
-    headers=headers,
-    json=payload  # ← ここを修正：json= にする
-)
+message = {
+    "type": "text",
+    "text": "✅ アタルくんからの通知が届いたよ！"
+}
 
-# 結果表示
-print("✅ ステータスコード:", res.status_code)
-print("📬 レスポンス:", res.text)
+if should_send_today():
+    for user_id in USER_IDS:
+        if not user_id.strip():
+            continue
+        payload = {
+            "to": user_id.strip(),
+            "messages": [message]
+        }
+        res = requests.post(
+            "https://api.line.me/v2/bot/message/push",
+            headers=headers,
+            json=payload
+        )
+        print(f"📤 To {user_id.strip()} => Status: {res.status_code}, Response: {res.text}")
+else:
+    print("⏸ 水曜日のため送信スキップ")
