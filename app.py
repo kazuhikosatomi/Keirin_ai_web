@@ -24,27 +24,12 @@ app = Flask(__name__)
 DB_PATH = OUTPUT_PATH
 con = duckdb.connect(DB_PATH)
 
-# カレンダーCSV読み込み
+
+# venue_id を含んだ最新のカレンダーCSVを読み込み
 calendar_df = pd.read_csv(
-    "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/calendar/keirin_calendar_2011-10_to_2025-06.csv"
+    "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/calendar/keirin_calendar_with_venue_id.csv",
+    dtype={'venue_id': str}
 )
-calendar_df = calendar_df.rename(columns={
-    '開催日': 'date',
-    '開催場名': 'venue_name'
-})
-
-# 場コードマスタの読み込み
-jyocode_df = pd.read_csv(
-    "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/venue/jyocode.csv",
-    dtype={'場コード': str}
-)
-jyocode_df = jyocode_df.rename(columns={
-    '場名': 'venue_name',
-    '場コード': 'venue_id'
-})
-
-# venue_name で突合して venue_id を calendar_df に補完
-calendar_df = pd.merge(calendar_df, jyocode_df, on='venue_name', how='left')
 
 # 日付から開催場一覧を取得
 def get_venues_for_date(date_str):
