@@ -46,7 +46,9 @@
     </form>
 
     {% if result and result.error %}
-      <pre style="color:red; font-weight: bold;">{{ result.error }}</pre>
+      <div style="margin-top: 1em; padding: 0.5em; border: 2px solid red; color: red; font-weight: bold; background-color: #ffeaea;">
+        ⚠️ {{ result.error }}
+      </div>
     {% endif %}
 
     {% if result.meta %}
