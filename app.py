@@ -60,9 +60,10 @@ def index():
                 }
         except Exception as e:
             import traceback
+            error_message = traceback.format_exc()
             print("❌ エラー:", e)
-            print(traceback.format_exc())
-            result = {'error': "出走表の取得中にエラーが発生しました。詳細はログをご確認ください。"}
+            print(error_message)
+            result = {'error': error_message}
         venues = get_venues_for_date(date)
         return render_template('index.html', result=result, venues=venues, today=date, selected_venue=venue_id, selected_race=race)
 
