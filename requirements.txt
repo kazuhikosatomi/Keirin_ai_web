@@ -5,3 +5,4 @@ selenium
 duckdb>=1.2.0
 gdown
 pandas
+requests
