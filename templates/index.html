@@ -40,7 +40,7 @@
     </form>
 
     {% if result and result.error %}
-      <p style="color:red; font-weight: bold;">{{ result.error }}</p>
+      <pre style="color:red; font-weight: bold;">{{ result.error }}</pre>
     {% endif %}
 
     {% if result.meta %}
