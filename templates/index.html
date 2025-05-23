@@ -39,6 +39,10 @@
       <button type="submit">出走表を取得</button>
     </form>
 
+    {% if result and result.error %}
+      <p style="color:red; font-weight: bold;">{{ result.error }}</p>
+    {% endif %}
+
     {% if result.meta %}
         <p style="font-weight: bold; font-size: 15px;">
           荒れ度スコア（予測）:
@@ -62,9 +66,7 @@
     {% endif %}
 
     {% if result %}
-    {% if result.error %}
-        <p style="color:red;">{{ result.error }}</p>
-    {% else %}
+    {% if not result.error %}
         <table>
             <tr>
                 <th>枠番</th><th>車番</th><th>名前</th><th>年齢</th><th>府県</th><th>期別</th><th>級班</th>
