@@ -75,15 +75,9 @@ def fetch_entry_data(url):
             return {"error": "タイムアウトエラー"}
 
         html = driver.page_source
-        print("💬 driver.page_source を取得しました（先頭500文字）:")
-        print(html[:500])
         if not html:
             print("❌ HTMLが空です")
             return {"error": "HTMLが取得できませんでした"}
-        save_path = os.path.abspath("entry_page_debug.html")
-        with open(save_path, "w", encoding="utf-8") as f:
-            f.write(html)
-        print(f"📄 HTMLを書き出しました: {save_path}")
         driver.quit()
 
         soup = BeautifulSoup(html, "html.parser")

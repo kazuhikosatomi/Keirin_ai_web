@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, make_response
 from utils.entry_parser import fetch_entry_data  # 修正ポイント①
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
@@ -31,9 +31,17 @@ calendar_df = pd.read_csv(
     dtype={'venue_id': str}
 )
 
+
 # 日付から開催場一覧を取得
 def get_venues_for_date(date_str):
     return calendar_df[calendar_df['date'] == date_str][['venue_id', 'venue_name']].drop_duplicates().to_dict('records')
+
+# カレンダーデータをJSONで返すAPI
+@app.route('/calendar_data')
+def calendar_data():
+    response = make_response(calendar_df.to_json(force_ascii=False, orient='records'))
+    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    return response
 
 # 🔸出走表取得UI（index.html）
 @app.route('/', methods=['GET', 'POST'])

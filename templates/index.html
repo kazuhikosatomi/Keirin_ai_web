@@ -1,4 +1,4 @@
-<file name=entry_parser.py><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -116,6 +116,41 @@
     {% endif %}
     {% endif %}
 </body>
+<script>
+  let calendarData = [];
+
+  fetch("/calendar_data")
+    .then(response => response.json())
+    .then(data => {
+      calendarData = data;
+    });
+
+  document.querySelector('input[name="date"]').addEventListener('change', function () {
+    const selectedDate = this.value.replace(/\D/g, "");
+    const venueSelect = document.querySelector('select[name="venue_id"]');
+    venueSelect.innerHTML = ""; // clear options
+
+    console.log("📅 calendarData sample:", calendarData[0]);
+    const venues = calendarData.filter(entry => entry.date.replace(/\D/g, "") === selectedDate);
+    console.log("選択日:", selectedDate);
+    console.log("該当開催場:", venues);
+
+    if (venues.length === 0) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "該当なし";
+      venueSelect.appendChild(option);
+      return;
+    }
+
+    venues.forEach(entry => {
+      const option = document.createElement("option");
+      option.value = entry.venue_id || entry.venue_code;
+      option.textContent = entry.venue_name;
+      venueSelect.appendChild(option);
+    });
+  });
+</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
