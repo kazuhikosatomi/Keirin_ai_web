@@ -1,10 +1,12 @@
 import re
+import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 def extract_lineinfo_from_html(html):
     soup = BeautifulSoup(html, "html.parser")
@@ -52,16 +54,36 @@ def fetch_entry_data(url):
         date_str, place_code, race_num = match.groups()
 
         options = Options()
-        options.add_argument("--headless")
+        options.add_argument("--headless=new")
+        options.add_argument("--ignore-certificate-errors")
+        options.add_argument("--disable-gpu")
         options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1280,800")
         driver = webdriver.Chrome(options=options)
         driver.get(url)
 
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//th[contains(text(), '選手名')]"))
-        )
+        try:
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//th[contains(text(), '選手名')]"))
+            )
+        except TimeoutException:
+            html = driver.page_source
+            save_path = os.path.abspath("entry_page_debug_on_error.html")
+            with open(save_path, "w", encoding="utf-8") as f:
+                f.write(html)
+            print(f"❌ WebDriverWaitで失敗。取得HTMLを保存しました: {save_path}")
+            return {"error": "タイムアウトエラー"}
+
         html = driver.page_source
+        print("💬 driver.page_source を取得しました（先頭500文字）:")
+        print(html[:500])
+        if not html:
+            print("❌ HTMLが空です")
+            return {"error": "HTMLが取得できませんでした"}
+        save_path = os.path.abspath("entry_page_debug.html")
+        with open(save_path, "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"📄 HTMLを書き出しました: {save_path}")
         driver.quit()
 
         soup = BeautifulSoup(html, "html.parser")
@@ -194,4 +216,9 @@ def fetch_entry_data(url):
             }
         }
     except Exception as e:
+        html = driver.page_source
+        save_path = os.path.abspath("entry_page_debug_on_error.html")
+        with open(save_path, "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"❌ WebDriverWaitで失敗。取得HTMLを保存しました: {save_path}")
         return {"error": str(e)}
