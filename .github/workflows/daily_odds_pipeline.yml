@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas beautifulsoup4 duckdb selenium
+          pip install pandas beautifulsoup4 duckdb selenium requests
 
       - name: Run odds scraper for yesterday
         run: python3 scripts/odds/scrape_odds_headless.py --target $(date -d "yesterday" +%Y-%m-%d)
