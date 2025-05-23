@@ -14,7 +14,8 @@
 </head>
 <body>
     <h2>出走表URLから選手情報を表示</h2>
-    <form method="POST">
+    <form method="POST" onsubmit="showLoading()">
+      <div id="loading" style="display:none; color:red; font-weight:bold;">⏳ 出走表を取得中です...</div>
       <label>日付:</label>
       <input type="date" name="date" value="{{ today }}" required>
 
@@ -36,6 +37,11 @@
         {% endfor %}
       </select>
 
+      <script>
+        function showLoading() {
+          document.getElementById('loading').style.display = 'block';
+        }
+      </script>
       <button type="submit">出走表を取得</button>
     </form>
 

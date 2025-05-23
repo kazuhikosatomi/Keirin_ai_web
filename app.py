@@ -62,7 +62,7 @@ def index():
             import traceback
             print("❌ エラー:", e)
             print(traceback.format_exc())
-            result = {'error': f"Exception occurred:\n{traceback.format_exc()}"}
+            result = {'error': "出走表の取得中にエラーが発生しました。詳細はログをご確認ください。"}
         venues = get_venues_for_date(date)
         return render_template('index.html', result=result, venues=venues, today=date, selected_venue=venue_id, selected_race=race)
 
