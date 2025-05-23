@@ -1,9 +1,15 @@
 import duckdb
 import pandas as pd
 import os
+import argparse
+
+# 引数パーサー設定
+parser = argparse.ArgumentParser(description='Insert odds raw data into DuckDB.')
+parser.add_argument('--target', type=str, required=True, help='対象日付 (YYYY-MM-DD)')
+args = parser.parse_args()
 
 # 対象日付
-target_date = "2025-05-21"
+target_date = args.target
 short_date = target_date.replace("-", "")
 
 # ファイルパス

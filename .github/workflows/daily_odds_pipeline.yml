@@ -25,5 +25,8 @@ jobs:
       - name: Run odds scraper for yesterday
         run: python3 scripts/odds/scrape_odds_headless.py --target $(date -d "yesterday" +%Y-%m-%d)
 
+      - name: Insert odds_raw to DuckDB
+        run: python3 scripts/odds/insert_odds_raw.py --target $(date -d "yesterday" +%Y-%m-%d)
+
       - name: Run odds slimify for yesterday
         run: python3 scripts/odds/slimify_odds.py --target $(date -d "yesterday" +%Y-%m-%d)

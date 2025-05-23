@@ -184,7 +184,7 @@ def webhook():
         for event in events:
             print("🔸イベント内容:", event, flush=True)
             if event.get("type") == "message":
-                user_id = event["source"]["userId"]
+                user_id = event["source"].get("userId", "(unknown)")
                 print(f"👤 userId: {user_id}", flush=True)
     except Exception as e:
         print("⚠️ Webhook処理エラー:", e, flush=True)
