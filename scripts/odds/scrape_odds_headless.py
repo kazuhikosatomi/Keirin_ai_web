@@ -34,10 +34,12 @@ except ValueError:
 
 # ▼ データ読み込み
 calendar_df = pd.read_csv("data/calendar/keirin_calendar_with_venue_id.csv")
+calendar_df.columns = [col.strip() for col in calendar_df.columns]
 calendar_df.rename(columns={"place": "競輪場名"}, inplace=True)
 calendar_df["date"] = pd.to_datetime(calendar_df["date"])
 
 jyocode_df = pd.read_csv("data/venue/jyocode.csv")
+jyocode_df.columns = [col.strip() for col in jyocode_df.columns]
 jyocode_df.rename(columns={"place": "競輪場名"}, inplace=True)
 
 # ▼ 開催日と場名を突合して (date, vel_code, place_name) を抽出
