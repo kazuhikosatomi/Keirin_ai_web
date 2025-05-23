@@ -36,9 +36,11 @@
 
     <script>
     function showLoading() {
-      const msg = document.getElementById('loading-message');
-      msg.style.display = 'block';
-      msg.classList.add('blinking');
+      setTimeout(() => {
+        const msg = document.getElementById('loading-message');
+        msg.style.display = 'block';
+        msg.classList.add('blinking');
+      }, 10);
     }
     </script>
 
