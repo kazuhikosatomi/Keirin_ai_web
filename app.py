@@ -1,11 +1,12 @@
 from flask import Flask, request, render_template, jsonify
 from utils.entry_parser import fetch_entry_data  # 修正ポイント①
-
 from utils.araredo_calc import calc_araredo      # 修正ポイント②
 import duckdb
 import os
 import requests
 import gdown
+import pandas as pd
+import datetime
 
 GOOGLE_FILE_ID = "1j7jA0P4CP3J0-WGGCgVFNzvG7tCsiVDw"
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_ai.duckdb")
@@ -23,12 +24,27 @@ app = Flask(__name__)
 DB_PATH = OUTPUT_PATH
 con = duckdb.connect(DB_PATH)
 
+# カレンダーデータフレームを読み込む
+calendar_df = pd.read_csv(
+    "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/calendar/keirin_calendar_2011-10_to_2025-06.csv",
+    dtype={'venue_id': str}
+)
+
+# 日付から開催場一覧を取得
+def get_venues_for_date(date_str):
+    return calendar_df[calendar_df['date'] == date_str][['venue_id', 'venue_name']].drop_duplicates().to_dict('records')
+
 # 🔸出走表取得UI（index.html）
 @app.route('/', methods=['GET', 'POST'])
 def index():
     result = None
+    today = datetime.date.today().strftime("%Y-%m-%d")
+
     if request.method == 'POST':
-        url = request.form['url']
+        date = request.form['date']
+        venue_id = request.form['venue_id']
+        race = request.form['race']
+        url = f"http://chariloto.com/keirin/athletes/{date}/{venue_id}/{race}"
         try:
             print("✅ fetch_entry_data() 開始")
             print("🔗 URL:", url)
@@ -44,7 +60,11 @@ def index():
         except Exception as e:
             print("❌ エラー:", e)
             result = {'error': f"Exception occurred: {str(e)}"}
-    return render_template('index.html', result=result)
+        venues = get_venues_for_date(date)
+        return render_template('index.html', result=result, venues=venues, today=date, selected_venue=venue_id, selected_race=race)
+
+    venues = get_venues_for_date(today)
+    return render_template('index.html', result=result, venues=venues, today=today)
 
 # 🔸荒れ度予測API（GETで使用）
 @app.route('/araredo_predict', methods=['GET'])

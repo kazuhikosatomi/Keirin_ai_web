@@ -14,9 +14,29 @@
 </head>
 <body>
     <h2>出走表URLから選手情報を表示</h2>
-    <form method="post">
-        <input type="text" name="url" size="50" placeholder="https://..." required>
-        <button type="submit">取得</button>
+    <form method="POST">
+      <label>日付:</label>
+      <input type="date" name="date" value="{{ today }}" required>
+
+      <label>開催場:</label>
+      <select name="venue_id" required>
+        {% for venue in venues %}
+          <option value="{{ venue.venue_id }}" {% if venue.venue_id == selected_venue %}selected{% endif %}>
+            {{ venue.venue_name }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <label>レース番号:</label>
+      <select name="race" required>
+        {% for i in range(1, 13) %}
+          <option value="{{ i }}" {% if i|string == selected_race %}selected{% endif %}>
+            {{ i }}R
+          </option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">出走表を取得</button>
     </form>
 
     {% if result.meta %}
