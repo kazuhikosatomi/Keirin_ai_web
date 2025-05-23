@@ -29,6 +29,12 @@ calendar_df = pd.read_csv(
     "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/calendar/keirin_calendar_2011-10_to_2025-06.csv",
     dtype={'venue_id': str}
 )
+# 日本語カラムを英語に変換
+calendar_df = calendar_df.rename(columns={
+    '開催日': 'date',
+    '開催場コード': 'venue_id',
+    '開催場名': 'venue_name'
+})
 
 # 日付から開催場一覧を取得
 def get_venues_for_date(date_str):
