@@ -33,7 +33,7 @@ except ValueError:
     sys.exit(1)
 
 # ▼ データ読み込み
-calendar_df = pd.read_csv("data/calendar/keirin_calendar_2024-12_to_2025-06.csv")
+calendar_df = pd.read_csv("data/calendar/keirin_calendar_with_venue_id.csv")
 calendar_df.rename(columns={"place": "競輪場名"}, inplace=True)
 calendar_df["date"] = pd.to_datetime(calendar_df["date"])
 
