@@ -38,6 +38,7 @@ calendar_df.rename(columns={"place": "競輪場名"}, inplace=True)
 calendar_df["date"] = pd.to_datetime(calendar_df["date"])
 
 jyocode_df = pd.read_csv("data/venue/jyocode.csv")
+jyocode_df.rename(columns={"place": "競輪場名"}, inplace=True)
 
 # ▼ 開催日と場名を突合して (date, vel_code, place_name) を抽出
 range_df = calendar_df[(calendar_df["date"] >= start_dt) & (calendar_df["date"] <= end_dt)]
