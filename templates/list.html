@@ -12,7 +12,7 @@
 </head>
 <body>
     <h2>開催日・場コードを指定して一覧取得</h2>
-    <form method="post">
+    <form method="post" onsubmit="showLoading()">
         <label>日付 (YYYYMMDD):</label>
         <input type="text" name="date" required>
         <label>場コード:</label>
@@ -20,6 +20,11 @@
         <button type="submit">一覧取得</button>
     </form>
 
+    <div id="loading-message" style="display: none; color: red; font-weight: bold;">
+      ⏳ 出走表を取得中です...
+    </div>
+
+</body>
     {% if result %}
         <h3>荒れ度スコア一覧</h3>
         <ul>
@@ -28,5 +33,22 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+    <script>
+    function showLoading() {
+      const msg = document.getElementById('loading-message');
+      msg.style.display = 'block';
+      msg.classList.add('blinking');
+    }
+    </script>
+
+    <style>
+    .blinking {
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    </style>
 </body>
 </html>
