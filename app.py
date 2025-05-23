@@ -36,6 +36,13 @@ calendar_df = calendar_df.rename(columns={
     '開催場名': 'venue_name'
 })
 
+# venue_id を venue_name から補完（jyocode.csv と突合）
+jyocode_df = pd.read_csv("https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/venue/jyocode.csv", dtype={'場コード': str})
+jyocode_df = jyocode_df.rename(columns={'場コード': 'venue_id', '場名': 'venue_name'})
+
+# venue_name をキーにマージ
+calendar_df = pd.merge(calendar_df, jyocode_df, on='venue_name', how='left')
+
 # 日付から開催場一覧を取得
 def get_venues_for_date(date_str):
     return calendar_df[calendar_df['date'] == date_str][['venue_id', 'venue_name']].drop_duplicates().to_dict('records')
