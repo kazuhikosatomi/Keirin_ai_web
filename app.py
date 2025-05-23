@@ -59,8 +59,10 @@ def index():
                     "meta": data["meta"]
                 }
         except Exception as e:
+            import traceback
             print("❌ エラー:", e)
-            result = {'error': f"Exception occurred: {str(e)}"}
+            print(traceback.format_exc())
+            result = {'error': f"Exception occurred:\n{traceback.format_exc()}"}
         venues = get_venues_for_date(date)
         return render_template('index.html', result=result, venues=venues, today=date, selected_venue=venue_id, selected_race=race)
 
