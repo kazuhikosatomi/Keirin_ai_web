@@ -9,7 +9,7 @@ import pandas as pd
 import datetime
 
 GOOGLE_FILE_ID = "1LfWUJUw2BV0mqVrFx3qhfox44RQJk3J9"
-OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_ai.duckdb")
+OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_data.duckdb")
 
 # DuckDBが存在しない場合はGoogle Driveからダウンロード
 if not os.path.exists(OUTPUT_PATH):
