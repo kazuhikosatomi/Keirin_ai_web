@@ -1,0 +1,8 @@
+bet_code,bet_type,description_ja,description_en,bet_type2
+1,niwakutan,2枠単,Exacta (frame),2枠単
+2,niwakufuku,2枠複,Quinella (frame),2枠複
+3,nirentan,2車単,Exacta (pair),2車単
+4,nirenfuku,2車複,Quinella (pair),2車複
+5,sanrentan,3連単,Trifecta,3連単
+6,sanrenfuku,3連複,Trio,3連複
+7,wide,ワイド,Wide,ワイド
