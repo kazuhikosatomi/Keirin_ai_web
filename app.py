@@ -8,7 +8,7 @@ import gdown
 import pandas as pd
 import datetime
 
-GOOGLE_FILE_ID = "1j7jA0P4CP3J0-WGGCgVFNzvG7tCsiVDw"
+GOOGLE_FILE_ID = "1LfWUJUw2BV0mqVrFx3qhfox44RQJk3J9"
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_ai.duckdb")
 
 # DuckDBが存在しない場合はGoogle Driveからダウンロード
