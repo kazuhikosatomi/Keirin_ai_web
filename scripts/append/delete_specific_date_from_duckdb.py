@@ -2,8 +2,9 @@ import duckdb
 import os
 from dotenv import load_dotenv
 
-# .env ファイルから DUCKDB_PATH を取得
-load_dotenv()
+ # スクリプトの位置を基準に .env を明示的に読み込む
+dotenv_path = os.path.join(os.path.dirname(__file__), "../../.env")
+load_dotenv(dotenv_path)
 db_path = os.getenv("DUCKDB_PATH")
 
 # 🔧 対象日付（必要に応じて変更）
