@@ -7,16 +7,16 @@ from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+import os
 
+# ✅ 引数で開始日・終了日を指定
 parser = argparse.ArgumentParser()
-parser.add_argument("--target", help="対象日付 (YYYY-MM-DD)")
+parser.add_argument("start", help="開始日付 (YYYY-MM-DD)")
+parser.add_argument("end", help="終了日付 (YYYY-MM-DD)")
 args = parser.parse_args()
 
-if args.target:
-    start_date = end_date = args.target
-else:
-    yesterday = datetime.now() - timedelta(days=1)
-    start_date = end_date = yesterday.strftime("%Y-%m-%d")
+start_date = args.start
+end_date = args.end
 
 try:
     start_dt = datetime.strptime(start_date, "%Y-%m-%d")
@@ -26,16 +26,11 @@ except ValueError:
     sys.exit(1)
 
 # ✅ ファイル読込
-import os
-from dotenv import load_dotenv
-load_dotenv()
 script_dir = os.path.dirname(os.path.abspath(__file__))
-calendar_df = pd.read_csv(os.path.join(script_dir, "../../data/calendar/calendar_all.csv"))  # ← 開催カレンダー
-# 日付カラムを正規化（YYYY-MM-DD形式へ変換）
+calendar_df = pd.read_csv(os.path.join(script_dir, "../../data/calendar/calendar_all.csv"))
 calendar_df["date"] = pd.to_datetime(calendar_df["date"].astype(str), format="%Y%m%d").dt.strftime("%Y-%m-%d")
-jyocode_path = os.path.join(script_dir, "../../data/master/venue_master.csv")
-jyocode_df = pd.read_csv(jyocode_path)  # ← 場コード対応表
-
+venue_path = os.path.join(script_dir, "../../data/master/venue_master.csv")
+venue_df = pd.read_csv(venue_path)
 player_path = os.path.join(script_dir, "../../data/master/player_master.csv")
 player_df = pd.read_csv(player_path)
 
@@ -53,9 +48,9 @@ while current <= end_dt:
     open_day = current.strftime("%Y-%m-%d")
     print(f"🔍 {open_day} のレース結果を取得中...")
 
-    # ⬇ カレンダーと突合し、この日に開催の競輪場だけ取得
+    # ⬇ カレンダーと突合
     day_venues = calendar_df[calendar_df["date"] == open_day]
-    merged = pd.merge(day_venues, jyocode_df, on="venue_name", how="inner")
+    merged = pd.merge(day_venues, venue_df, on="venue_name", how="inner")
     venues = [(str(row.venue_id_y).zfill(2), row.venue_name) for row in merged.itertuples(index=False)]
 
     all_results = []
@@ -120,28 +115,22 @@ while current <= end_dt:
             df_result = pd.DataFrame(records)
             df_merged = pd.merge(df_result, df_line, on="車番", how="left")
 
-            # スペース削除用の関数
             def normalize_name(name):
                 return name.replace(" ", "").replace("　", "").strip()
 
-            # 5文字までの短縮名生成（突合用）
             def short_key(name):
                 return normalize_name(name)[:5]
 
-            # 正規化した短縮キーで突合
             df_merged["short_name"] = df_merged["選手名"].apply(short_key)
             player_df["short_name"] = player_df["name_kanji"].apply(short_key)
 
             df_merged = pd.merge(df_merged, player_df[["racer_id", "short_name"]], on="short_name", how="left")
 
-            # name_kanjiはオリジナルを保持
             df_merged["name_kanji"] = df_merged["選手名"]
-
             all_results.append(df_merged)
 
             time.sleep(0.3)
 
-    # ✅ 日付ごとのCSV保存
     if all_results:
         df_final = pd.concat(all_results, ignore_index=True)
         df_final = df_final.rename(columns={

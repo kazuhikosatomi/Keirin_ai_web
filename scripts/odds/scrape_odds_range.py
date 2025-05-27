@@ -1,62 +1,47 @@
-import pandas as pd
 import os
-from dotenv import load_dotenv
-load_dotenv()
-script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "..", "..", "data", "master", "bet_master.csv")
-bet_master_df = pd.read_csv(csv_path)
-bet_type_to_code = dict(zip(bet_master_df["bet_type"], bet_master_df["bet_code"]))
-
-import pandas as pd
-
-bet_master_df = pd.read_csv("../../data/master/bet_master.csv", dtype=str)
-bet_code_to_type = dict(zip(bet_master_df["bet_code"], bet_master_df["bet_type"]))
-
-import requests
 import csv
 import time
-import sys
-from datetime import datetime, timedelta
+import requests
+import pandas as pd
+from datetime import datetime
 import argparse
 
-# ▼ コマンドライン引数の処理（--targetオプション）
+# ▼ 引数：2025-05-20 2025-05-24 のように使用
 parser = argparse.ArgumentParser()
-parser.add_argument("--target", help="対象日付 (YYYY-MM-DD)")
+parser.add_argument("start", help="開始日付 (YYYY-MM-DD)")
+parser.add_argument("end", help="終了日付 (YYYY-MM-DD)")
 args = parser.parse_args()
 
-if args.target:
-    start_date = end_date = args.target
-else:
-    yesterday = datetime.now() - timedelta(days=1)
-    start_date = end_date = yesterday.strftime("%Y-%m-%d")
+start_date = args.start
+end_date = args.end
 
 try:
     start_dt = datetime.strptime(start_date, "%Y-%m-%d")
     end_dt = datetime.strptime(end_date, "%Y-%m-%d")
 except ValueError:
     print("日付形式が正しくありません。YYYY-MM-DD で指定してください")
-    sys.exit(1)
-
-import os
+    exit(1)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-calendar_path = os.path.join(script_dir, "../../data/calendar/calendar_all.csv")
 
-if not os.path.exists(calendar_path):
-    raise FileNotFoundError(f"{calendar_path} が見つかりません。")
+# ▼ 必要データ読み込み
+calendar_path = os.path.join(script_dir, "../../data/calendar/calendar_all.csv")
+venue_path = os.path.join(script_dir, "../../data/master/venue_master.csv")
+bet_master_path = os.path.join(script_dir, "../../data/master/bet_master.csv")
 
 calendar_df = pd.read_csv(calendar_path)
-# venue情報も読み込み（今後の分析に使用予定）
-venue_path = os.path.join(script_dir, "..", "..", "data", "master", "venue_master.csv")
 venue_df = pd.read_csv(venue_path)
+bet_master_df = pd.read_csv(bet_master_path, dtype=str)
 
+# ▼ bet_code辞書
+bet_type_to_code = dict(zip(bet_master_df["bet_type"], bet_master_df["bet_code"]))
+bet_code_to_type = dict(zip(bet_master_df["bet_code"], bet_master_df["bet_type"]))
+
+# ▼ カレンダー結合とフィルタリング
 calendar_df["date"] = pd.to_datetime(calendar_df["date"].astype(str), format="%Y%m%d")
 merged_df = pd.merge(calendar_df, venue_df, on="venue_id", how="inner")
-
-# 対象日付範囲に絞り込み
 range_df = merged_df[(merged_df["date"] >= start_dt) & (merged_df["date"] <= end_dt)].copy()
 range_df["date"] = range_df["date"].dt.strftime("%Y-%m-%d")
-
 filtered_venues = list(range_df[["date", "venue_id"]].itertuples(index=False, name=None))
 
 # ▼ 処理開始
@@ -74,7 +59,6 @@ for open_day, venue_ids in grouped.items():
     output_file = os.path.join(output_dir, f"odds_{open_day}.csv")
 
     with open(output_file, "w", newline="", encoding="utf-8-sig") as f:
-
         writer = csv.writer(f)
         header = ["date", "venue_id", "race_no", "bet_code", "car_1", "car_2", "car_3", "odds_1", "odds_2"]
         writer.writerow(header)
@@ -92,7 +76,6 @@ for open_day, venue_ids in grouped.items():
                 try:
                     response = requests.get(odds_url, params=params)
                     time.sleep(0.4)
-
                     if response.status_code != 200:
                         break
 
