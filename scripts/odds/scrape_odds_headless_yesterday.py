@@ -7,9 +7,6 @@ csv_path = os.path.join(script_dir, "..", "..", "data", "master", "bet_master.cs
 bet_master_df = pd.read_csv(csv_path)
 bet_type_to_code = dict(zip(bet_master_df["bet_type"], bet_master_df["bet_code"]))
 
-import pandas as pd
-
-bet_master_df = pd.read_csv("../../data/master/bet_master.csv", dtype=str)
 bet_code_to_type = dict(zip(bet_master_df["bet_code"], bet_master_df["bet_type"]))
 
 import requests
@@ -131,6 +128,8 @@ for open_day, venue_ids in grouped.items():
             else:
                 print("⚠️ オッズなし")
 
+    print(f"📅 対象日: {open_day}")
+    print(f"🎯 出力件数: {total_rows}")
     print(f"\n🎉 出力完了: {output_file}")
 
 print("🎉 全期間の処理が完了しました")

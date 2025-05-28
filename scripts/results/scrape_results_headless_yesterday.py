@@ -18,6 +18,10 @@ else:
     yesterday = datetime.now() - timedelta(days=1)
     start_date = end_date = yesterday.strftime("%Y-%m-%d")
 
+# スクリプト開始ログ
+print("==================== scrape_results_headless_yesterday.py START ====================")
+print(f"📅 対象日: {start_date}")
+
 try:
     start_dt = datetime.strptime(start_date, "%Y-%m-%d")
     end_dt = datetime.strptime(end_date, "%Y-%m-%d")
@@ -63,14 +67,18 @@ while current <= end_dt:
     for jyo_code, jyo_name in venues:
         url = f"https://www.chariloto.com/keirin/results/{jyo_code}/{open_day}"
         driver.get(url)
+        print(f"🌐 リクエスト送信: {url}")
         time.sleep(10)
 
         soup = BeautifulSoup(driver.page_source, "html.parser")
+        print(f"📥 レスポンス受信: ページ長 = {len(driver.page_source)}")
         loop_blocks = [t for t in soup.find_all("table", class_="table") if "周回予想" in t.get_text()]
         result_tables = [t for t in soup.find_all("table") if "着" in t.get_text() and "選手名" in t.get_text()]
 
         if not loop_blocks or not result_tables:
-            print(f"⚠️ {jyo_name}: レース情報なし")
+            print(f"⚠️ {jyo_name}: レース情報なし (loop_blocks: {len(loop_blocks)}, result_tables: {len(result_tables)})")
+            with open(f"debug_{open_day}_{jyo_code}.html", "w", encoding="utf-8") as f:
+                f.write(driver.page_source)
             continue
 
         for race_num, (result_table, loop_table) in enumerate(zip(result_tables, loop_blocks), start=1):
@@ -177,7 +185,9 @@ while current <= end_dt:
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, f"results_{open_day}.csv")
         df_final.to_csv(output_path, index=False, encoding="utf-8-sig")
+        print(f"🎯 出力件数: {len(df_final)}")
         print(f"✅ 保存完了: {output_path}")
+        print(f"📦 ファイルサイズ: {os.path.getsize(output_path)} bytes")
     else:
         print(f"❌ {open_day}: データ取得なし")
 
