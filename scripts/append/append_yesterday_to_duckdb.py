@@ -9,7 +9,7 @@ import duckdb
 import pandas as pd
 from datetime import datetime, timedelta
 
- # ✅ 昨日の日付（YYYY-MM-DD形式）を取得
+yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")  # ✅ 昨日の日付（YYYY-MM-DD形式）を取得
 yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 print(f"🕒 append対象日: {yesterday}")
 year = yesterday[:4]
@@ -34,6 +34,7 @@ if os.path.exists(odds_path):
     else:
         print(f"📥 odds: {odds_path}")
         df_odds = pd.read_csv(odds_path)
+        con.register("df_odds", df_odds)
         con.execute("INSERT INTO odds SELECT * FROM df_odds")
 else:
     print(f"⚠️ oddsファイルが見つかりません: {odds_path}")
@@ -48,6 +49,7 @@ if os.path.exists(results_path):
     else:
         print(f"📥 results: {results_path}")
         df_results = pd.read_csv(results_path)
+        con.register("df_results", df_results)
         con.execute("INSERT INTO results SELECT * FROM df_results")
 else:
     print(f"⚠️ resultsファイルが見つかりません: {results_path}")
