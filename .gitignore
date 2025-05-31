@@ -1,6 +1,7 @@
-data/odds/
-data/results/
-db/*.duckdb
+# --- 無視するフォルダ一覧 ---
+data/
+db/
+logs/
 
 # 仮想環境やキャッシュ
 venv/
