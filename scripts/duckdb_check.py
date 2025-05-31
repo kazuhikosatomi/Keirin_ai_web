@@ -1,31 +1,40 @@
 import duckdb
 
-def check_duckdb_counts(db_path, target_date):
-    con = duckdb.connect(db_path)
+def check_table_count(conn, table_name, target_date):
+    query = f"SELECT COUNT(*) FROM {table_name} WHERE date = ?"
+    result = conn.execute(query, (target_date,)).fetchone()
+    count = result[0]
+    print(f"🎯 {table_name} {target_date}: {count} 件")
+
     try:
-        odds_count = con.execute(
-            "SELECT date, COUNT(*) FROM odds WHERE date = ? GROUP BY date",
-            [target_date]
-        ).fetchall()
-        results_count = con.execute(
-            "SELECT date, COUNT(*) FROM results WHERE date = ? GROUP BY date",
-            [target_date]
-        ).fetchall()
-        entries_count = con.execute(
-            "SELECT date, COUNT(*) FROM entries WHERE date = ? GROUP BY date",
-            [target_date]
-        ).fetchall()
-        print(f"Odds count for {target_date}: {odds_count}")
-        print(f"Results count for {target_date}: {results_count}")
-        print(f"Entries count for {target_date}: {entries_count}")
-    finally:
-        con.close()
+        distinct_dates = conn.execute(f"SELECT DISTINCT date FROM {table_name} ORDER BY date DESC").fetchall()
+        print(f"📅 登録されている date 一覧:")
+        for d in distinct_dates:
+            print(f"  - {d[0]}")
+    except Exception:
+        pass
 
-if __name__ == "__main__":
-    # DuckDBファイルのパスを適宜変更してください
-    duckdb_path = "/Users/satomi/Library/CloudStorage/GoogleDrive-itokeirinbu@gmail.com/マイドライブ/keirin_data.duckdb"
-    check_date = "2025-05-28"
-    check_duckdb_counts(duckdb_path, check_date)
+# 🔧 個別に日付を指定
+date_odds = "2025-05-29"
+date_results = "2025-05-29"
+date_entry = "2025-05-31"
 
-    check_date_entry = "2025-05-29"
-    check_duckdb_counts(duckdb_path, check_date_entry)
+# DuckDBへの接続
+db_path = "/Users/satomi/Library/CloudStorage/GoogleDrive-itokeirinbu@gmail.com/マイドライブ/keirin_data.duckdb"
+con = duckdb.connect(db_path)
+
+# 🔍 各テーブルの件数を取得
+try:
+    check_table_count(con, "odds", date_odds)
+except Exception as e:
+    print(f"❌ odds の取得に失敗しました: {e}")
+
+try:
+    check_table_count(con, "results", date_results)
+except Exception as e:
+    print(f"❌ results の取得に失敗しました: {e}")
+
+try:
+    check_table_count(con, "entry", date_entry)
+except Exception as e:
+    print(f"❌ entry の取得に失敗しました: {e}")

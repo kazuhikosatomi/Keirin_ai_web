@@ -3,6 +3,8 @@ import csv
 import pandas as pd
 from entry_parser import fetch_entry_data
 from datetime import datetime
+import os
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 def main():
     import sys
@@ -18,10 +20,10 @@ def main():
         date_str_arg = args[0]
         mode = "all_from_calendar"
     else:
-        print("Usage: python export_entry_to_csv_v3.py <date> [venue_id] [race_num]")
+        print("Usage: python scrape_entry.py <date> [venue_id] [race_num]")   
         return
 
-    date_str = f"{date_str_arg[:4]}-{date_str_arg[4:6]}-{date_str_arg[6:]}"
+    date_str = date_str_arg if "-" in date_str_arg else f"{date_str_arg[:4]}-{date_str_arg[4:6]}-{date_str_arg[6:]}"
     all_entries = []
 
     if mode == "single":
@@ -29,34 +31,36 @@ def main():
     elif mode == "venue_all":
         venues = [(venue_id_arg, list(range(1, 13)))]
     elif mode == "all_from_calendar":
-        calendar_df = pd.read_csv("data/calendar/calendar_all.csv", dtype=str)
+        # Normalize date string to YYYYMMDD format for calendar lookup
+        date_str_arg = date_str_arg.replace("-", "")
+        calendar_path = os.path.join(BASE_DIR, "data/calendar/calendar_all.csv")
+        calendar_df = pd.read_csv(calendar_path, dtype=str)
         calendar_df.columns = calendar_df.columns.str.strip()
         calendar_df = calendar_df[calendar_df["date"] == date_str_arg]
         venues = [(row["venue_id"], list(range(1, 13))) for _, row in calendar_df.iterrows()]
 
-    print(f"📅 {date_str}")
-
     for venue_id, race_nums in venues:
-        print(f"🏟️ place_code: {venue_id}")
+        print(f"📅 {date_str} | 🏟️ venue_id: {venue_id}")
         for race_num in race_nums:
             url = f"https://www.chariloto.com/keirin/athletes/{date_str}/{venue_id}/{race_num}"
-            print(f"🔍 URL: {url}")
-
+            # Compact race status summary
             result = fetch_entry_data(url)
+            df = None
+            if "entries" in result:
+                df = pd.DataFrame(result["entries"])
+            status_char = "✓" if df is not None and not df.empty else "×"
+            print(f" {status_char} R{race_num}", end="", flush=True)
             if "error" in result:
-                print(f"❌ エラー（{race_num}R）: {result['error']}")
                 continue
-
             entries = result.get("entries", [])
             if not entries:
-                print(f"⚠️ {race_num}R に選手情報がありません")
                 continue
-
             for entry in entries:
                 entry["race_num"] = race_num
                 entry["date"] = date_str
                 entry["place_code"] = venue_id
             all_entries.extend(entries)
+        print()
 
     # Load player master
     player_master_df = pd.read_csv("data/master/player_master.csv", dtype=str).fillna("")
@@ -81,7 +85,6 @@ def main():
         print("⚠️ 有効な出走表データが1件も取得できませんでした")
         return
 
-    import os
     year_folder = f"data/entries/{date_str_arg[:4]}"
     os.makedirs(year_folder, exist_ok=True)
     # Construct filename_suffix based on mode
@@ -129,7 +132,7 @@ def main():
             renamed_row = {rename_map.get(k, k): v for k, v in row.items()}
             writer.writerow(renamed_row)
 
-    print(f"✅ 出力完了: {filename}")
+    print(f"✅ Saved: {len(all_entries)} races → {filename}")
 
 if __name__ == "__main__":
     main()
