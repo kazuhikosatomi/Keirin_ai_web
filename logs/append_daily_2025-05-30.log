@@ -1,8 +1,0 @@
-✅ DuckDBへの追記が完了しました
-🕒 append対象日: 2025-05-29
-🛤️ 使用するDBパス: /Users/satomi/Library/CloudStorage/GoogleDrive-itokeirinbu@gmail.com/マイドライブ/keirin_data.duckdb
-🔍 check_odds = 0
-📥 odds: /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/../../data/odds/2025/odds_2025-05-29.csv
-🔍 check_results = 0
-📥 results: /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/../../data/results/2025/results_2025-05-29.csv
-✅ DuckDBへの追記が完了しました
