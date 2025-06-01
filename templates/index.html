@@ -1,69 +1,166 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>出走表ビューワ</title>
-    <script>
-        async function loadVenues() {
-            const date = document.getElementById("date").value;
-            const response = await fetch(`/venue?date=${date}`);
-            const data = await response.json();
-            const venueSelect = document.getElementById("venue");
-            venueSelect.innerHTML = data.venues.map(v => `<option value="${v}">${v}</option>`).join("");
-            loadRaces(); // venue更新後にraceも更新
-        }
-
-        async function loadRaces() {
-            const date = document.getElementById("date").value;
-            const venue = document.getElementById("venue").value;
-            const response = await fetch(`/race?date=${date}&venue=${venue}`);
-            const data = await response.json();
-            const raceSelect = document.getElementById("race");
-            raceSelect.innerHTML = data.races.map(r => `<option value="${r}">${r}</option>`).join("");
-            loadEntries();
-        }
-
-        async function loadEntries() {
-            const date = document.getElementById("date").value;
-            const venue = document.getElementById("venue").value;
-            const race = document.getElementById("race").value;
-            const response = await fetch(`/entry?date=${date}&venue=${venue}&race=${race}`);
-            const table = document.getElementById("entries");
-            try {
-                const data = await response.json();
-                console.log("✅ 取得したdata:", data);  // 追加: デバッグ用ログ
-                if (data.entries && data.entries.length > 0) {
-                    table.innerHTML = `<tr><th>車番</th><th>選手名</th><th>級班</th><th>ライン</th></tr>` + data.entries.map(e =>
-                        `<tr><td>${e.car_no}</td><td>${e.name_kanji}</td><td>${e.class}</td><td>${e.line_id}</td></tr>`
-                    ).join("");
-                } else {
-                    table.innerHTML = "<tr><td colspan='4'>出走表データがありません。</td></tr>";
-                }
-            } catch (err) {
-                table.innerHTML = `<tr><td colspan="4">出走表の取得中にエラーが発生しました。</td></tr>`;
-                console.error("出走表取得エラー:", err);
-            }
-        }
-    </script>
+    <meta charset="utf-8">
+    <title>出走表（絞り込み表示）</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { border-collapse: collapse; width: 100%; font-size: 13px; }
+        th, td { border: 1px solid #ccc; padding: 4px 6px; text-align: center; }
+        th { background: #f0f0f0; }
+    </style>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#000000">
 </head>
 <body>
-    <h2>出走表選択</h2>
-    <label>日付:
-        <select id="date" onchange="loadVenues()">
-            {% for d in dates %}
-                <option value="{{ d }}">{{ d }}</option>
+    <h2>出走表URLから選手情報を表示</h2>
+    <form method="POST" onsubmit="showLoading()">
+      <div id="loading" style="display:none; color:red; font-weight:bold;">⏳ 出走表を取得中です...</div>
+      <label>日付:</label>
+      <input type="date" name="date" value="{{ today }}" required>
+
+      <label>開催場:</label>
+      <select name="venue_id" required>
+        {% for venue in venues %}
+          <option value="{{ venue.venue_id }}" {% if venue.venue_id == selected_venue %}selected{% endif %}>
+            {{ venue.venue_name }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <label>レース番号:</label>
+      <select name="race" required>
+        {% for i in range(1, 13) %}
+          <option value="{{ i }}" {% if i|string == selected_race %}selected{% endif %}>
+            {{ i }}R
+          </option>
+        {% endfor %}
+      </select>
+
+      <script>
+        function showLoading() {
+          document.getElementById('loading').style.display = 'block';
+        }
+      </script>
+      <button type="submit">出走表を取得</button>
+    </form>
+
+    {% if result and result.error %}
+      <div style="margin-top: 1em; padding: 0.5em; border: 2px solid red; color: red; font-weight: bold; background-color: #ffeaea; white-space: pre-wrap;">
+        ⚠️ {{ result.error }}
+      </div>
+    {% endif %}
+
+    {% if result.meta %}
+        <p style="font-weight: bold; font-size: 15px;">
+          荒れ度スコア（予測）:
+          <span id="araredo-score">取得中...</span>
+        </p>
+        <script>
+          const url = `/araredo_predict?date={{ result.meta.date }}&venue_id={{ result.meta.place_code }}&race={{ result.meta.race_num }}`;
+          console.log("🔍 荒れ度取得URL:", url);
+
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              console.log("✅ 取得結果:", data);
+              document.getElementById('araredo-score').textContent = data.araredo_score ?? "取得失敗";
+            })
+            .catch(error => {
+              console.error("❌ fetchエラー:", error);
+              document.getElementById('araredo-score').textContent = "取得失敗";
+            });
+        </script>
+    {% endif %}
+
+    {% if result %}
+    {% if not result.error %}
+        <table>
+            <tr>
+                <th>枠番</th><th>車番</th><th>名前</th><th>年齢</th><th>府県</th><th>期別</th><th>級班</th>
+                <th>脚質</th><th>ギア</th><th>得点</th><th>1着</th><th>2着</th><th>3着</th><th>着外</th>
+                <th>勝率</th><th>2連対</th><th>3連対</th>
+                <th>逃</th><th>捲</th><th>差</th><th>マ</th>
+                <th>S</th><th>B</th><th>Line</th><th>Pos</th>
+            </tr>
+            {% for r in result.entries %}
+            <tr>
+                <td>{{ r.frame_number }}</td>
+                <td>{{ r.car_number }}</td>
+                <td>{{ r.name }}</td>
+                <td>{{ r.age }}</td>
+                <td>{{ r.prefecture }}</td>
+                <td>{{ r.term }}</td>
+                <td>{{ r.grade }}</td>
+                <td>{{ r.leg_type }}</td>
+                <td>{{ r.gear }}</td>
+                <td>{{ r.score }}</td>
+                <td>{{ r.first_places }}</td>
+                <td>{{ r.second_places }}</td>
+                <td>{{ r.third_places }}</td>
+                <td>{{ r.outs }}</td>
+                <td>{{ r.win_rate }}</td>
+                <td>{{ r.top2_rate }}</td>
+                <td>{{ r.top3_rate }}</td>
+                <td>{{ r.style_escape }}</td>
+                <td>{{ r.style_sprint }}</td>
+                <td>{{ r.style_chase }}</td>
+                <td>{{ r.style_other }}</td>
+                <td>{{ r.start_number }}</td>
+                <td>{{ r.back_number }}</td>
+                <td>{{ r.line_id }}</td>
+                <td>{{ r.line_pos }}</td>
+            </tr>
             {% endfor %}
-        </select>
-    </label>
-    <label>競輪場:
-        <select id="venue" onchange="loadRaces()"></select>
-    </label>
-    <label>レース:
-        <select id="race" onchange="loadEntries()"></select>
-    </label>
-    <h3>出走表</h3>
-    <table border="1" id="entries">
-      <tr><th>車番</th><th>選手名</th><th>級班</th><th>ライン</th></tr>
-    </table>
+        </table>
+    {% endif %}
+    {% endif %}
 </body>
+<script>
+  let calendarData = [];
+
+  fetch("/calendar_data")
+    .then(response => response.json())
+    .then(data => {
+      calendarData = data;
+    });
+
+  document.querySelector('input[name="date"]').addEventListener('change', function () {
+    const selectedDate = this.value.replace(/\D/g, "");
+    const venueSelect = document.querySelector('select[name="venue_id"]');
+    venueSelect.innerHTML = ""; // clear options
+
+    console.log("📅 calendarData sample:", calendarData[0]);
+    const venues = calendarData.filter(entry => entry.date.replace(/\D/g, "") === selectedDate);
+    console.log("選択日:", selectedDate);
+    console.log("該当開催場:", venues);
+
+    if (venues.length === 0) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "該当なし";
+      venueSelect.appendChild(option);
+      return;
+    }
+
+    venues.forEach(entry => {
+      const option = document.createElement("option");
+      option.value = entry.venue_id || entry.venue_code;
+      option.textContent = entry.venue_name;
+      venueSelect.appendChild(option);
+    });
+  });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(function(reg) {
+          console.log("✅ Service Worker registered");
+        }).catch(function(err) {
+          console.log("❌ Service Worker registration failed:", err);
+        });
+    });
+  }
+</script>
 </html>
