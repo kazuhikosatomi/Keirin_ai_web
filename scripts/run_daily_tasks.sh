@@ -1,5 +1,10 @@
 #!/bin/bash
 
+source /Users/satomi/Documents/keirin/venv_shared/bin/activate
+
+LOG_DATE=$(date +%F)
+exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" 2>&1
+
 # 1. オッズのスクレイピング
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/odds/scrape_odds_headless_yesterday.py
 
