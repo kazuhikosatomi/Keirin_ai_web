@@ -27,7 +27,7 @@ con = duckdb.connect(DB_PATH)
 
 # venue_id を含んだ最新のカレンダーCSVを読み込み
 calendar_df = pd.read_csv(
-    "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/calendar/keirin_calendar_with_venue_id.csv",
+    "https://raw.githubusercontent.com/kazuhikosatomi/Keirin_ai_web/main/data/calendar/calendar_all.csv",
     dtype={'venue_id': str}
 )
 
