@@ -41,7 +41,7 @@ def extract_lineinfo_from_html(html):
 
 def extract_result_pairs(text):
     # 成績欄から「初3準1」→ ['初3', '準1'] のように分割
-    return re.findall(r"[^\d\s]+\d+", text)[:4] + [""] * (4 - len(re.findall(r"[^\d\s]+\d+", text)))
+    return re.findall(r"[^\d\s]+\d+", text)[:5] + [""] * (5 - len(re.findall(r"[^\d\s]+\d+", text)))
 
 def fetch_entry_data(url):
     print("✅ fetch_entry_data() 開始")
@@ -187,22 +187,69 @@ def fetch_entry_data(url):
                 "back_number": back_number,
                 "recent_place1": recent_place1,
                 "recent_date1": recent_date1,
-                **{f"recent_result1_{i+1}": r1[i] for i in range(4)},
+                **{f"recent_race1_{i+1}": r1[i] for i in range(5)},
                 "recent_place2": recent_place2,
                 "recent_date2": recent_date2,
-                **{f"recent_result2_{i+1}": r2[i] for i in range(4)},
+                **{f"recent_race2_{i+1}": r2[i] for i in range(5)},
                 "recent_place3": recent_place3,
                 "recent_date3": recent_date3,
-                **{f"recent_result3_{i+1}": r3[i] for i in range(4)},
+                **{f"recent_race3_{i+1}": r3[i] for i in range(5)},
                 "comment": comment,
                 "line_id": line_info["line_id"],
                 "line_pos": line_info["line_pos"]
             })
+        # 欠損している recent_raceX_Y キーを文字列 "nan" で補完
+        for row in data:
+            for prefix in ["recent_race1_", "recent_race2_", "recent_race3_"]:
+                for i in range(1, 6):
+                    key = f"{prefix}{i}"
+                    if key not in row:
+                        row[key] = "nan"
         print("📦 登録選手数:", len(data))
 
+        # --- If you have a section that creates a pandas DataFrame and writes CSV, insert below before export or return ---
+        # Example (add this block before final return df or CSV export):
+        # # Ensure all recent_race columns are string type
+        # recent_race_cols = [col for col in df.columns if col.startswith("recent_race")]
+        # df[recent_race_cols] = df[recent_race_cols].astype(str)
+
+        # If you prepare a DataFrame here and write to CSV, ensure recent_race columns are string type:
+        # For example:
+        # import pandas as pd
+        # df = pd.DataFrame(data)
+        # # Convert all recent_race columns to string type to avoid float64 with NaN
+        # recent_cols = [col for col in df.columns if col.startswith("recent_race")]
+        # df[recent_cols] = df[recent_cols].fillna("").astype(str)
+        # df.to_csv("your_output.csv", index=False)
+
+        import pandas as pd
+        df = pd.DataFrame(data)
+        # Do not replace NaN values here; keep them as empty and modify CSV afterward
+        recent_cols = [col for col in df.columns if col.startswith("recent_race")]
+        df[recent_cols] = df[recent_cols].astype(str)
+        output_path = f"data/entries/{date_str[:4]}/entry_{date_str}.csv"
+        df.to_csv(output_path, index=False)
+
+        # Post-process CSV file to replace empty recent_race fields with "nan"
+        import csv
+        with open(output_path, "r", encoding="utf-8") as f:
+            reader = list(csv.reader(f))
+        header = reader[0]
+        recent_race_indices = [i for i, col in enumerate(header) if col.startswith("recent_race")]
+
+        for row in reader[1:]:
+            for i in recent_race_indices:
+                if row[i].strip() == "":
+                    row[i] = "nan"
+
+        with open(output_path, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerows(reader)
+        print(f"✅ Post-processed empty recent_race fields to 'nan': {output_path}")
+        print(f"✅ Saved: {len(df)} races → {output_path}")
         return {
             "status": "OK",
-            "entries": data,
+            "entries": df.to_dict(orient="records"),
             "meta": {
                 "date": date_str,
                 "place_code": place_code,

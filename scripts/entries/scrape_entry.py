@@ -48,6 +48,10 @@ def main():
             df = None
             if "entries" in result:
                 df = pd.DataFrame(result["entries"])
+                # Ensure all recent_race columns, including dynamically added ones, are string type
+                for col in df.columns:
+                    if col.startswith("recent_race"):
+                        df[col] = df[col].astype(str)
             status_char = "✓" if df is not None and not df.empty else "×"
             print(f" {status_char} R{race_num}", end="", flush=True)
             if "error" in result:
@@ -63,7 +67,8 @@ def main():
         print()
 
     # Load player master
-    player_master_df = pd.read_csv("data/master/player_master.csv", dtype=str).fillna("")
+    master_path = os.path.join(BASE_DIR, "data/master/player_master.csv")
+    player_master_df = pd.read_csv(master_path, dtype=str).fillna("")
 
     # Strip all whitespace (full/half) and take first 5 characters of name_kanji
     def normalize_name(name):

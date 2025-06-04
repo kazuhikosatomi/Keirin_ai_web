@@ -22,7 +22,9 @@
       <label>開催場:</label>
       <select name="venue_id" class="form-control">
         {% for venue in venues %}
-          <option value="{{ venue.venue_id }}">{{ venue.venue_name }}</option>
+          <option value="{{ venue.venue_id }}" {% if venue.venue_id == selected_venue %}selected{% endif %}>
+            {{ venue.venue_name }}
+          </option>
         {% endfor %}
       </select>
 
@@ -47,28 +49,6 @@
       <div style="margin-top: 1em; padding: 0.5em; border: 2px solid red; color: red; font-weight: bold; background-color: #ffeaea; white-space: pre-wrap;">
         ⚠️ {{ result.error }}
       </div>
-    {% endif %}
-
-    {% if result.meta %}
-        <p style="font-weight: bold; font-size: 15px;">
-          荒れ度スコア（予測）:
-          <span id="araredo-score">取得中...</span>
-        </p>
-        <script>
-          const url = `/araredo_predict?date={{ result.meta.date }}&venue_id={{ result.meta.place_code }}&race={{ result.meta.race_num }}`;
-          console.log("🔍 荒れ度取得URL:", url);
-
-          fetch(url)
-            .then(response => response.json())
-            .then(data => {
-              console.log("✅ 取得結果:", data);
-              document.getElementById('araredo-score').textContent = data.araredo_score ?? "取得失敗";
-            })
-            .catch(error => {
-              console.error("❌ fetchエラー:", error);
-              document.getElementById('araredo-score').textContent = "取得失敗";
-            });
-        </script>
     {% endif %}
 
     {% if result %}
@@ -111,6 +91,26 @@
             </tr>
             {% endfor %}
         </table>
+        <h2>展開予想（ライン別：車番のみ表示）</h2>
+        <div style="display: flex; flex-direction: column; gap: 1em;">
+          {% set grouped = {} %}
+          {% for r in result.entries %}
+            {% set _ = grouped.setdefault(r.line_id, []).append(r) %}
+          {% endfor %}
+
+          {% for line_id, members in grouped.items() %}
+            <div>
+              <strong>ライン {{ line_id }}</strong>
+              <div style="display: flex; gap: 10px; margin-top: 5px;">
+                {% for r in members | sort(attribute='line_pos') %}
+                  <div style="width: 36px; height: 36px; border-radius: 50%; background-color: lightgray; line-height: 36px; text-align: center; font-weight: bold;">
+                    {{ r.car_number }}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
     {% endif %}
     {% endif %}
 </body>

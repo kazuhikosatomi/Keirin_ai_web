@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import datetime
+import pandas as pd
 
 def should_send_today():
     return datetime.datetime.now().weekday() != 2  # 水曜スキップ
@@ -14,9 +15,25 @@ headers = {
     "Content-Type": "application/json"
 }
 
+today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+predict_file = f"output/predict/predicted_rank_{today_str}.csv"
+
+if os.path.exists(predict_file):
+    df = pd.read_csv(predict_file)
+    top3 = df.sort_values("predicted_rank").groupby(["date", "venue_id", "race_no"]).head(1)
+    top3 = top3.sort_values("predicted_rank").head(3)
+
+    lines = []
+    for row in top3.itertuples():
+        lines.append(f"・{row.venue_name} {int(row.race_no)}R：{int(row.car_no)} {row.name_kanji}")
+    detail_url = f"https://keirin-ai.example.com/{today_str}"
+    message_text = f"【{today_str} AI予測】\n🏆 本命予想（1着）\n\n" + "\n".join(lines) + f"\n\n詳細👇\n{detail_url}"
+else:
+    message_text = f"{today_str} の予測結果ファイルが見つかりませんでした。"
+
 message = {
     "type": "text",
-    "text": "✅ アタルくんからの通知が届いたよ！"
+    "text": message_text
 }
 
 if should_send_today():

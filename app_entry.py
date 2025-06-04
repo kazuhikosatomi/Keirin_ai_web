@@ -4,9 +4,7 @@ import os
 
 app = Flask(__name__)
 
-ENTRY_CSV_PATH = "data/entries/2025/entry_2025-06-01.csv"
-
-# 将来のために DuckDB から読み込むコード（コメントアウトで保持）
+# 🚫 以下の DuckDB 取得処理は今後も保持すること（消さないこと）🚫
 # import gdown
 # GOOGLE_FILE_ID = "17_O_DDKSqIl7ubluncZvtrMxeOLsAVSI"
 # OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "db", "keirin_data.duckdb")
@@ -15,6 +13,8 @@ ENTRY_CSV_PATH = "data/entries/2025/entry_2025-06-01.csv"
 #     url = f"https://drive.google.com/uc?id={GOOGLE_FILE_ID}"
 #     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
 #     gdown.download(url, OUTPUT_PATH, quiet=False)
+
+ENTRY_CSV_PATH = "data/entries/2025/entry_2025-06-01.csv"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -75,8 +75,24 @@ def index():
     if os.path.exists(ENTRY_CSV_PATH):
         try:
             all_df = pd.read_csv(ENTRY_CSV_PATH, dtype=str)
-            venues_df = all_df[["venue_id", "venue_name"]].drop_duplicates()
-            venues = venues_df.to_dict(orient="records")
+            all_df["venue_id"] = all_df["venue_id"].str.strip().str.zfill(2)
+            venues_df = all_df[["venue_id"]].drop_duplicates()
+
+            VENUE_NAME_MAP = {
+                "11": "函館", "12": "青森", "13": "いわき平", "21": "弥彦", "22": "前橋", "23": "取手", "24": "宇都宮",
+                "25": "大宮", "26": "西武園", "27": "京王閣", "28": "立川", "31": "松戸", "32": "千葉", "34": "川崎",
+                "35": "平塚", "36": "小田原", "37": "伊東", "38": "静岡", "42": "名古屋", "43": "岐阜", "44": "大垣",
+                "45": "豊橋", "46": "富山", "47": "松阪", "48": "四日市", "51": "福井", "53": "奈良", "54": "向日町",
+                "55": "和歌山", "56": "岸和田", "61": "玉野", "62": "広島", "63": "防府", "71": "高松", "73": "小松島",
+                "74": "高知", "75": "松山", "81": "小倉", "83": "久留米", "84": "武雄", "85": "佐世保", "86": "別府", "87": "熊本"
+            }
+
+            venues = []
+            for vid in venues_df["venue_id"]:
+                venues.append({
+                    "venue_id": vid,
+                    "venue_name": VENUE_NAME_MAP.get(vid, f"会場{vid}")
+                })
         except Exception:
             venues = []
 
@@ -84,3 +100,48 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=False, port=5050)
+VENUE_NAME_MAP = {
+    "11": "函館",
+    "12": "青森",
+    "13": "いわき平",
+    "21": "弥彦",
+    "22": "前橋",
+    "23": "取手",
+    "24": "宇都宮",
+    "25": "大宮",
+    "26": "西武園",
+    "27": "京王閣",
+    "28": "立川",
+    "31": "松戸",
+    "32": "千葉",
+    "34": "川崎",
+    "35": "平塚",
+    "36": "小田原",
+    "37": "伊東",
+    "38": "静岡",
+    "42": "名古屋",
+    "43": "岐阜",
+    "44": "大垣",
+    "45": "豊橋",
+    "46": "富山",
+    "47": "松阪",
+    "48": "四日市",
+    "51": "福井",
+    "53": "奈良",
+    "54": "向日町",
+    "55": "和歌山",
+    "56": "岸和田",
+    "61": "玉野",
+    "62": "広島",
+    "63": "防府",
+    "71": "高松",
+    "73": "小松島",
+    "74": "高知",
+    "75": "松山",
+    "81": "小倉",
+    "83": "久留米",
+    "84": "武雄",
+    "85": "佐世保",
+    "86": "別府",
+    "87": "熊本"
+}
