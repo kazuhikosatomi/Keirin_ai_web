@@ -12,3 +12,4 @@ __pycache__/
 .DS_Storelogs/
 scripts/cron/send_slack.sh
 scripts/cron/send_slack.sh
+scripts/cron/send_slack.sh
