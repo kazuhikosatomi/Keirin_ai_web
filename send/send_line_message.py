@@ -5,7 +5,7 @@ import datetime
 import pandas as pd
 
 def should_send_today():
-    return datetime.datetime.now().weekday() != 2  # 水曜スキップ
+    return datetime.datetime.now().weekday() != 2  # 水曜スキップ（今は仮）
 
 ACCESS_TOKEN = os.environ.get("LINE_TOKEN")
 USER_IDS = os.environ.get("LINE_USER_IDS", "").split(";")
