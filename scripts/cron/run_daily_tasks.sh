@@ -2,6 +2,8 @@
 
 source /Users/satomi/Documents/keirin/venv_shared/bin/activate
 
+YESTERDAY=$(date -v-1d "+%Y-%m-%d")
+
 LOG_DATE=$(date +%F)
 echo "=== run_daily_tasks.sh started at $(date '+%Y-%m-%d %H:%M:%S') ==="
 exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" 2>&1
@@ -27,19 +29,19 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
   && echo "[OK] append today entry to DuckDB completed" || echo "[FAIL] append today entry to DuckDB failed"
 
 # 6. Slack通知
-if tail -n 50 "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" | grep -q "\[FAIL\]"; then
-  /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/cron/send_slack.sh "❌ 競輪タスク失敗あり: ${LOG_DATE}"
-else
-  /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/cron/send_slack.sh "✅ 競輪タスク成功: ${LOG_DATE}"
-fi
+#if tail -n 50 "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" | grep -q "\[FAIL\]"; then
+#  /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/cron/send_slack.sh "❌ 競輪タスク失敗あり: ${LOG_DATE}"
+#else
+#  /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/cron/send_slack.sh "✅ 競輪タスク成功: ${LOG_DATE}"
+#fi
 
 ###############################################################################
 # 7. 学習データ生成（前日まで）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/train/generate_train_racer_level.py --until $(date -v-1d "+%Y-%m-%d") \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/train/generate_train_racer_level.py --start_date 2025-01-01 --end_date $YESTERDAY \
   && echo "[OK] train racer level data generated" || echo "[FAIL] train racer level generation failed"
 
 # 8. モデル学習（前日まで）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/train/train_rank_model.py --train_until $(date -v-1d "+%Y-%m-%d") \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/train/train_rank_model.py --train_until "$YESTERDAY" \
   && echo "[OK] rank model training completed" || echo "[FAIL] rank model training failed"
 
 # 9. 特徴量生成（当日）
@@ -52,5 +54,3 @@ fi
 ###############################################################################
 
 echo "=== run_daily_tasks.sh ended at $(date '+%Y-%m-%d %H:%M:%S') ==="
-
-

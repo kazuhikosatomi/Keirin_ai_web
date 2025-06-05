@@ -8,7 +8,7 @@ def predict(date):
     # パス設定
     model_path = "models/rank_predict_model.pkl"
     feature_path = f"data/train/predict_features_{date}.csv"
-    output_path = f"data/train.predicted_rank_{date}.csv"
+    output_path = f"output/predict/train.predicted_rank_{date}.csv"
 
     # モデルと特徴量の読み込み
     model = joblib.load(model_path)
