@@ -52,11 +52,10 @@ def main():
                 for col in df.columns:
                     if col.startswith("recent_race"):
                         df[col] = df[col].astype(str)
-            status_char = "✓" if df is not None and not df.empty else "×"
-            print(f" {status_char} R{race_num}", end="", flush=True)
+            entries = result.get("entries", [])
+            print(f"  R{race_num}: {len(entries)}人", end=" ", flush=True)
             if "error" in result:
                 continue
-            entries = result.get("entries", [])
             if not entries:
                 continue
             for entry in entries:
