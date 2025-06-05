@@ -16,7 +16,7 @@ headers = {
 }
 
 today_str = datetime.datetime.now().strftime("%Y-%m-%d")
-predict_file = f"output/predict/predicted_rank_{today_str}.csv"
+predict_file = f"output/predict/train.predicted_rank_{today_str}.csv"
 
 if os.path.exists(predict_file):
     df = pd.read_csv(predict_file)
