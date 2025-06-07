@@ -1,6 +1,9 @@
 #!/bin/bash
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-source /Users/satomi/Documents/keirin/venv_shared/bin/activate
+
+. /Users/satomi/Documents/keirin/venv_shared/bin/activate
+cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 
 YESTERDAY=$(date -v-1d "+%Y-%m-%d")
 TODAY=$(date "+%Y-%m-%d")
@@ -22,7 +25,7 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
   && echo "[OK] append to DuckDB completed" || echo "[FAIL] append to DuckDB failed"
 
 # 4. 出走表のスクレイピング（当日を引数に指定）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry.py $(date +\%F) \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today.py "$TODAY" \
   && echo "[OK] entry scrape completed" || echo "[FAIL] entry scrape failed"
 
 # 5. 出走表のDB登録
@@ -30,8 +33,13 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
   && echo "[OK] append today entry to DuckDB completed" || echo "[FAIL] append today entry to DuckDB failed"
 
 ###############################################################################
+/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
+cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
+mkdir -p data/train
+###############################################################################
+
 # 6. 学習データ生成（前日まで）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/train/generate_train_racer_level.py --start_date 2025-01-01 --end_date $YESTERDAY \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/train/generate_train_racer_level.py --start_date 2015-01-01 --end_date $YESTERDAY \
   && echo "[OK] train racer level data generated" || echo "[FAIL] train racer level generation failed"
 
 # 7. モデル学習（前日まで）

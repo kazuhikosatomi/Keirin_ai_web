@@ -3,6 +3,7 @@ import requests
 import json
 import datetime
 import pandas as pd
+import pytz
 
 def should_send_today():
     return datetime.datetime.now().weekday() != 2  # 水曜スキップ（今は仮）
@@ -15,7 +16,9 @@ headers = {
     "Content-Type": "application/json"
 }
 
-today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+import pytz
+jst = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
+today_str = jst.strftime("%Y-%m-%d")
 
 predict_file = f"output/predict/train.predicted_rank_{today_str}.csv"
 

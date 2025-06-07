@@ -11,7 +11,7 @@ def parse_args():
     return parser.parse_args()
 
 def load_results_in_range(start_date, end_date):
-    result_files = sorted(glob("data/results/2025/results_2025-*.csv"))
+    result_files = sorted(glob("data/results/*/results_*.csv"))
     all_dfs = []
     for file in result_files:
         date_str = os.path.basename(file).split("_")[1].split(".")[0]

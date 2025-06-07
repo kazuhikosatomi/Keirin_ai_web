@@ -1,10 +1,5 @@
 import re
 import os
-import sys
-class DevNull:
-    def write(self, msg): pass
-    def flush(self): pass
-sys.stderr = DevNull()
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -12,6 +7,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+
+import sys
+
+# suppress chromedriver warnings (stdout/stderr)
+class DevNull:
+    def write(self, msg): pass
+    def flush(self): pass
+
+sys.stderr = DevNull()  # これでstderrへの出力（Chromedriverの警告）を抑制
 
 def extract_lineinfo_from_html(html):
     soup = BeautifulSoup(html, "html.parser")
