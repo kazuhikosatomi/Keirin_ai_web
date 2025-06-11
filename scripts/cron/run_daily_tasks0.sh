@@ -13,24 +13,24 @@ echo "=== run_daily_tasks.sh started at $(date '+%Y-%m-%d %H:%M:%S') ==="
 exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" 2>&1
 
 # 1. オッズのスクレイピング
-#/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/odds/scrape_odds_headless_yesterday.py \
-#  && echo "[OK] odds scrape completed" || echo "[FAIL] odds scrape failed"
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/odds/scrape_odds_headless_yesterday.py \
+  && echo "[OK] odds scrape completed" || echo "[FAIL] odds scrape failed"
 
 # 2. 結果のスクレイピング
-#/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/results/scrape_results_headless_yesterday.py \
-#  && echo "[OK] results scrape completed" || echo "[FAIL] results scrape failed"
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/results/scrape_results_headless_yesterday.py \
+  && echo "[OK] results scrape completed" || echo "[FAIL] results scrape failed"
 
 # 3. odds + results のDB登録
-#/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_yesterday_to_duckdb.py \
-#  && echo "[OK] append to DuckDB completed" || echo "[FAIL] append to DuckDB failed"
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_yesterday_to_duckdb.py \
+  && echo "[OK] append to DuckDB completed" || echo "[FAIL] append to DuckDB failed"
 
 # 4. 出走表のスクレイピング（当日を引数に指定）
-#/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today.py "$TODAY" \
-#  && echo "[OK] entry scrape completed" || echo "[FAIL] entry scrape failed"
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today.py "$TODAY" \
+  && echo "[OK] entry scrape completed" || echo "[FAIL] entry scrape failed"
 
 # 5. 出走表のDB登録
-#/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_today_entry_to_duckdb.py \
-#  && echo "[OK] append today entry to DuckDB completed" || echo "[FAIL] append today entry to DuckDB failed"
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_today_entry_to_duckdb.py \
+  && echo "[OK] append today entry to DuckDB completed" || echo "[FAIL] append today entry to DuckDB failed"
 
 ###############################################################################
 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
