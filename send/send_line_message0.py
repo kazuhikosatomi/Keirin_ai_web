@@ -6,7 +6,7 @@ import pandas as pd
 import pytz
 
 def should_send_today():
-    return datetime.datetime.now().weekday() != 2  # 水曜スキップ（今は仮）
+    return True  # 毎日送信に変更
 
 ACCESS_TOKEN = os.environ.get("LINE_TOKEN")
 USER_IDS = os.environ.get("LINE_USER_IDS", "").split(";")
@@ -20,7 +20,7 @@ import pytz
 jst = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
 today_str = jst.strftime("%Y-%m-%d")
 
-predict_file = f"output/predict/train.predicted_rank_{today_str}.csv"
+predict_file = f"output/predict/final_prediction_{today_str}.csv"
 
 
 if os.path.exists(predict_file):
@@ -33,7 +33,12 @@ if os.path.exists(predict_file):
 
     # 各レースでスコアを合計
     grouped = valid_races.groupby(["date", "venue_id", "venue_name", "race_no"])
-    race_scores = grouped["predicted_score"].sum().reset_index(name="total_score")
+    score_col = "predicted_score"
+    if score_col not in valid_races.columns:
+        score_candidates = [col for col in valid_races.columns if "score" in col]
+        if score_candidates:
+            score_col = score_candidates[0]  # 最初に見つかった候補を使用
+    race_scores = grouped[score_col].sum().reset_index(name="total_score")
 
     # 上位3レース抽出
     top3_races = race_scores.sort_values("total_score", ascending=False).head(3)
@@ -50,10 +55,16 @@ if os.path.exists(predict_file):
         names = "-".join(racers["name_kanji"])
         lines.append(f"・{race['venue_name']} {int(race['race_no'])}R：{car_nos}（{names}） [Score: {race['total_score']:.2f}]")
 
+    if not lines:
+        print("⚠️ 有効な2車単候補が見つかりませんでした。")
+    else:
+        print("✅ 通知メッセージを作成しました。")
+
     detail_url = f"https://keirin-ai.example.com/{today_str}"
     message_text = f"【{today_str} AI予測】\n🎯 本日の注目2車単予想\n\n" + "\n".join(lines) + f"\n\n🔗 詳細：{detail_url}"
 else:
     message_text = f"{today_str} の予測結果ファイルが見つかりませんでした。"
+    print(message_text)
 
 message = {
     "type": "text",
@@ -61,8 +72,10 @@ message = {
 }
 
 if should_send_today():
+    print("📦 メッセージ内容:\n" + message_text)
     for user_id in USER_IDS:
         if not user_id.strip():
+            print("⚠️ USER_IDが設定されていません。")
             continue
         payload = {
             "to": user_id.strip(),
