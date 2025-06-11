@@ -41,19 +41,23 @@ if os.path.exists(predict_file):
     race_scores = grouped[score_col].sum().reset_index(name="total_score")
 
     # 上位3レース抽出
-    top3_races = race_scores.sort_values("total_score", ascending=False).head(3)
+    top_races = race_scores.sort_values("total_score", ascending=True).head(3)
 
     lines = []
-    for _, race in top3_races.iterrows():
+    for _, race in top_races.iterrows():
         racers = valid_races[
             (valid_races["date"] == race["date"]) &
             (valid_races["venue_id"] == race["venue_id"]) &
             (valid_races["race_no"] == race["race_no"])
         ].sort_values("predicted_rank")
 
-        car_nos = "-".join(str(int(c)) for c in racers["car_no"])
-        names = "-".join(racers["name_kanji"])
-        lines.append(f"・{race['venue_name']} {int(race['race_no'])}R：{car_nos}（{names}） [Score: {race['total_score']:.2f}]")
+        car_nos = [str(int(c)) for c in racers["car_no"]]
+        names = list(racers["name_kanji"])
+        # 修正後のメッセージ行追加
+        lines.append(f"{race['venue_name']} {int(race['race_no'])}R：{car_nos[0]}-{car_nos[1]}")
+        lines.append(f"{names[0]}-{names[1]}")
+        lines.append(f"Score: {race['total_score']:.2f}")
+        lines.append("")  # 空行を追加して見やすくする
 
     if not lines:
         print("⚠️ 有効な2車単候補が見つかりませんでした。")
@@ -61,7 +65,7 @@ if os.path.exists(predict_file):
         print("✅ 通知メッセージを作成しました。")
 
     detail_url = f"https://keirin-ai.example.com/{today_str}"
-    message_text = f"【{today_str} AI予測】\n🎯 本日の注目2車単予想\n\n" + "\n".join(lines) + f"\n\n🔗 詳細：{detail_url}"
+    message_text = f"【{today_str} AI予測】\n🎯 本日の注目2車単予想\n\n" + "\n".join(lines) + f"\n🔗 詳細：{detail_url}"
 else:
     message_text = f"{today_str} の予測結果ファイルが見つかりませんでした。"
     print(message_text)
