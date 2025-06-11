@@ -60,12 +60,20 @@ PREDICTED_RANK_FILE="output/predict/train.predicted_rank_${TODAY}.csv"
 if [ -f "$PREDICTED_RANK_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
-  git pull origin main --rebase
-  git add "$PREDICTED_RANK_FILE"
-  git commit -m "🤖 Predict result for ${TODAY}"
-  git push origin main \
-    && echo "✅ predict result committed to GitHub" \
-    || echo "❌ predict result commit failed"
+
+  # 変更があるか確認してからコミット処理を行う
+  git status --porcelain | grep -q . && {
+    git add "$PREDICTED_RANK_FILE"
+    git commit -m "🤖 Predict result for ${TODAY}"
+    
+    # GitHubへのpush（認証情報が必要な環境では失敗する可能性あり）
+    if git push origin main; then
+      echo "✅ predict result committed to GitHub"
+    else
+      echo "❌ predict result push failed"
+      echo "[FAIL] predict result push failed"
+    fi
+  } || echo "[SKIP] No changes to commit"
 else
   echo "[SKIP] predict result file not found: $PREDICTED_RANK_FILE"
 fi

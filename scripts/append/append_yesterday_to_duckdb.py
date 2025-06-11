@@ -56,19 +56,3 @@ else:
 
 con.close()
 print("✅ DuckDBへの追記が完了しました")
-
-log_dir = os.path.join(script_dir, "../../logs")
-os.makedirs(log_dir, exist_ok=True)
-log_date = datetime.now().strftime("%Y-%m-%d")
-log_path = os.path.join(log_dir, f"append_daily_{log_date}.log")
-with open(log_path, "a") as log_file:
-    log_file.write("✅ DuckDBへの追記が完了しました\n")
-
-import time
-for filename in os.listdir(log_dir):
-    if filename.startswith("append_daily_") and filename.endswith(".log"):
-        filepath = os.path.join(log_dir, filename)
-        if os.path.isfile(filepath):
-            file_mtime = os.path.getmtime(filepath)
-            if time.time() - file_mtime > 30 * 86400:
-                os.remove(filepath)
