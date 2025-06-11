@@ -4,6 +4,7 @@ import json
 import datetime
 import pandas as pd
 import pytz
+import re
 
 def should_send_today():
     return True  # 毎日送信に変更
@@ -53,9 +54,12 @@ if os.path.exists(predict_file):
 
         car_nos = [str(int(c)) for c in racers["car_no"]]
         names = list(racers["name_kanji"])
+        # 正規化処理を追加
+        name1 = re.sub(r'\s+', ' ', names[0].strip())
+        name2 = re.sub(r'\s+', ' ', names[1].strip())
         # 修正後のメッセージ行追加
         lines.append(f"{race['venue_name']} {int(race['race_no'])}R：{car_nos[0]}-{car_nos[1]}")
-        lines.append(f"{names[0]}-{names[1]}")
+        lines.append(f"{name1}-{name2}")
         lines.append(f"Score: {race['total_score']:.2f}")
         lines.append("")  # 空行を追加して見やすくする
 
