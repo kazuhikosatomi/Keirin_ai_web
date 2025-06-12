@@ -16,12 +16,15 @@ def main(target_date):
     # 必要な列だけ抽出
     expected_columns = [
         "date", "venue_id", "race_no",
-        "predicted_rank", "car_no", "name_kanji", "predicted_score"
+        "predicted_rank", "car_no", "name_kanji", "predicted_score", "grade"
     ]
 
     # predicted_scoreを小数第2位の文字列に変換、predicted_rankは整数に
     df["predicted_score"] = df["predicted_score"].apply(lambda x: f"{float(x):.2f}")
     df["predicted_rank"] = df["predicted_rank"].round().astype(int)
+
+    if "grade" not in df.columns:
+        df["grade"] = ""
 
     df_final = df[expected_columns].copy()
 
@@ -35,7 +38,7 @@ def main(target_date):
     df_final = df_final.merge(venue_master[["venue_id", "venue_name"]], on="venue_id", how="left")
     final_columns = [
         "date", "venue_id", "venue_name", "race_no",
-        "predicted_rank", "car_no", "name_kanji", "predicted_score"
+        "predicted_rank", "car_no", "name_kanji", "predicted_score", "grade"
     ]
     df_final = df_final[final_columns]
 
