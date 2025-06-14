@@ -9,7 +9,6 @@ import re
 
 # argparseによるコマンドライン引数処理
 parser = argparse.ArgumentParser()
-parser.add_argument('--message', type=str, required=True)
 parser.add_argument('--dryrun', action='store_true', help='LINEには送らず、printだけする')
 args = parser.parse_args()
 
@@ -167,7 +166,6 @@ else:
     message_text = f"{today_str} の予測結果ファイルが見つかりませんでした。"
     print(message_text)
 
-# メッセージ確認
 print("📨 送信メッセージ:")
 print(message_text)
 
