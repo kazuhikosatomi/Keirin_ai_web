@@ -26,5 +26,5 @@ jobs:
           LINE_USER_IDS: ${{ secrets.LINE_USER_IDS }}
         run: |
           echo "🔔 Start LINE notify script"
-          python send/send_line_message.py
+          python send/send_line_message0.py
           echo "✅ LINE notify script finished"
