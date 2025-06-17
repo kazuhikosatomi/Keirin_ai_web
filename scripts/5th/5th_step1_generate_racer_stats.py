@@ -6,23 +6,16 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--date", type=str, required=True, help="Target date in YYYY-MM-DD format")
 args = parser.parse_args()
 target_date = pd.to_datetime(args.date)
-start_date = target_date - pd.DateOffset(years=3)
+target_year = target_date.year
 
 # 結果格納用リスト
 all_results = []
-base_folder = Path("data/results")
-for year_folder in sorted(base_folder.glob("*")):
-    if not year_folder.is_dir():
-        continue
-    for file in sorted(year_folder.glob("results_*.csv")):
-        file_date_str = file.stem.split("_")[-1]
-        try:
-            file_date = pd.to_datetime(file_date_str)
-            if start_date <= file_date < target_date:
-                df = pd.read_csv(file)
-                all_results.append(df)
-        except Exception:
-            continue
+
+folder = Path(f"data/results/{target_year}")
+csv_files = folder.glob("*.csv")
+for file in csv_files:
+    df = pd.read_csv(file)
+    all_results.append(df)
 
 # 全部まとめて連結
 results_df = pd.concat(all_results, ignore_index=True)
@@ -50,7 +43,7 @@ agg = results_df.groupby("racer_id").agg(
 ).reset_index()
 
 # 保存
-output_path = f"data/4th/tmp/step1_racer_stats.csv"
+output_path = f"data/5th/tmp/step1_racer_stats.csv"
 Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 agg.to_csv(output_path, index=False)
 print(f"📤 上書き保存: {output_path}")

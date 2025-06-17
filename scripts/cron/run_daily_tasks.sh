@@ -45,6 +45,10 @@ mkdir -p data/train
 # 6-9b. モデル実行（run_backtest_predict_trio.py）
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_backtest_predict_trio.py --start "$TODAY" --end "$TODAY" \
   && echo "[OK] run_backtest_predict_trio.py completed" || echo "[FAIL] run_backtest_predict_trio.py failed"
+
+# 6-9c. モデル実行（run_backtest_predict_arare.py）
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/5th/run_backtest_predict_arare.py --start "$TODAY" --end "$TODAY" \
+  && echo "[OK] run_backtest_predict_arare.py completed" || echo "[FAIL] run_backtest_predict_arare.py failed"
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット
@@ -88,6 +92,26 @@ if [ -f "$FINAL_PREDICTION_TRIO_FILE" ]; then
   } || echo "[SKIP] No TRIO changes to commit"
 else
   echo "[SKIP] final TRIO prediction file not found: $FINAL_PREDICTION_TRIO_FILE"
+fi
+
+FINAL_PREDICTION_ARARE_FILE="output/predict/5th/final_prediction_arare_${TODAY}.csv"
+if [ -f "$FINAL_PREDICTION_ARARE_FILE" ]; then
+  git config --global user.name "GitHub Actions"
+  git config --global user.email "actions@github.com"
+
+  git status --porcelain | grep -q . && {
+    git add "$FINAL_PREDICTION_ARARE_FILE"
+    git commit -m "🤖 Final ARARE prediction result for ${TODAY}"
+
+    if git push origin main; then
+      echo "✅ final ARARE prediction result committed to GitHub"
+    else
+      echo "❌ final ARARE prediction result push failed"
+      echo "[FAIL] final ARARE prediction result push failed"
+    fi
+  } || echo "[SKIP] No ARARE changes to commit"
+else
+  echo "[SKIP] final ARARE prediction file not found: $FINAL_PREDICTION_ARARE_FILE"
 fi
 
 # 11. Slack通知

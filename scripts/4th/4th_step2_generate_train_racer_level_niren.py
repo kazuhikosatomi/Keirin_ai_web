@@ -11,12 +11,18 @@ RESULTS_DIR = Path("data/results")
 RACER_STATS_PATH = Path("data/4th/tmp/step1_racer_stats.csv")
 OUTPUT_PATH = Path("data/4th/tmp/step2_train_racer_level.csv")
 
-# 2015〜2019年のresults CSVを読み込み
+# 2015年から基準日前日までのresults CSVのみ読み込み
 dfs = []
-for year in range(2015, 2020):
+current_date = datetime.strptime(date, "%Y-%m-%d")
+cutoff_date = current_date - timedelta(days=1)
+start_date = cutoff_date - timedelta(days=365*3)
+for year in range(2015, cutoff_date.year + 1):
     for file in sorted((RESULTS_DIR / str(year)).glob("results_*.csv")):
-        df = pd.read_csv(file)
-        dfs.append(df)
+        file_date_str = file.stem.split("_")[-1]
+        file_date = datetime.strptime(file_date_str, "%Y-%m-%d")
+        if start_date <= file_date <= cutoff_date:
+            df = pd.read_csv(file)
+            dfs.append(df)
 
 # 結合・整形
 df_all = pd.concat(dfs, ignore_index=True)
