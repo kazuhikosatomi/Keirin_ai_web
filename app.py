@@ -32,7 +32,7 @@ import os
 
 @app.route("/download_userids")
 def download_userids():
-    filepath = "line_user_ids.csv"
+    filepath = "data/line_user_ids.csv"
     if os.path.exists(filepath):
         return send_file(filepath, as_attachment=True)
     else:
