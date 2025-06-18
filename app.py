@@ -19,7 +19,7 @@ def webhook():
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                 # 保存（重複チェックや改行処理は必要に応じて）
-                with open("line_user_ids.csv", "a") as f:
+                with open("data/line_user_ids.csv", "a") as f:
                     f.write(f"{user_id},{timestamp},{message}\n")
 
                 print(f"✅ userId 取得: {user_id} | msg: {message}")
