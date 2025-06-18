@@ -9,6 +9,7 @@ app = Flask(__name__)
 @app.route("/webhook", methods=["POST"])
 def webhook():
     body = request.get_data(as_text=True)
+    print("📨 Webhook受信:", body)
     try:
         events = json.loads(body).get("events", [])
         for event in events:
