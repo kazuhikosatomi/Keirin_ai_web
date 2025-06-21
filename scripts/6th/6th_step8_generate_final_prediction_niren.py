@@ -20,7 +20,7 @@ def main(target_date):
     ]
 
     # predicted_scoreを小数第2位の文字列に変換、predicted_rankは整数に
-    df["predicted_score"] = df["predicted_score"].apply(lambda x: f"{float(x):.2f}")
+    df["predicted_score"] = df["predicted_score"].apply(lambda x: "{:.2f}".format(float(x)))
     df["predicted_rank"] = df["predicted_rank"].round().astype(int)
 
     if "grade" not in df.columns:

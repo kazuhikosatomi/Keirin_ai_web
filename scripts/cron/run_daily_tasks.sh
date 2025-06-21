@@ -161,6 +161,18 @@ INDEX_HTML_PATH="./docs/index.html"
 sed -i '' -E "s|href=\"./predict/pdf/6th/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/6th/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
 sed -i '' -E "s|PDFを開く（.*）|PDFを開く（${TODAY_JP}）|g" "${INDEX_HTML_PATH}"
 
+if git status --porcelain | grep -q 'docs/index.html'; then
+  git add docs/index.html
+  git commit -m "🌐 Update index.html with today's prediction link (${TODAY})"
+  if git push origin main; then
+    echo "✅ index.html pushed to GitHub"
+  else
+    echo "❌ index.html push failed"
+  fi
+else
+  echo "[SKIP] index.html has no changes"
+fi
+
 echo "=== run_daily_tasks.sh ended at $(date '+%Y-%m-%d %H:%M:%S') ==="
 
 # 12. Slack通知
