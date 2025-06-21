@@ -27,7 +27,7 @@ import pytz
 jst = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
 today_str = jst.strftime("%Y-%m-%d")
 
-predict_file = f"output/predict/4th/final_prediction_niren_{today_str}.csv"
+predict_file = f"output/predict/csv/6th/final_prediction_niren_{today_str}.csv"
 
 
 if os.path.exists(predict_file):
@@ -160,7 +160,7 @@ if os.path.exists(predict_file):
     else:
         print("✅ 通知メッセージを作成しました。")
 
-    detail_url = f"https://keirin-ai.example.com/{today_str}"
+    detail_url = "https://kazuhikosatomi.github.io/Keirin_ai_web/"
     message_text = f"【{today_str} AI予測】\n\n" + "\n".join(lines) + f"\n🔗 詳細：{detail_url}"
 else:
     message_text = f"{today_str} の予測結果ファイルが見つかりませんでした。"
