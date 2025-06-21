@@ -39,20 +39,20 @@ mkdir -p data/train
 ###############################################################################
 
 # 6-9. モデル実行（run_backtest_predict_niren.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_backtest_predict_niren.py --start "$TODAY" --end "$TODAY" \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/6th/run_daily_predict_niren.py \
   && echo "[OK] run_backtest_predict_niren.py completed" || echo "[FAIL] run_backtest_predict_niren.py failed"
 
 # 6-9b. モデル実行（run_backtest_predict_trio.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_backtest_predict_trio.py --start "$TODAY" --end "$TODAY" \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_daily_predict_trio.py  \
   && echo "[OK] run_backtest_predict_trio.py completed" || echo "[FAIL] run_backtest_predict_trio.py failed"
 
 # 6-9c. モデル実行（run_backtest_predict_arare.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/5th/run_backtest_predict_arare.py --start "$TODAY" --end "$TODAY" \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/5th/run_daily_predict_arare.py \
   && echo "[OK] run_backtest_predict_arare.py completed" || echo "[FAIL] run_backtest_predict_arare.py failed"
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット
-FINAL_PREDICTION_FILE="output/predict/4th/final_prediction_niren_${TODAY}.csv"
+FINAL_PREDICTION_FILE="output/predict/csv/6th/final_prediction_niren_${TODAY}.csv"
 if [ -f "$FINAL_PREDICTION_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
@@ -72,6 +72,23 @@ if [ -f "$FINAL_PREDICTION_FILE" ]; then
   } || echo "[SKIP] No changes to commit"
 else
   echo "[SKIP] final prediction file not found: $FINAL_PREDICTION_FILE"
+fi
+
+FINAL_PREDICTION_PDF="output/predict/pdf/6th/final_prediction_niren_${TODAY}.pdf"
+if [ -f "$FINAL_PREDICTION_PDF" ]; then
+  git status --porcelain | grep -q . && {
+    git add "$FINAL_PREDICTION_PDF"
+    git commit -m "📄 Final prediction PDF for ${TODAY}"
+
+    if git push origin main; then
+      echo "✅ final prediction PDF committed to GitHub"
+    else
+      echo "❌ final prediction PDF push failed"
+      echo "[FAIL] final prediction PDF push failed"
+    fi
+  } || echo "[SKIP] No PDF changes to commit"
+else
+  echo "[SKIP] final prediction PDF file not found: $FINAL_PREDICTION_PDF"
 fi
 
 FINAL_PREDICTION_TRIO_FILE="output/predict/4th/final_prediction_trio_${TODAY}.csv"
