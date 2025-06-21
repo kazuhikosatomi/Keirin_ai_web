@@ -138,14 +138,17 @@ ARCHIVE_HTML="docs/archive.html"
 
 if [ -f "$YESTERDAY_FILE" ]; then
   # 日付形式を変換（例: 2025-06-20 → 2025年6月20日）
-  JP_DATE=$(date -jf "%Y-%m-%d" "$YESTERDAY" "+%Y年%-m月%-d日")
-
+  #JP_DATE=$(date -jf "%Y-%m-%d" "$YESTERDAY" "+%Y年%-m月%-d日")
+  JP_DATE="${YESTERDAY} の予想"
   # すでにリンクが存在しない場合のみ追記
   if ! grep -q "$YESTERDAY_FILE" "$ARCHIVE_HTML"; then
-    sed -i '' "/<!-- ARCHIVE_INSERT_POINT -->/a\\
-    <li><a href=\"predict/pdf/6th/final_prediction_niren_${YESTERDAY}.pdf\">${JP_DATE}</a></li>
-    " "$ARCHIVE_HTML"
-    echo "✅ アーカイブに ${YESTERDAY} のPDFリンクを追加しました"
+    INSERT_LINE="    <li><a href=\"predict/pdf/6th/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
+    awk -v insert="$INSERT_LINE" '/<!-- ARCHIVE_INSERT_POINT -->/ {
+        print;
+        print insert;
+        next
+    }1' "$ARCHIVE_HTML" > "${ARCHIVE_HTML}.tmp" && mv "${ARCHIVE_HTML}.tmp" "$ARCHIVE_HTML"
+    echo "✅ アーカイブに ${YESTERDAY} のPDFリンクを追加しました（AWK方式）"
   fi
 else
   echo "⚠️ 前日 (${YESTERDAY}) のPDFが存在しません"
