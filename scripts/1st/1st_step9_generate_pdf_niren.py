@@ -19,10 +19,6 @@ def register_font():
         return "Helvetica"
 
 def save_pdf(df, output_path):
-    # 小数第2位までの文字列に変換（例: 1.10）
-    if "predicted_score" in df.columns:
-        df["predicted_score"] = df["predicted_score"].apply(lambda x: f"{x:.2f}")
-
     font_name = register_font()
     styles = getSampleStyleSheet()
     style_title = styles["Heading3"]
@@ -71,8 +67,8 @@ def save_pdf(df, output_path):
     print(f"📄 PDFを出力しました: {output_path}")
 
 def main(date_str):
-    input_path = Path(f"output/predict/csv/6th/final_prediction_niren_{date_str}.csv")
-    output_path = Path(f"docs/predict/pdf/6th/final_prediction_niren_{date_str}.pdf")
+    input_path = Path(f"output/predict/csv/1st/final_prediction_niren_{date_str}.csv")
+    output_path = Path(f"docs/predict/pdf/1st/final_prediction_niren_{date_str}.pdf")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(input_path)

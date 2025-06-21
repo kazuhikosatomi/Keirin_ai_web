@@ -2,12 +2,14 @@ import pandas as pd
 import argparse
 from pathlib import Path
 
+Path("data/1st/tmp").mkdir(parents=True, exist_ok=True)
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--date", required=True, help="基準日（YYYY-MM-DD）")
 args = parser.parse_args()
 
 base_date = pd.to_datetime(args.date) - pd.Timedelta(days=1)
-start_date = base_date - pd.DateOffset(years=3)
+start_date = base_date - pd.DateOffset(years=1)
 date_list = pd.date_range(start=start_date, end=base_date).strftime("%Y-%m-%d").tolist()
 
 master_path = Path("data/master/prefectures_master.csv")
@@ -44,6 +46,6 @@ for date in date_list:
 
 # 最終出力
 out_df = pd.DataFrame(all_features)
-output_path = Path(f"data/6th/tmp/step0_race_features_{start_date.date()}_to_{base_date.date()}.csv")
+output_path = Path(f"data/1st/tmp/step0_race_features_{start_date.date()}_to_{base_date.date()}.csv")
 out_df.to_csv(output_path, index=False)
 print(f"🎉 出力完了: {output_path}")
