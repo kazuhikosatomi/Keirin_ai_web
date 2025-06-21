@@ -131,11 +131,41 @@ else
   echo "[SKIP] final ARARE prediction file not found: $FINAL_PREDICTION_ARARE_FILE"
 fi
 
-# 11. Slack通知
+echo "#11: Add yesterday's PDF to archive"
+YESTERDAY=$(date -v-1d "+%Y-%m-%d")
+YESTERDAY_FILE="docs/predict/pdf/6th/final_prediction_niren_${YESTERDAY}.pdf"
+ARCHIVE_HTML="docs/archive.html"
+
+if [ -f "$YESTERDAY_FILE" ]; then
+  # 日付形式を変換（例: 2025-06-20 → 2025年6月20日）
+  JP_DATE=$(date -jf "%Y-%m-%d" "$YESTERDAY" "+%Y年%-m月%-d日")
+
+  # すでにリンクが存在しない場合のみ追記
+  if ! grep -q "$YESTERDAY_FILE" "$ARCHIVE_HTML"; then
+    sed -i '' "/<!-- ARCHIVE_INSERT_POINT -->/a\\
+    <li><a href=\"predict/pdf/6th/final_prediction_niren_${YESTERDAY}.pdf\">${JP_DATE}</a></li>
+    " "$ARCHIVE_HTML"
+    echo "✅ アーカイブに ${YESTERDAY} のPDFリンクを追加しました"
+  fi
+else
+  echo "⚠️ 前日 (${YESTERDAY}) のPDFが存在しません"
+fi
+
+# 11. index.html の今日の日付に合わせたPDFリンクを更新
+TODAY=$(date '+%Y-%m-%d')
+TODAY_JP=$(date '+%Y年%-m月%-d日')
+PDF_FILE_NAME="final_prediction_niren_${TODAY}.pdf"
+INDEX_HTML_PATH="./docs/index.html"
+
+# index.htmlの中のリンク部分を書き換える（macOS用）
+sed -i '' -E "s|href=\"./predict/pdf/6th/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/6th/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
+sed -i '' -E "s|PDFを開く（.*）|PDFを開く（${TODAY_JP}）|g" "${INDEX_HTML_PATH}"
+
+echo "=== run_daily_tasks.sh ended at $(date '+%Y-%m-%d %H:%M:%S') ==="
+
+# 12. Slack通知
 if tail -n 50 "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" | grep -q "\[FAIL\]"; then
   /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/cron/send_slack.sh "❌ 競輪タスク失敗あり: ${LOG_DATE}"
 else
   /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/cron/send_slack.sh "✅ 競輪タスク成功: ${LOG_DATE}"
 fi
-
-echo "=== run_daily_tasks.sh ended at $(date '+%Y-%m-%d %H:%M:%S') ==="
