@@ -68,7 +68,7 @@ def save_pdf(df, output_path):
 
 def main(date_str):
     input_path = Path(f"output/predict/csv/6th/final_prediction_niren_{date_str}.csv")
-    output_path = Path(f"output/predict/pdf/6th/final_prediction_niren_{date_str}.pdf")
+    output_path = Path(f"docs/predict/pdf/6th/final_prediction_niren_{date_str}.pdf")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(input_path)

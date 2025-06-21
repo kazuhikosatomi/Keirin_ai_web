@@ -74,7 +74,7 @@ else
   echo "[SKIP] final prediction file not found: $FINAL_PREDICTION_FILE"
 fi
 
-FINAL_PREDICTION_PDF="output/predict/pdf/6th/final_prediction_niren_${TODAY}.pdf"
+FINAL_PREDICTION_PDF="docs/predict/pdf/6th/final_prediction_niren_${TODAY}.pdf"
 if [ -f "$FINAL_PREDICTION_PDF" ]; then
   git status --porcelain | grep -q . && {
     git add "$FINAL_PREDICTION_PDF"
