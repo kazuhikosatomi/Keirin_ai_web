@@ -13,9 +13,10 @@ df = pd.read_csv(input_path)
 if "roof_type" in df.columns:
     df["roof_type"] = df["roof_type"].astype("category").cat.codes
 
-# 特徴量と目的変数
+# 特徴量と目的変数（object型・roof_typeなど不要なものは除外）
 target_col = "is_arare"
-feature_cols = [col for col in df.columns if col not in ["date", "venue_id", "race_no", target_col]]
+exclude_cols = ["date", "venue_id", "race_no", target_col, "roof_type"]
+feature_cols = [col for col in df.columns if col not in exclude_cols and df[col].dtype in ["int64", "float64", "bool"]]
 
 X = df[feature_cols]
 y = df[target_col]
@@ -29,7 +30,7 @@ params = {
     "metric": "binary_logloss",
     "verbosity": -1,
     "seed": 42,
-    "scale_pos_weight": 100
+    "scale_pos_weight": 9
 }
 
 # 学習
@@ -48,3 +49,17 @@ importance_df = pd.DataFrame({
 
 importance_df.to_csv(feature_importance_path, index=False)
 print(f"📊 特徴量重要度を保存: {feature_importance_path}")
+
+# Pickle形式でも保存（再利用や予測に便利）
+import pickle
+pkl_model_path = "models/7th/arare_race_model.pkl"
+with open(pkl_model_path, "wb") as f:
+    pickle.dump(model, f)
+print(f"💾 Pickle形式でモデル保存完了: {pkl_model_path}")
+
+# 使用した特徴量を保存
+feature_list_path = "models/7th/arare_feature_list.txt"
+with open(feature_list_path, "w") as f:
+    for col in feature_cols:
+        f.write(col + "\n")
+print(f"📝 使用特徴量リストを保存: {feature_list_path}")

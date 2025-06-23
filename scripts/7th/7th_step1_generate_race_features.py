@@ -4,8 +4,11 @@ import os
 from glob import glob
 
 # パス
-entry_dir = "data/entries/2023/"
-entry_paths = sorted(glob(os.path.join(entry_dir, "entry_2023-*.csv")))
+entry_dirs = ["data/entries/2023/", "data/entries/2024/"]
+entry_paths = []
+for d in entry_dirs:
+    entry_paths.extend(glob(os.path.join(d, "entry_20*-*.csv")))
+entry_paths = sorted(entry_paths)
 venue_master_path = "data/master/venue_master.csv"
 output_path = "data/7th/step1_race_features.csv"
 

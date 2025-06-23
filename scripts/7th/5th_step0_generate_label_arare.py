@@ -54,7 +54,7 @@ def run_steps_for_date(date_str: str) -> pd.DataFrame:
             continue
 
         odds = matched[available_odds_col].values[0]
-        label = int(odds >= 200)
+        label = int(odds >= 300)
 
         labels.append({
             "date": date_str,

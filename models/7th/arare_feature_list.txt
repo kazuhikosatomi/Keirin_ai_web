@@ -1,0 +1,15 @@
+num_racers
+avg_age
+num_lines
+line_size_std
+num_solo
+venue_length
+straight_length
+has_cross_area_line
+max_line_size
+age_std
+score_std
+score_max
+score_min
+escape_max
+sprint_max
