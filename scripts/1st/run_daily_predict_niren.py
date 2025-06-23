@@ -13,7 +13,7 @@ def run_daily_prediction(today: str, yesterday: str):
         print(f"\n🔁 Step{i}: 実行中（昨日のデータ）: {step}")
         try:
             subprocess.run(
-                ["python", f"scripts/6th/{step}", "--date", yesterday],
+                ["python", f"scripts/1st/{step}", "--date", yesterday],
                 check=True
             )
         except subprocess.CalledProcessError:
@@ -31,7 +31,7 @@ def run_daily_prediction(today: str, yesterday: str):
         print(f"\n🚀 Step{i}: 実行中（本日データ）: {step}")
         try:
             subprocess.run(
-                ["python", f"scripts/6th/{step}", "--date", today],
+                ["python", f"scripts/1st/{step}", "--date", today],
                 check=True
             )
         except subprocess.CalledProcessError:
