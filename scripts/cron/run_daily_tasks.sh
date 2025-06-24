@@ -149,6 +149,19 @@ if [ -f "$YESTERDAY_FILE" ]; then
         next
     }1' "$ARCHIVE_HTML" > "${ARCHIVE_HTML}.tmp" && mv "${ARCHIVE_HTML}.tmp" "$ARCHIVE_HTML"
     echo "✅ アーカイブに ${YESTERDAY} のPDFリンクを追加しました（AWK方式）"
+
+    # archive.html を GitHub にコミット・プッシュ
+    if git status --porcelain | grep -q 'docs/archive.html'; then
+      git add docs/archive.html
+      git commit -m "📚 Update archive with ${YESTERDAY} PDF link"
+      if git push origin main; then
+        echo "✅ archive.html pushed to GitHub"
+      else
+        echo "❌ archive.html push failed"
+      fi
+    else
+      echo "[SKIP] archive.html has no changes"
+    fi
   fi
 else
   echo "⚠️ 前日 (${YESTERDAY}) のPDFが存在しません"

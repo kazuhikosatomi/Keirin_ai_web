@@ -3,10 +3,10 @@ from pathlib import Path
 
 # 入力ファイルパス
 label_path = Path("data/7th/step0_arare_labels_merged.csv")
-features_path = Path("data/7th/step1_race_features.csv")
+features_path = Path("data/7th/tmp/step1_race_features.csv")
 
 # 出力ファイルパス
-output_path = Path("data/7th/step2_merged.csv")
+output_path = Path("data/7th/tmp/step2_merged.csv")
 
 # データ読み込み
 df_label = pd.read_csv(label_path)

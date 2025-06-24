@@ -1,12 +1,19 @@
 import pandas as pd
 import lightgbm as lgb
 from pathlib import Path
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--date", type=str, required=True, help="対象日（YYYY-MM-DD）")
+args = parser.parse_args()
+target_date = args.date
 
 # 入出力パス
-# 未来の出走表（2025-01-01）のみを対象とする
-input_path = Path("data/7th/entry_2025-06-22_with_features.csv")
-model_path = Path("models/7th/arare_race_model.txt")
-output_path = Path("data/7th/step5_predictions.csv")
+# 未来の出走表（対象日）のみを対象とする
+input_path = Path(f"data/7th/tmp/step5_1_entry_{target_date}_with_features.csv")
+model_path = Path("data/7th/tmp/step4_arare_race_model.txt")
+feature_list_path = "data/7th/tmp/step4_arare_feature_list.txt"
+pkl_model_path = "data/7th/tmp/step4_arare_race_model.pkl"
+output_path = Path(f"data/7th/tmp/step5_2_predictions_{target_date}.csv")
 
 # データ読み込み
 df = pd.read_csv(input_path)
@@ -22,7 +29,6 @@ else:
 df = df.drop(columns=[col for col in df.columns if df[col].dtype == "object"])
 
 # 特徴量リストを読み込み
-feature_list_path = "models/7th/arare_feature_list.txt"
 with open(feature_list_path) as f:
     raw_features = [line.strip() for line in f]
 
@@ -36,16 +42,16 @@ if missing_cols:
 
 # モデル読み込み（pkl形式）
 import pickle
-with open("models/7th/arare_race_model.pkl", "rb") as f:
+with open(pkl_model_path, "rb") as f:
     model = pickle.load(f)
 
 # 予測
 df["predicted_score"] = model.predict(df[features])
 df["predicted_score"] = df["predicted_score"].round(3)
 
-# 'date' カラムが存在しない場合は補完（2025-01-01 と仮定）
+# 'date' カラムが存在しない場合は補完（対象日 と仮定）
 if "date" not in df.columns:
-    df["date"] = "2025-01-01"
+    df["date"] = target_date
 
 # 出力
 df[["date", "venue_id", "race_no", "predicted_score"]].to_csv(output_path, index=False)

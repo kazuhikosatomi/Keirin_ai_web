@@ -1,7 +1,15 @@
+import argparse
+from datetime import datetime, timedelta
 import pandas as pd
 from tqdm import tqdm
 import os
 from glob import glob
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--base_date", type=str, required=True, help="基準日（YYYY-MM-DD）")
+args = parser.parse_args()
+base_date = datetime.strptime(args.base_date, "%Y-%m-%d")
+start_date = base_date - timedelta(days=730)
 
 # パス
 entry_dirs = ["data/entries/2023/", "data/entries/2024/"]
@@ -9,17 +17,22 @@ entry_paths = []
 for d in entry_dirs:
     entry_paths.extend(glob(os.path.join(d, "entry_20*-*.csv")))
 entry_paths = sorted(entry_paths)
-venue_master_path = "data/master/venue_master.csv"
-output_path = "data/7th/step1_race_features.csv"
 
 entry_list = []
 for path in entry_paths:
     try:
         df = pd.read_csv(path)
         df["source_path"] = path  # デバッグ用（任意）
-        entry_list.append(df)
+        df["date"] = pd.to_datetime(df["date"])  # 日付型に変換
+        df = df[df["date"].between(start_date, base_date - timedelta(days=1))]  # 過去2年間のみ
+        if not df.empty:
+            entry_list.append(df)
     except Exception as e:
         print(f"⚠️ 読み込み失敗: {path} ({e})")
+
+venue_master_path = "data/master/venue_master.csv"
+output_path = "data/7th/tmp/step1_race_features.csv"
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 entry_df = pd.concat(entry_list, ignore_index=True)
 

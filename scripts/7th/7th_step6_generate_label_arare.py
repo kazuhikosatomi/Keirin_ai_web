@@ -1,7 +1,11 @@
 import pandas as pd
-import argparse
 from pathlib import Path
 from datetime import datetime, timedelta
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--date", type=str, required=True, help="対象日（YYYY-MM-DD）")
+args = parser.parse_args()
+target_date = args.date
 
 def run_steps_for_date(date_str: str) -> pd.DataFrame:
     results_path = Path(f"data/results/{date_str[:4]}/results_{date_str}.csv")
@@ -71,31 +75,14 @@ def run_steps_for_date(date_str: str) -> pd.DataFrame:
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--start", required=True, help="開始日 (YYYY-MM-DD)")
-    parser.add_argument("--end", required=True, help="終了日 (YYYY-MM-DD)")
-    args = parser.parse_args()
-
-    original_start = datetime.strptime(args.start, "%Y-%m-%d").date()
-    start_date = original_start - timedelta(days=365 * 3)
-    end_date = datetime.strptime(args.end, "%Y-%m-%d").date()
-
-    all_dfs = []
-    current_date = start_date
-    while current_date <= end_date:
-        df = run_steps_for_date(str(current_date))
-        if not df.empty:
-            all_dfs.append(df)
-        current_date += timedelta(days=1)
-
-    if all_dfs:
-        merged_df = pd.concat(all_dfs, ignore_index=True)
-        output_path = Path("data/7th/step0_arare_labels_merged.csv")
+    df = run_steps_for_date(target_date)
+    if not df.empty:
+        output_path = Path(f"data/7th/step6/step6_label_{target_date}.csv")
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        merged_df.to_csv(output_path, index=False)
-        print(f"✅ 出力完了: {len(merged_df)} 件 → {output_path}")
+        df.to_csv(output_path, index=False)
+        print(f"✅ 出力完了: {len(df)} 件 → {output_path}")
     else:
-        print("⚠️ 有効なデータが見つかりませんでした。")
+        print(f"⚠️ {target_date}: 有効なデータが見つかりませんでした。")
 
 
 if __name__ == "__main__":

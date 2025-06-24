@@ -3,9 +3,9 @@ import lightgbm as lgb
 import os
 
 # 入出力パス
-input_path = "data/7th/step3_train_race_level.csv"
-model_path = "models/7th/arare_race_model.txt"
-feature_importance_path = "data/7th/step4_feature_importance.csv"
+input_path = "data/7th/tmp/step3_train_race_level.csv"
+model_path = "data/7th/tmp/step4_arare_race_model.txt"
+feature_importance_path = "data/7th/tmp/step4_feature_importance.csv"
 
 # データ読み込み
 df = pd.read_csv(input_path)
@@ -52,14 +52,25 @@ print(f"📊 特徴量重要度を保存: {feature_importance_path}")
 
 # Pickle形式でも保存（再利用や予測に便利）
 import pickle
-pkl_model_path = "models/7th/arare_race_model.pkl"
+pkl_model_path = "data/7th/tmp/step4_arare_race_model.pkl"
+os.makedirs(os.path.dirname(pkl_model_path), exist_ok=True)
 with open(pkl_model_path, "wb") as f:
     pickle.dump(model, f)
 print(f"💾 Pickle形式でモデル保存完了: {pkl_model_path}")
 
 # 使用した特徴量を保存
-feature_list_path = "models/7th/arare_feature_list.txt"
+feature_list_path = "data/7th/tmp/step4_arare_feature_list.txt"
+os.makedirs(os.path.dirname(feature_list_path), exist_ok=True)
 with open(feature_list_path, "w") as f:
     for col in feature_cols:
         f.write(col + "\n")
 print(f"📝 使用特徴量リストを保存: {feature_list_path}")
+
+# 除外カラムと使用カラムの一覧を表示
+print("\n🟥 除外カラム（exclude_cols）:")
+for col in exclude_cols:
+    print(" -", col)
+
+print("\n🟩 使用カラム（feature_cols）:")
+for col in feature_cols:
+    print(" +", col)

@@ -1,9 +1,16 @@
 import pandas as pd
 import os
+import argparse
+from datetime import datetime
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--date", type=str, required=True, help="対象日（YYYY-MM-DD）")
+args = parser.parse_args()
+target_date = args.date
 
 # 入出力パス
-input_path = "data/entries/2025/entry_2025-06-22.csv"
-output_path = "data/7th/entry_2025-06-22_with_features.csv"
+input_path = f"data/entries/{target_date[:4]}/entry_{target_date}.csv"
+output_path = f"data/7th/tmp/step5_1_entry_{target_date}_with_features.csv"
 
 # 読み込み
 df = pd.read_csv(input_path)
@@ -15,8 +22,8 @@ df["roof_type_encoded"] = df["roof_type"].map({"ドーム": 1, "屋外": 0}).fil
 
 # 年齢統計量
 if "age" in df.columns:
-    df["avg_age"] = df.groupby("race_no")["age"].transform("mean")
-    df["age_std"] = df.groupby("race_no")["age"].transform("std").fillna(0)
+    df["avg_age"] = df.groupby(["date", "venue_id", "race_no"])["age"].transform("mean")
+    df["age_std"] = df.groupby(["date", "venue_id", "race_no"])["age"].transform("std").fillna(0)
 else:
     df["avg_age"] = 0
     df["age_std"] = 0
@@ -25,8 +32,8 @@ else:
 if "line_id" in df.columns and "race_no" in df.columns:
     group_counts = df["line_id"].value_counts()
     df["line_size"] = df["line_id"].map(group_counts)
-    df["line_size_std"] = df.groupby("race_no")["line_size"].transform("std").fillna(0)
-    df["num_lines"] = df.groupby("race_no")["line_id"].transform("nunique")
+    df["line_size_std"] = df.groupby(["date", "venue_id", "race_no"])["line_size"].transform("std").fillna(0)
+    df["num_lines"] = df.groupby(["date", "venue_id", "race_no"])["line_id"].transform("nunique")
     df["num_solo"] = df["line_id"].map(lambda x: 1 if pd.notna(x) and group_counts.get(x, 0) == 1 else 0)
 else:
     df["line_size_std"] = 0
@@ -35,9 +42,9 @@ else:
 
 # 仮スコア（予測前のプレースホルダ）
 df["score"] = 0.0
-df["score_min"] = df.groupby("race_no")["score"].transform("min")
-df["score_max"] = df.groupby("race_no")["score"].transform("max")
-df["score_std"] = df.groupby("race_no")["score"].transform("std").fillna(0)
+df["score_min"] = df.groupby(["date", "venue_id", "race_no"])["score"].transform("min")
+df["score_max"] = df.groupby(["date", "venue_id", "race_no"])["score"].transform("max")
+df["score_std"] = df.groupby(["date", "venue_id", "race_no"])["score"].transform("std").fillna(0)
 
 # 正しいカラム名に合わせて venue_master から補完
 df = df.merge(
@@ -47,11 +54,11 @@ df = df.merge(
 )
 
 # 出走人数
-df["num_racers"] = df.groupby("race_no")["racer_id"].transform("count")
+df["num_racers"] = df.groupby(["date", "venue_id", "race_no"])["racer_id"].transform("count")
 
 # 最大ラインサイズ
 if "line_id" in df.columns:
-    df["max_line_size"] = df.groupby("race_no")["line_size"].transform("max")
+    df["max_line_size"] = df.groupby(["date", "venue_id", "race_no"])["line_size"].transform("max")
 else:
     df["max_line_size"] = 0
 
@@ -59,17 +66,17 @@ else:
 if "area_id" in df.columns and "line_id" in df.columns:
     def check_cross_area(group):
         return int(group.groupby("line_id")["area_id"].nunique().max() > 1 if group["line_id"].notna().any() else 0)
-    df["has_cross_area_line"] = df.groupby("race_no").apply(check_cross_area).reindex(df["race_no"]).values
+    df["has_cross_area_line"] = df.groupby(["date", "venue_id", "race_no"]).apply(check_cross_area).reindex(df.index).values
 else:
     df["has_cross_area_line"] = 0
 
 # 最大 escape/sprint スコア（仮に存在するとして処理）
 if "style_escape" in df.columns:
-    df["escape_max"] = df.groupby("race_no")["style_escape"].transform("max")
+    df["escape_max"] = df.groupby(["date", "venue_id", "race_no"])["style_escape"].transform("max")
 else:
     df["escape_max"] = 0
 if "style_sprint" in df.columns:
-    df["sprint_max"] = df.groupby("race_no")["style_sprint"].transform("max")
+    df["sprint_max"] = df.groupby(["date", "venue_id", "race_no"])["style_sprint"].transform("max")
 else:
     df["sprint_max"] = 0
 

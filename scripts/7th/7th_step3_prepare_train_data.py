@@ -1,7 +1,8 @@
 import pandas as pd
+import os
 
-input_path = "data/7th/step2_merged.csv"
-output_path = "data/7th/step3_train_race_level.csv"
+input_path = "data/7th/tmp/step2_merged.csv"
+output_path = "data/7th/tmp/step3_train_race_level.csv"
 
 # データ読み込み
 df = pd.read_csv(input_path)
@@ -22,6 +23,7 @@ for col in ["car_1", "car_2", "car_3"]:
 
 # カラム順を整理して保存
 df_out = df[meta_cols + feature_cols + [target_col]]
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
 df_out.to_csv(output_path, index=False)
 
 print(f"✅ 出力完了: {output_path}")
