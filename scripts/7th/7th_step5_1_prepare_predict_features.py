@@ -10,7 +10,7 @@ target_date = args.date
 
 # 入出力パス
 input_path = f"data/entries/{target_date[:4]}/entry_{target_date}.csv"
-output_path = f"data/7th/tmp/step5_1_entry_{target_date}_with_features.csv"
+output_path = "data/7th/tmp/step5_1_entry_with_features.csv"
 
 # 読み込み
 df = pd.read_csv(input_path)
@@ -86,4 +86,4 @@ race_df = df.groupby(["date", "venue_id", "race_no"], as_index=False).mean(numer
 # 保存
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 race_df.to_csv(output_path, index=False)
-print(f"✅ 特徴量を（レース単位で）追加して保存しました: {output_path}")
+print("✅ 特徴量を（レース単位で）追加して保存しました: data/7th/tmp/step5_1_entry_with_features.csv")

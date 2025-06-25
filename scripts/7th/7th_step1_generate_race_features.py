@@ -6,9 +6,9 @@ import os
 from glob import glob
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--base_date", type=str, required=True, help="基準日（YYYY-MM-DD）")
+parser.add_argument("--date", type=str, required=True, help="基準日（YYYY-MM-DD）")
 args = parser.parse_args()
-base_date = datetime.strptime(args.base_date, "%Y-%m-%d")
+base_date = datetime.strptime(args.date, "%Y-%m-%d")
 start_date = base_date - timedelta(days=730)
 
 # パス

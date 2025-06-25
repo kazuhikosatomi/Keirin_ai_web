@@ -1,6 +1,13 @@
 import pandas as pd
 import lightgbm as lgb
 import os
+import argparse
+from datetime import datetime
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--date", type=str, required=True, help="基準日 (例: 2025-01-02)")
+args = parser.parse_args()
+base_date = args.date
 
 # 入出力パス
 input_path = "data/7th/tmp/step3_train_race_level.csv"
@@ -67,10 +74,10 @@ with open(feature_list_path, "w") as f:
 print(f"📝 使用特徴量リストを保存: {feature_list_path}")
 
 # 除外カラムと使用カラムの一覧を表示
-print("\n🟥 除外カラム（exclude_cols）:")
-for col in exclude_cols:
-    print(" -", col)
+#print("\n🟥 除外カラム（exclude_cols）:")
+#for col in exclude_cols:
+#    print(" -", col)
 
-print("\n🟩 使用カラム（feature_cols）:")
-for col in feature_cols:
-    print(" +", col)
+#print("\n🟩 使用カラム（feature_cols）:")
+#for col in feature_cols:
+#    print(" +", col)

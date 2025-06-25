@@ -8,7 +8,7 @@ args = parser.parse_args()
 target_date = args.date
 
 # ファイルパス
-pred_path = Path(f"data/7th/tmp/step5_2_predictions_{target_date}.csv")
+pred_path = Path(f"data/7th/tmp/step5_2_predictions.csv")
 label_path = Path(f"data/7th/step6/step6_label_{target_date}.csv")
 output_path = Path(f"data/7th/step7/step7_feedback_{target_date}.csv")
 

@@ -1,9 +1,18 @@
 import pandas as pd
 from pathlib import Path
+import argparse
+from datetime import datetime
 
 # 入力ファイルパス
 label_path = Path("data/7th/step0_arare_labels_merged.csv")
 features_path = Path("data/7th/tmp/step1_race_features.csv")
+
+
+# 引数パース
+parser = argparse.ArgumentParser()
+parser.add_argument("--date", type=str, required=True, help="基準日（YYYY-MM-DD）")
+args = parser.parse_args()
+base_date = args.date
 
 # 出力ファイルパス
 output_path = Path("data/7th/tmp/step2_merged.csv")

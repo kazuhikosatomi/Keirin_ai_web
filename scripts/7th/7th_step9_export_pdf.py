@@ -31,6 +31,7 @@ def export_pdf_from_step5(step5_csv_path, output_pdf_path):
     font_prop = register_font()
 
     df = pd.read_csv(step5_csv_path)
+    pdf_date = df["date"].iloc[0] if "date" in df.columns else "unknown_date"
 
     # venue_name を補完（必要に応じて）
     venue_master_path = Path("data/master/venue_master.csv")
@@ -79,6 +80,9 @@ def export_pdf_from_step5(step5_csv_path, output_pdf_path):
 
 # 実行部分
 if __name__ == "__main__":
-    input_csv = Path(f"data/7th/tmp/step5_2_predictions_{target_date}.csv")
-    output_pdf = Path(f"docs/predict/pdf/7th/final_prediction_arare_{target_date}.pdf")
+    input_csv = Path("data/7th/tmp/step5_2_predictions.csv")
+    # まずDataFrameを読み込んで日付を取得
+    df = pd.read_csv(input_csv)
+    pdf_date = df["date"].iloc[0] if "date" in df.columns else "unknown_date"
+    output_pdf = Path(f"docs/predict/pdf/7th/final_prediction_arare_{pdf_date}.pdf")
     export_pdf_from_step5(input_csv, output_pdf)

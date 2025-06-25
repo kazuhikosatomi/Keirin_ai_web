@@ -9,11 +9,11 @@ target_date = args.date
 
 # 入出力パス
 # 未来の出走表（対象日）のみを対象とする
-input_path = Path(f"data/7th/tmp/step5_1_entry_{target_date}_with_features.csv")
+input_path = Path("data/7th/tmp/step5_1_entry_with_features.csv")
 model_path = Path("data/7th/tmp/step4_arare_race_model.txt")
 feature_list_path = "data/7th/tmp/step4_arare_feature_list.txt"
 pkl_model_path = "data/7th/tmp/step4_arare_race_model.pkl"
-output_path = Path(f"data/7th/tmp/step5_2_predictions_{target_date}.csv")
+output_path = Path("data/7th/tmp/step5_2_predictions.csv")
 
 # データ読み込み
 df = pd.read_csv(input_path)
