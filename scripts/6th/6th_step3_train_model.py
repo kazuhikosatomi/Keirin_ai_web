@@ -39,6 +39,9 @@ if "rank" not in df.columns:
 
 # 特徴量と目的変数の分離
 drop_cols = ["rank", "date", "hit"] if "hit" in df.columns else ["rank", "date"]
+for col in ["car_no", "race_no"]:
+    if col in df.columns:
+        drop_cols.append(col)
 X = df.drop(columns=drop_cols)
 # print(f"✅ 特徴量カラム一覧: {X.columns.tolist()}")
 y = df["rank"]
