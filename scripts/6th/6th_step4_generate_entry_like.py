@@ -18,8 +18,8 @@ def main(target_date: str):
     train_df.sort_values("date", ascending=False, inplace=True)
     train_df = train_df.drop_duplicates(subset=["racer_id"], keep="first")
 
-    # entry_df に含まれるカラムと重複するものは除外（racer_id を除く）
-    drop_cols = [col for col in train_df.columns if col in entry_df.columns and col != "racer_id"]
+    # entry_df に含まれるカラムと重複するものは除外（racer_id, car_no, race_no を除く）
+    drop_cols = [col for col in train_df.columns if col in entry_df.columns and col not in ["racer_id", "car_no", "race_no"]]
     train_df = train_df.drop(columns=drop_cols)
 
     # ✅ 'hit'列が含まれていれば除外（予測には不要）
@@ -28,6 +28,16 @@ def main(target_date: str):
 
     # 特徴量をマージ（racer_id をキーにする）
     merged = pd.merge(entry_df, train_df, on="racer_id", how="left")
+
+    # 🆕 car_no, race_no メタ情報を再付与
+    meta_path = base_dir / "step3_train_metadata.csv"
+    if meta_path.exists():
+        meta_df = pd.read_csv(meta_path)
+        merged = pd.concat([merged.reset_index(drop=True), meta_df.reset_index(drop=True)], axis=1)
+        print(f"🔗 car_no, race_no メタ情報を再付与しました: {meta_path}")
+    else:
+        print(f"⚠️ メタ情報ファイルが見つかりません: {meta_path}")
+
     if 'area' not in merged.columns or 'group' not in merged.columns:
         print("⚠️ Warning: 'area' or 'group' not found after merge.")
 

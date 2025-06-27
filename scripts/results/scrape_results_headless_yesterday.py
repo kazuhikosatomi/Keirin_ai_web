@@ -44,12 +44,11 @@ player_path = os.path.join(script_dir, "../../data/master/player_master.csv")
 player_df = pd.read_csv(player_path)
 
 # ✅ Chrome起動
-chromedriver_path = "/Users/satomi/Desktop/ai/chromedriver-mac-arm64/chromedriver"
 options = Options()
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-driver = webdriver.Chrome(service=Service(chromedriver_path), options=options)
+driver = webdriver.Chrome(options=options)
 
 # ✅ 日付ループ
 current = start_dt

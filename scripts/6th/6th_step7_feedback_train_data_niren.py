@@ -37,7 +37,10 @@ def main():
     eval_df["hit"] = (eval_df["pred_comb"] == eval_df["answer_comb"]).astype(int)
 
     # car1, car2 を抽出
-    eval_df[["car1", "car2"]] = eval_df["pred_comb"].str.split("-", expand=True).astype(int)
+    split_cols = eval_df["pred_comb"].dropna().str.split("-", expand=True)
+    split_cols.columns = ["car1", "car2"]
+    split_cols = split_cols.astype("Int64")  # pandas拡張整数型（NaN許容）
+    eval_df = pd.concat([eval_df, split_cols], axis=1)
 
     # レース単位で展開して選手単位に
     hit_rows = []

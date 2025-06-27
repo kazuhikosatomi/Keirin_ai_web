@@ -43,6 +43,8 @@ for col in ["car_no", "race_no"]:
     if col in df.columns:
         drop_cols.append(col)
 X = df.drop(columns=drop_cols)
+meta_cols = ["race_no", "car_no"]
+X_with_meta = df[meta_cols].copy() if all(col in df.columns for col in meta_cols) else pd.DataFrame()
 # print(f"✅ 特徴量カラム一覧: {X.columns.tolist()}")
 y = df["rank"]
 if "hit" in df.columns:
@@ -65,6 +67,10 @@ model = lgb.train(params, lgb_train, num_boost_round=100)
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 joblib.dump(model, MODEL_PATH)
 print(f"📤 上書き保存: {MODEL_PATH}")
+
+if not X_with_meta.empty:
+    X_with_meta.to_csv("data/6th/tmp/step3_train_metadata.csv", index=False)
+    print("📁 car_no, race_no を含むメタ情報を保存しました: data/6th/tmp/step3_train_metadata.csv")
 
 # 特徴量重要度の取得と表示
 import matplotlib.pyplot as plt
