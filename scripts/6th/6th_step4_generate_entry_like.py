@@ -29,12 +29,18 @@ def main(target_date: str):
     # 特徴量をマージ（racer_id をキーにする）
     merged = pd.merge(entry_df, train_df, on="racer_id", how="left")
 
-    # 🆕 car_no, race_no メタ情報を再付与
+    # 🆕 car_no, race_no メタ情報をキーでマージ
     meta_path = base_dir / "step3_train_metadata.csv"
     if meta_path.exists():
         meta_df = pd.read_csv(meta_path)
-        merged = pd.concat([merged.reset_index(drop=True), meta_df.reset_index(drop=True)], axis=1)
-        print(f"🔗 car_no, race_no メタ情報を再付与しました: {meta_path}")
+        print("🔍 merged.columns:", merged.columns)
+        key_cols = ["racer_id", "date", "venue_id", "race_no"]
+        key_cols = [col for col in key_cols if col in merged.columns and col in meta_df.columns]
+        if key_cols:
+            merged = pd.merge(merged, meta_df, on=key_cols, how="left")
+            print(f"🔗 car_no, race_no メタ情報をマージしました: {meta_path}")
+        else:
+            print("⚠️ マージキーが不足しているため、meta情報はマージされませんでした")
     else:
         print(f"⚠️ メタ情報ファイルが見つかりません: {meta_path}")
 

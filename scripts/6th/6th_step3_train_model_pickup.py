@@ -40,6 +40,12 @@ if "rank" not in df.columns:
 # 特徴量と目的変数の分離
 drop_cols = ["rank", "date", "hit"] if "hit" in df.columns else ["rank", "date"]
 X = df.drop(columns=drop_cols)
+meta_cols = ["racer_id", "date", "venue_id", "race_no", "car_no"]
+meta_cols = [col for col in meta_cols if col in df.columns]
+X_with_meta = df[meta_cols].copy()
+if not X_with_meta.empty:
+    X_with_meta.to_csv("data/6th/tmp/step3_train_metadata.csv", index=False)
+    print("📁 car_no, race_no を含むメタ情報を保存しました: data/6th/tmp/step3_train_metadata.csv")
 # print(f"✅ 特徴量カラム一覧: {X.columns.tolist()}")
 y = df["rank"]
 if "hit" in df.columns:
