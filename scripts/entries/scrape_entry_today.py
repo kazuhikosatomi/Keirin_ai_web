@@ -44,7 +44,7 @@ def main():
         for race_num in race_nums:
             url = f"https://www.chariloto.com/keirin/athletes/{date_str}/{venue_id}/{race_num}"
             result = fetch_entry_data(url)
-            print(f"🔍 result for {url} → {result}")
+            # print(f"🔍 result for {url} → {result}")
             entries = result.get("entries", [])
             if entries:
                 print(f"  R{race_num}: {len(entries)}人", end=" ", flush=True)
