@@ -29,23 +29,18 @@ def main(target_date: str):
     # 特徴量をマージ（racer_id をキーにする）
     merged = pd.merge(entry_df, train_df, on="racer_id", how="left")
 
-    # 🆕 car_no, race_no メタ情報をキーでマージ
-    meta_path = base_dir / "step3_train_metadata.csv"
-    if meta_path.exists():
-        meta_df = pd.read_csv(meta_path)
-        print("🔍 merged.columns:", merged.columns)
-        key_cols = ["racer_id", "date", "venue_id", "race_no"]
-        key_cols = [col for col in key_cols if col in merged.columns and col in meta_df.columns]
-        if key_cols:
-            merged = pd.merge(merged, meta_df, on=key_cols, how="left")
-            print(f"🔗 car_no, race_no メタ情報をマージしました: {meta_path}")
-        else:
-            print("⚠️ マージキーが不足しているため、meta情報はマージされませんでした")
-    else:
-        print(f"⚠️ メタ情報ファイルが見つかりません: {meta_path}")
-
     if 'area' not in merged.columns or 'group' not in merged.columns:
         print("⚠️ Warning: 'area' or 'group' not found after merge.")
+
+    # ✅ 不要な重複カラムを整理: car_no_y, race_no_y → 削除 / car_no_x → car_no にリネーム
+    if "car_no_x" in merged.columns:
+        merged.rename(columns={"car_no_x": "car_no"}, inplace=True)
+    if "race_no_x" in merged.columns:
+        merged.rename(columns={"race_no_x": "race_no"}, inplace=True)
+    for col in ["car_no_y", "race_no_y", "car_no", "race_no"]:
+        if col in merged.columns:
+            if bool(merged[col].isna().all()):
+                merged.drop(columns=[col], inplace=True)
 
     # 出力保存
     merged.to_csv(output_path, index=False)

@@ -38,7 +38,9 @@ if "rank" not in df.columns:
     raise ValueError("❌ 'rank' カラムが存在しません。目的変数が必要です。")
 
 # 特徴量と目的変数の分離
-drop_cols = ["rank", "date", "hit"] if "hit" in df.columns else ["rank", "date"]
+drop_cols = ["rank", "date", "car_no", "race_no"]
+if "hit" in df.columns:
+    drop_cols.append("hit")
 X = df.drop(columns=drop_cols)
 meta_cols = ["racer_id", "date", "venue_id", "race_no", "car_no"]
 meta_cols = [col for col in meta_cols if col in df.columns]
