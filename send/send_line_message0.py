@@ -27,7 +27,7 @@ import pytz
 jst = datetime.datetime.now(pytz.timezone("Asia/Tokyo"))
 today_str = jst.strftime("%Y-%m-%d")
 
-predict_file = f"output/predict/csv/6th/final_prediction_niren_{today_str}.csv"
+predict_file = f"output/predict/csv/1st/final_prediction_niren_{today_str}.csv"
 
 
 if os.path.exists(predict_file):
