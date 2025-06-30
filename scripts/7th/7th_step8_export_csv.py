@@ -1,35 +1,41 @@
 import pandas as pd
-from pathlib import Path
 import argparse
+from pathlib import Path
 
+# 🔹 引数：--date
 parser = argparse.ArgumentParser()
-parser.add_argument("--date", type=str, required=True, help="対象日（YYYY-MM-DD）")
+parser.add_argument("--date", required=True)
 args = parser.parse_args()
-target_date = args.date
 
-# 入力ファイル
-step5_path = Path("data/7th/tmp/step5_2_predictions.csv")
+# 🔹 入出力パス定義
+base_dir = Path("data/7th/tmp")
+output_dir = Path("output/predict/csv/7th")
+output_dir.mkdir(parents=True, exist_ok=True)
+
+pred_path = base_dir / "step5_2_predictions.csv"
 venue_path = Path("data/master/venue_master.csv")
-output_path = Path(f"output/predict/csv/7th/final_prediction_arare_{target_date}.csv")
 
-# 出力先ディレクトリ作成
-output_path.parent.mkdir(parents=True, exist_ok=True)
+# 🔹 データ読み込み
+df = pd.read_csv(pred_path)
+venue_master = pd.read_csv(venue_path)
 
-# 読み込み
-df = pd.read_csv(step5_path)
-venue_master = pd.read_csv(venue_path)[["venue_id", "venue_name"]]
+# 🔹 venue_name をマージ
+df = pd.merge(df, venue_master[["venue_id", "venue_name"]], on="venue_id", how="left")
 
-# マージ
-df = pd.merge(df, venue_master, on="venue_id", how="left")
+# 🔹 predict_score に変換し、元の predicted_score を削除し、順位を追加
+df["predict_score"] = df["predicted_score"].fillna(0)
+df.drop(columns=["predicted_score"], inplace=True)
+df["predict_rank"] = df["predict_score"].rank(ascending=False, method="first").astype(int)
 
-# カラム順の調整（venue_idの直後にvenue_nameを配置）
-cols = df.columns.tolist()
-if "venue_id" in cols and "venue_name" in cols:
-    cols.remove("venue_name")
-    venue_id_index = cols.index("venue_id") + 1
-    cols.insert(venue_id_index, "venue_name")
-    df = df[cols]
+if "predict_score" in df.columns:
+    df["predict_score"] = df["predict_score"].map(lambda x: f"{x:.3f}")
 
-# 保存（必要な列のみ or 全体そのまま）
-df.to_csv(output_path, index=False)
-print(f"✅ 最終CSVを出力しました: {output_path}")
+# 🔹 カラム順調整
+cols = ["date", "venue_id", "venue_name", "race_no", "predict_score", "predict_rank"]
+other_cols = [c for c in df.columns if c not in cols]
+df = df[cols + other_cols]
+
+# 🔹 出力
+out_path = output_dir / f"final_prediction_arare_{args.date}.csv"
+df.to_csv(out_path, index=False)
+print(f"✅ 最終CSVを出力しました: {out_path}")

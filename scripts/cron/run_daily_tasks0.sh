@@ -5,17 +5,11 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 . /Users/satomi/Documents/keirin/venv_shared/bin/activate
 cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 
- # 任意の日付を引数で受け取れるようにする（例: ./run_daily_tasks.sh 2025-06-27）
-if [ -n "$1" ]; then
-  TODAY="$1"
-  YESTERDAY=$(date -j -v-1d -f "%Y-%m-%d" "$TODAY" "+%Y-%m-%d")
-else
-  YESTERDAY=$(date -v-1d "+%Y-%m-%d")
-  TODAY=$(date "+%Y-%m-%d")
-fi
+YESTERDAY=$(date -v-1d "+%Y-%m-%d")
+TODAY=$(date "+%Y-%m-%d")
 
 LOG_DATE=$(date +%F)
-echo "=== run_daily_tasks.sh started at $(date '+%Y-%m-%d %H:%M:%S') ==="
+echo "=== run_daily_tasks.sh0 started at $(date '+%Y-%m-%d %H:%M:%S') ==="
 exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" 2>&1
 
 # 1. オッズのスクレイピング
@@ -44,8 +38,8 @@ cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 mkdir -p data/train
 ###############################################################################
 
-# 6-9. モデル実行（run_backtest_predict_niren.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/6th/run_daily_predict_niren.py \
+# 6-9a. モデル実行（run_backtest_predict_niren.py）
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/1st/run_daily_predict_niren.py \
   && echo "[OK] run_backtest_predict_niren.py completed" || echo "[FAIL] run_backtest_predict_niren.py failed"
 
 # 6-9b. モデル実行（run_backtest_predict_trio.py）
@@ -58,7 +52,7 @@ mkdir -p data/train
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット
-FINAL_PREDICTION_FILE="output/predict/csv/6th/final_prediction_niren_${TODAY}.csv"
+FINAL_PREDICTION_FILE="output/predict/csv/1st/final_prediction_niren_${TODAY}.csv"
 if [ -f "$FINAL_PREDICTION_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
@@ -80,7 +74,7 @@ else
   echo "[SKIP] final prediction file not found: $FINAL_PREDICTION_FILE"
 fi
 
-FINAL_PREDICTION_PDF="docs/predict/pdf/6th/final_prediction_niren_${TODAY}.pdf"
+FINAL_PREDICTION_PDF="docs/predict/pdf/1st/final_prediction_niren_${TODAY}.pdf"
 if [ -f "$FINAL_PREDICTION_PDF" ]; then
   git status --porcelain | grep -q . && {
     git add "$FINAL_PREDICTION_PDF"
@@ -139,7 +133,7 @@ fi
 
 echo "#11: Add yesterday's PDF to archive"
 YESTERDAY=$(date -v-1d "+%Y-%m-%d")
-YESTERDAY_FILE="docs/predict/pdf/6th/final_prediction_niren_${YESTERDAY}.pdf"
+YESTERDAY_FILE="docs/predict/pdf/1st/final_prediction_niren_${YESTERDAY}.pdf"
 ARCHIVE_HTML="docs/archive.html"
 
 if [ -f "$YESTERDAY_FILE" ]; then
@@ -148,7 +142,7 @@ if [ -f "$YESTERDAY_FILE" ]; then
   JP_DATE="${YESTERDAY} の予想"
   # すでにリンクが存在しない場合のみ追記
   if ! grep -q "$YESTERDAY_FILE" "$ARCHIVE_HTML"; then
-    INSERT_LINE="    <li><a href=\"predict/pdf/6th/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
+    INSERT_LINE="    <li><a href=\"predict/pdf/1st/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
     awk -v insert="$INSERT_LINE" '/<!-- ARCHIVE_INSERT_POINT -->/ {
         print;
         print insert;
@@ -180,7 +174,7 @@ PDF_FILE_NAME="final_prediction_niren_${TODAY}.pdf"
 INDEX_HTML_PATH="./docs/index.html"
 
 # index.htmlの中のリンク部分を書き換える（macOS用）
-sed -i '' -E "s|href=\"./predict/pdf/6th/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/6th/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
+sed -i '' -E "s|href=\"./predict/pdf/1st/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/1st/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
 sed -i '' -E "s|PDFを開く（.*）|PDFを開く（${TODAY_JP}）|g" "${INDEX_HTML_PATH}"
 
 if git status --porcelain | grep -q 'docs/index.html'; then

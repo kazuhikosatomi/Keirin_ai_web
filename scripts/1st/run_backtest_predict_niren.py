@@ -6,7 +6,6 @@ def run_steps_for_date(target_date: str, end_date: str):
     print(f"\n📅 {target_date} の処理を開始します")
 
     steps = [
-        "1st_step0_generate_race_features.py",
         "1st_step1_generate_racer_stats.py",
         "1st_step2_generate_train_racer_level_niren.py",
         "1st_step3_train_model.py",
@@ -41,6 +40,15 @@ def run_steps_for_date(target_date: str, end_date: str):
             )
         except subprocess.CalledProcessError:
             print("❌ エラーが発生しました: 1st_step8_generate_final_prediction_niren.py")
+
+        print(f"\n🚀 Step9: 実行中: 1st_step9_generate_pdf_niren.py")
+        try:
+            subprocess.run(
+                ["python", "scripts/1st/1st_step9_generate_pdf_niren.py", "--date", target_date],
+                check=True
+            )
+        except subprocess.CalledProcessError:
+            print("❌ エラーが発生しました: 1st_step9_generate_pdf_niren.py")
 
 def main():
     parser = argparse.ArgumentParser()

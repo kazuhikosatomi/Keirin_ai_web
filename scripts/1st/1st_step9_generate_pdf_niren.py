@@ -38,6 +38,13 @@ def save_pdf(df, output_path):
         elements.append(Spacer(1, 6))
 
         df_page = df_page.drop(columns=["date", "venue_id"], errors="ignore")
+        # カラムの並びを調整: name_kanji の後に prefecture を挿入
+        columns = df_page.columns.tolist()
+        if "name_kanji" in columns and "prefecture" in columns:
+            columns.remove("prefecture")
+            name_idx = columns.index("name_kanji")
+            columns.insert(name_idx + 1, "prefecture")
+            df_page = df_page[columns]
         table_data = [df_page.columns.tolist()] + df_page.values.tolist()
         table = Table(table_data, repeatRows=1)
 

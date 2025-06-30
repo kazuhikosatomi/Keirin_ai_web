@@ -1,88 +1,83 @@
+import argparse
 import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 from pathlib import Path
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-import matplotlib.font_manager as fm
-import argparse
+from reportlab.lib import colors
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--date", type=str, required=True, help="対象日（YYYY-MM-DD）")
-args = parser.parse_args()
-target_date = args.date
-
-# フォント登録関数（PDF用）
 def register_font():
     font_path = Path("fonts/ipaexg.ttf")
     if font_path.exists():
-        font_prop = fm.FontProperties(fname=str(font_path))
-        plt.rcParams["font.family"] = font_prop.get_name()
-        return font_prop
+        pdfmetrics.registerFont(TTFont("IPAexGothic", str(font_path)))
+        return "IPAexGothic"
     else:
         print(f"⚠️ フォントファイルが見つかりません: {font_path}")
-        return None
+        return "Helvetica"
 
-# 表描画用にmatplotlibにもフォントを適用
-def set_matplotlib_font(font_name):
-    plt.rcParams["font.family"] = font_name
+def save_pdf(df, output_path):
+    font_name = register_font()
+    styles = getSampleStyleSheet()
+    style_title = styles["Heading3"]
+    style_title.fontName = font_name
+    style_title.alignment = 1  # center
 
-def export_pdf_from_step5(step5_csv_path, output_pdf_path):
-    font_prop = register_font()
+    doc = SimpleDocTemplate(str(output_path), pagesize=A4)
+    elements = []
 
-    df = pd.read_csv(step5_csv_path)
-    pdf_date = df["date"].iloc[0] if "date" in df.columns else "unknown_date"
+    date = df["date"].iloc[0]
+    title_text = f"競輪AIアタルくん　AI予想　{date}"
+    elements.append(Paragraph(title_text, style_title))
+    elements.append(Spacer(1, 6))
 
-    # venue_name を補完（必要に応じて）
-    venue_master_path = Path("data/master/venue_master.csv")
-    if venue_master_path.exists():
-        venue_df = pd.read_csv(venue_master_path)
-        df = df.merge(venue_df[["venue_id", "venue_name"]], on="venue_id", how="left")
-    else:
-        print("⚠️ venue_master.csv が見つかりません")
+    df = df.drop(columns=["date", "venue_id"], errors="ignore")
 
-    # 欠損処理
-    df = df.fillna("-")
+    # predict_scoreを小数第3位まで0埋めで表示する
+    if "predict_score" in df.columns:
+        df["predict_score"] = df["predict_score"].map(lambda x: f"{x:.3f}")
 
-    # 出力先フォルダの作成
-    output_pdf_path.parent.mkdir(parents=True, exist_ok=True)
+    # top10フラグに★を表示（10位以内に★マーク）
+    if "predict_rank" in df.columns:
+        df["top10"] = df["predict_rank"].apply(lambda x: "★" if int(x) <= 10 else "")
 
-    with PdfPages(output_pdf_path) as pdf:
-        rows_per_page = 25
-        for i in range(0, len(df), rows_per_page):
-            page_df = df.iloc[i:i+rows_per_page]
-            fig, ax = plt.subplots(figsize=(8.5, 11))
-            ax.axis("off")
+    table_data = [df.columns.tolist()] + df.values.tolist()
+    table = Table(table_data, repeatRows=1)
 
-            table_data = []
-            for _, row in page_df.iterrows():
-                table_data.append([
-                    row.get("date", "-"),
-                    row.get("venue_name", "-"),
-                    f'R{int(row["race_no"])}' if pd.notnull(row.get("race_no")) else "-",
-                    f'{row.get("predicted_score", 0.0):.4f}'
-                ])
+    table_style = TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), font_name),
+        ('FONTSIZE', (0, 0), (-1, -1), 8),
+        ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
+        ('BOX', (0, 0), (-1, -1), 0.75, colors.black),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+    ])
 
-            col_labels = ["日付", "競輪場名", "レース", "スコア"]
-            table = ax.table(cellText=table_data, colLabels=col_labels, loc="center")
-            table.auto_set_font_size(False)
-            table.set_fontsize(10)
-            table.scale(1.2, 1.5)
+    if "venue_name" in df.columns:
+        venue_col = df.columns.get_loc("venue_name")
+        prev_venue = None
+        for i, row in enumerate(df.itertuples(index=False), start=1):  # 1行目はヘッダーのため +1
+            current_venue = getattr(row, "venue_name", None)
+            if prev_venue is not None and current_venue != prev_venue:
+                table_style.add('LINEABOVE', (0, i), (-1, i), 0.75, colors.black)
+            prev_venue = current_venue
 
-            for key, cell in table.get_celld().items():
-                if font_prop:
-                    cell.set_text_props(fontproperties=font_prop)
+    table.setStyle(table_style)
+    elements.append(table)
 
-            pdf.savefig(fig)
-            plt.close(fig)
+    doc.build(elements)
+    print(f"✅ PDF出力完了: {output_path}")
 
-    print(f"✅ PDF出力完了: {output_pdf_path}")
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", required=True)
+    args = parser.parse_args()
 
-# 実行部分
+    input_path = Path(f"output/predict/csv/7th/final_prediction_arare_{args.date}.csv")
+    output_path = Path(f"docs/predict/pdf/7th/final_prediction_arare_{args.date}.pdf")
+
+    df = pd.read_csv(input_path)
+    save_pdf(df, output_path)
+
 if __name__ == "__main__":
-    input_csv = Path("data/7th/tmp/step5_2_predictions.csv")
-    # まずDataFrameを読み込んで日付を取得
-    df = pd.read_csv(input_csv)
-    pdf_date = df["date"].iloc[0] if "date" in df.columns else "unknown_date"
-    output_pdf = Path(f"docs/predict/pdf/7th/final_prediction_arare_{pdf_date}.pdf")
-    export_pdf_from_step5(input_csv, output_pdf)
+    main()

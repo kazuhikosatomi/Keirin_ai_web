@@ -42,7 +42,6 @@ for date in date_list:
         features.append(race_dict)
 
     all_features.extend(features)
-    print(f"✅ 処理完了: {date}")
 
 # 最終出力
 out_df = pd.DataFrame(all_features)
