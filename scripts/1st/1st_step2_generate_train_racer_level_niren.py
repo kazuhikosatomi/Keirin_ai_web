@@ -49,18 +49,32 @@ train_data_list = [df_merged]
 
 train_df = pd.concat(train_data_list, ignore_index=True)
 
-# 前日の日付を取得
-current_date = datetime.strptime(date, "%Y-%m-%d")
-prev_date = (current_date - timedelta(days=1)).strftime("%Y-%m-%d")
+# 1年分のフィードバックファイルをまとめて読み込み
+feedback_dir = Path("data/1st/step7")
+feedback_dfs = []
+for file in sorted(feedback_dir.glob("step7_train_feedback_only_niren_*.csv")):
+    file_date_str = file.stem.split("_")[-1]
+    try:
+        file_date = datetime.strptime(file_date_str, "%Y-%m-%d")
+    except ValueError:
+        continue
+    if start_date <= file_date <= cutoff_date:
+        df_fb = pd.read_csv(file)
+        if "hit" in df_fb.columns:
+            df_fb = df_fb[["racer_id", "date", "race_no", "hit"]]
+            df_fb["date"] = pd.to_datetime(df_fb["date"])
+            df_fb["race_no"] = df_fb["race_no"].astype(int)
+            feedback_dfs.append(df_fb)
 
-# 前日のフィードバックファイルを結合（存在すれば）
-feedback_path = Path(f"data/1st/step7/step7_train_feedback_only_niren_{prev_date}.csv")
-if feedback_path.exists():
-    print(f"🔁 前日フィードバック読み込み: {feedback_path}")
-    feedback_df = pd.read_csv(feedback_path)
-    train_df = pd.concat([train_df, feedback_df], ignore_index=True)
+# 結合してマージ
+if feedback_dfs:
+    feedback_all = pd.concat(feedback_dfs, ignore_index=True)
+    train_df["date"] = pd.to_datetime(train_df["date"])
+    train_df["race_no"] = train_df["race_no"].astype(int)
+    train_df = pd.merge(train_df, feedback_all, on=["racer_id", "date", "race_no"], how="left")
+    print(f"🔁 フィードバック結合: {len(feedback_all)} 件")
 else:
-    print(f"⚠️ フィードバックファイルなし: {feedback_path}")
+    print("⚠️ 有効なフィードバックファイルが見つかりませんでした")
 
 # 出力
 train_df.to_csv(OUTPUT_PATH, index=False)

@@ -4,7 +4,7 @@ import argparse
 
 def main(target_date):
     # 入力ファイルパス（Step5の予測結果）
-    input_path = Path(f"data/1st/tmp/step5_predicted_rank.csv")
+    input_path = Path(f"data/1st/step5/step5_predicted_rank_{target_date}.csv")
     output_path = Path(f"output/predict/csv/1st/final_prediction_niren_{target_date}.csv")
 
     # Step5の予測CSVを読み込み

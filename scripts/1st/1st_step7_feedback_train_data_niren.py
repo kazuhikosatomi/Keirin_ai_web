@@ -58,19 +58,19 @@ def main():
                       on=["date", "venue_id", "race_no", "car_no"])
     merged["hit"] = merged["hit"].fillna(0)
 
-    # ベースとなる出力する特徴量列
-    base_feature_cols = [
-        "racer_id", "date", "car_no", "rank", "line_pos", "line_id",
-        "grade", "venue_id", "prefecture", "race_no", "age", "hit"
+    final_cols = [
+        "racer_id", "name_kanji", "date", "venue_id", "race_no", "rank", "hit"
     ]
 
-    # オプションの列（存在すれば追加）
-    optional_cols = ["area", "group"]
-    feature_cols = base_feature_cols + [col for col in optional_cols if col in merged.columns]
+    # name_kanji_x/y を name_kanji にリネーム
+    if "name_kanji_x" in merged.columns:
+        merged = merged.rename(columns={"name_kanji_x": "name_kanji"})
+    elif "name_kanji_y" in merged.columns:
+        merged = merged.rename(columns={"name_kanji_y": "name_kanji"})
 
     output_path = OUTPUT_PATH / f"step7_train_feedback_only_niren_{target_date}.csv"
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    merged[feature_cols].to_csv(output_path, index=False)
+    merged[final_cols].to_csv(output_path, index=False)
     print(f"✅ フィードバック学習データを保存しました: {output_path}")
 
 if __name__ == "__main__":

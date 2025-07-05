@@ -9,7 +9,9 @@ args = parser.parse_args()
 target_date = args.date
 
 entry_path = f"data/1st/tmp/step4_entry_with_features.csv"
-output_path = f"data/1st/tmp/step5_predicted_rank.csv"
+output_dir = Path("data/1st/step5")
+output_dir.mkdir(parents=True, exist_ok=True)
+output_path = output_dir / f"step5_predicted_rank_{target_date}.csv"
 model_path = f"data/1st/tmp/step3_rank_model.pkl"
 
 entry_df = pd.read_csv(entry_path)

@@ -59,7 +59,15 @@ def run_daily_prediction(today: str, yesterday: str):
         print("❌ エラーが発生しました: 1st_step9_generate_pdf_niren.py")
 
 def main():
-    today_date = datetime.today().date()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", help="基準日（YYYY-MM-DD）を指定")
+    args = parser.parse_args()
+
+    if args.date:
+        today_date = datetime.strptime(args.date, "%Y-%m-%d").date()
+    else:
+        today_date = datetime.today().date()
+
     yesterday_date = today_date - timedelta(days=1)
     run_daily_prediction(str(today_date), str(yesterday_date))
 

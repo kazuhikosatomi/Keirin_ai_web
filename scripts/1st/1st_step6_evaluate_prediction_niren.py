@@ -9,7 +9,7 @@ parser.add_argument("--date", required=True, help="予測対象日（例: 2020-0
 args = parser.parse_args()
 target_date = args.date
 
-pred_path = f"data/1st/tmp/step5_predicted_rank.csv"
+pred_path = f"data/1st/step5/step5_predicted_rank_{target_date}.csv"
 pred_df = pd.read_csv(pred_path)
 
 pred_columns_to_keep = ["date", "venue_id", "race_no", "car_no", "area", "group"]
@@ -19,19 +19,15 @@ pred_df = pred_df[pred_columns_to_keep + ["predicted_rank"]]
 odds_df = pd.read_csv(f"data/odds/{target_date[:4]}/odds_{target_date}.csv")
 results_df = pd.read_csv(f"data/results/{target_date[:4]}/results_{target_date}.csv")
 
-# ✅ 各レースで予測上位2人のcar_noを抽出 → 組み合わせ作成（順番付き）およびarea, group保持
+# ✅ 各レースで予測上位2人のcar_noを抽出 → 組み合わせ作成（順番付き）（area, groupは除去）
 def get_pred_comb(df):
     top2 = df.sort_values("predicted_rank").head(2)
     top2_list = top2["car_no"].tolist()
-    area = top2["area"].iloc[0] if not top2["area"].isnull().all() else None
-    group = top2["group"].iloc[0] if not top2["group"].isnull().all() else None
     if len(top2_list) == 2:
         return pd.Series({
-            "pred_comb": f"{top2_list[0]}-{top2_list[1]}",
-            "area": area,
-            "group": group
+            "pred_comb": f"{top2_list[0]}-{top2_list[1]}"
         })
-    return pd.Series({"pred_comb": None, "area": None, "group": None})
+    return pd.Series({"pred_comb": None})
 
 pred_combs = pred_df.groupby(["date", "venue_id", "race_no"]).apply(get_pred_comb).reset_index()
 
