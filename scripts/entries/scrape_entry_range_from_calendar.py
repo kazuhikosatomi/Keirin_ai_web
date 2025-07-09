@@ -26,7 +26,7 @@ def main(start_date_str, end_date_str):
             continue
 
         try:
-            subprocess.run(["python", "scripts/entries/scrape_entry_today.py", date_str], check=True)
+            subprocess.run(["python", "scripts/entries/scrape_entry_today_grade.py", date_str], check=True)
         except subprocess.CalledProcessError:
             print(f"❌ エラー: {date_str} の処理に失敗しました")
 

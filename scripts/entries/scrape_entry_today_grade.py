@@ -4,8 +4,6 @@ import pandas as pd
 from entry_parser import fetch_entry_data
 from datetime import datetime
 import os
-from bs4 import BeautifulSoup
-import requests
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 def main():
@@ -41,34 +39,33 @@ def main():
         calendar_df = calendar_df[calendar_df["date"] == date_str_arg]
         venues = [(row["venue_id"], list(range(1, 13))) for _, row in calendar_df.iterrows()]
 
+    import requests
+    from bs4 import BeautifulSoup
     for venue_id, race_nums in venues:
         print(f"📅 {date_str} | 🏟️ venue_id: {venue_id}")
         for race_num in race_nums:
             url = f"https://www.chariloto.com/keirin/athletes/{date_str}/{venue_id}/{race_num}"
-            # grade情報の取得（HTMLから解析）
-            grade = ""
-            # class_name の抽出（例: "一 般" → "一般"）
+            # --- race_grade抽出 ---
+            race_grade = ""
             class_name = ""
             try:
                 res = requests.get(url)
                 soup = BeautifulSoup(res.content, "html.parser")
                 heading = soup.select_one("h2.heading-title")
                 if heading:
-                    text = heading.get_text(strip=True)
-                    match_grade = re.search(r"\b(G\d|F\d)\b", text)
-                    if match_grade:
-                        grade = match_grade.group(1)
-
-                    # 「G3」より前にある日本語ラベルを class_name として抽出
-                    segments = text.split(grade) if grade else []
-                    if len(segments) >= 1:
-                        before_grade = segments[0]
-                        class_match = re.search(r"([一-龯ぁ-んァ-ン]+)", before_grade)
-                        if class_match:
-                            class_name = class_match.group(1).replace("　", "").replace(" ", "")
+                    text = heading.get_text()
+                    match = re.search(r"\b(GP|G[1-3]|F[1-2])\b", text)
+                    if match:
+                        race_grade = match.group(1)
+                        before_grade = text.split(race_grade)[0]
+                        # 空白を取り除かず、改行や全角スペース含めて直前の行から class_name を抽出
+                        lines = before_grade.strip().splitlines()
+                        lines = [l.strip() for l in lines if l.strip()]
+                        if lines:
+                            class_name = lines[-1].replace("　", "").replace(" ", "")
             except Exception as e:
-                print(f"⚠️ grade/class_name 抽出エラー: {e}")
-
+                print(f"⚠️ race_grade 抽出エラー: {e}")
+            # --- ここまで race_grade抽出 ---
             result = fetch_entry_data(url)
             # print(f"🔍 result for {url} → {result}")
             entries = result.get("entries", [])
@@ -82,7 +79,7 @@ def main():
                 entry["race_num"] = race_num
                 entry["date"] = date_str
                 entry["place_code"] = venue_id
-                entry["grade"] = grade
+                entry["race_grade"] = race_grade
                 entry["class_name"] = class_name
             all_entries.extend(entries)
         print()
