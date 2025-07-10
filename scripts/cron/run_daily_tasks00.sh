@@ -12,20 +12,23 @@ else
 fi
 YESTERDAY=$(date -j -v-1d -f "%Y-%m-%d" "$TODAY" "+%Y-%m-%d")
 
+echo "▶ TODAY = $TODAY"
+echo "▶ YESTERDAY = $YESTERDAY"
+
 LOG_DATE=$(date +%F)
-echo "=== run_daily_tasks.sh0 started at $(date '+%Y-%m-%d %H:%M:%S') ==="
+echo "=== run_daily_tasks.sh00 started at $(date '+%Y-%m-%d %H:%M:%S') ==="
 exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" 2>&1
 
 # 1. オッズのスクレイピング
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/odds/scrape_odds_headless_yesterday.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/odds/scrape_odds_headless_yesterday.py --target "$YESTERDAY" \
   && echo "[OK] odds scrape completed" || echo "[FAIL] odds scrape failed"
 
 # 2. 結果のスクレイピング
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/results/scrape_results_headless_yesterday.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/results/scrape_results_headless_yesterday.py --target "$YESTERDAY" \
   && echo "[OK] results scrape completed" || echo "[FAIL] results scrape failed"
 
 # 3. odds + results のDB登録
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_yesterday_to_duckdb.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_yesterday_to_duckdb.py --target "$YESTERDAY" \
   && echo "[OK] append to DuckDB completed" || echo "[FAIL] append to DuckDB failed"
 
 # 4. 出走表のスクレイピング（当日を引数に指定）
@@ -33,7 +36,7 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
   && echo "[OK] entry scrape completed" || echo "[FAIL] entry scrape failed"
 
 # 5. 出走表のDB登録
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_today_entry_to_duckdb.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_today_entry_to_duckdb.py --target "$TODAY" \
   && echo "[OK] append today entry to DuckDB completed" || echo "[FAIL] append today entry to DuckDB failed"
 
 ###############################################################################
@@ -43,19 +46,19 @@ mkdir -p data/train
 ###############################################################################
 
 # 6-9a. モデル実行（run_backtest_predict_niren.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/1st/run_daily_predict_niren.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/1st/run_daily_predict_niren.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_niren.py completed" || echo "[FAIL] run_backtest_predict_niren.py failed"
 
 # 6-9b. モデル実行（run_backtest_predict_trio.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_daily_predict_trio.py  \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_daily_predict_trio.py --date "$TODAY"  \
   && echo "[OK] run_backtest_predict_trio.py completed" || echo "[FAIL] run_backtest_predict_trio.py failed"
 
 # 6-9c. モデル実行（run_backtest_predict_arare.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/5th/run_daily_predict_arare.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/5th/run_daily_predict_arare.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_arare.py completed" || echo "[FAIL] run_backtest_predict_arare.py failed"
 
 # 6-9d. モデル実行（run_backtest_predict_arare_race.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/7th/run_daily_predict_arare_race.py \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/7th/run_daily_predict_arare_race.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_arare_race.py completed" || echo "[FAIL] run_backtest_predict_arare_race.py failed"
 ###############################################################################
 
