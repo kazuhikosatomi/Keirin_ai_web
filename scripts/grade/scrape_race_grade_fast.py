@@ -71,13 +71,20 @@ def save_to_csv(data, date_str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--start", required=True, help="Start date (YYYY-MM-DD)")
-    parser.add_argument("--end", required=True, help="End date (YYYY-MM-DD)")
+    parser.add_argument("--start", help="Start date (YYYY-MM-DD)")
+    parser.add_argument("--end", help="End date (YYYY-MM-DD)")
+    parser.add_argument("--target", help="Single date (YYYY-MM-DD)")
     args = parser.parse_args()
 
     try:
-        start_date = datetime.strptime(args.start, "%Y-%m-%d")
-        end_date = datetime.strptime(args.end, "%Y-%m-%d")
+        if args.target:
+            start_date = end_date = datetime.strptime(args.target, "%Y-%m-%d")
+        elif args.start and args.end:
+            start_date = datetime.strptime(args.start, "%Y-%m-%d")
+            end_date = datetime.strptime(args.end, "%Y-%m-%d")
+        else:
+            print("❌ 日付指定が不正です。--target または --start/--end を指定してください。")
+            sys.exit(1)
     except ValueError:
         print("❌ Invalid date format. Use YYYY-MM-DD")
         sys.exit(1)

@@ -1,24 +1,43 @@
 import pandas as pd
+import argparse
+from pathlib import Path
 
-# 読み込み：resultsをentryと見立てる
-df_entry = pd.read_csv("data/results/2020/results_2020-01-01.csv")
+def main(target_date: str):
+    base_dir = Path("data/2nd/tmp")
+    if (Path(f"data/entries/{target_date[:4]}/entry_{target_date}.csv")).exists():
+        entry_path = Path(f"data/entries/{target_date[:4]}/entry_{target_date}.csv")
+    else:
+        entry_path = Path(f"data/results/{target_date[:4]}/results_{target_date}.csv")
+    train_path = base_dir / "step2_train_racer_level.csv"
+    output_path = Path("data/2nd/tmp") / "step4_entry_with_features.csv"
 
-# 読み込み：racerごとの過去成績（step1の出力）
-df_stats = pd.read_csv("data/2nd/racer_stats_2025_2029.csv")
+    entry_df = pd.read_csv(entry_path)
+    train_df = pd.read_csv(train_path, low_memory=False)
+    train_df["date"] = pd.to_datetime(train_df["date"], format='mixed').dt.strftime("%Y-%m-%d")
+    # train_df = train_df[train_df["date"] == target_date]
+    train_df.sort_values("date", ascending=False, inplace=True)
+    train_df = train_df.drop_duplicates(subset=["racer_id"], keep="first")
 
-# 不要なカラムを削除（entry_likeとして必要なものだけ残す）
-df_entry = df_entry[[
-    "racer_id", "date", "car_no", "line_pos", "line_id", "grade",
-    "venue_id", "prefecture", "race_no", "age"
-]]
+    # entry_df に含まれるカラムと重複するものは除外（racer_id を除く）
+    drop_cols = [col for col in train_df.columns if col in entry_df.columns and col != "racer_id"]
+    train_df = train_df.drop(columns=drop_cols)
 
-# 結合：選手IDで過去成績をマージ
-df_entry_like = pd.merge(df_entry, df_stats, on="racer_id", how="left")
+    # ✅ 'hit'列が含まれていれば除外（予測には不要）
+    if "hit" in train_df.columns:
+        train_df = train_df.drop(columns=["hit"])
 
-# rank列は除外（予測対象のため）
-if "rank" in df_entry_like.columns:
-    df_entry_like = df_entry_like.drop(columns=["rank"])
+    # 特徴量をマージ（racer_id をキーにする）
+    merged = pd.merge(entry_df, train_df, on="racer_id", how="left")
+    if 'area' not in merged.columns or 'group' not in merged.columns:
+        print("⚠️ Warning: 'area' or 'group' not found after merge.")
 
-# 保存
-df_entry_like.to_csv("data/2nd/entry_like_2020-01-01.csv", index=False)
-print("✅ entry_likeファイルの保存完了: data/2nd/entry_like_2020-01-01.csv")
+    # 出力保存
+    merged.to_csv(output_path, index=False)
+    print(f"📤 上書き保存: {output_path}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", type=str, required=True, help="対象日付 (例: 2020-01-03)")
+    args = parser.parse_args()
+
+    main(args.date)

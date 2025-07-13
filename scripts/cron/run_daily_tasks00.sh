@@ -23,16 +23,26 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/odds/scrape_odds_headless_yesterday.py --target "$YESTERDAY" \
   && echo "[OK] odds scrape completed" || echo "[FAIL] odds scrape failed"
 
+
 # 2. 結果のスクレイピング
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/results/scrape_results_headless_yesterday.py --target "$YESTERDAY" \
   && echo "[OK] results scrape completed" || echo "[FAIL] results scrape failed"
+
+
+# 2.5. グレード情報のスクレイピング
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/grade/scrape_race_grade_fast.py --target "$YESTERDAY" \
+  && echo "[OK] race grade scrape completed" || echo "[FAIL] race grade scrape failed"
+
+# 2.6. results に race_grade をマージ
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/merge_results_with_grade.py --target "$YESTERDAY" \
+  && echo "[OK] merge results with grade completed" || echo "[FAIL] merge results with grade failed"
 
 # 3. odds + results のDB登録
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_yesterday_to_duckdb.py --target "$YESTERDAY" \
   && echo "[OK] append to DuckDB completed" || echo "[FAIL] append to DuckDB failed"
 
 # 4. 出走表のスクレイピング（当日を引数に指定）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today.py "$TODAY" \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today_grade.py "$TODAY" \
   && echo "[OK] entry scrape completed" || echo "[FAIL] entry scrape failed"
 
 # 5. 出走表のDB登録
@@ -46,7 +56,7 @@ mkdir -p data/train
 ###############################################################################
 
 # 6-9a. モデル実行（run_backtest_predict_niren.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/1st/run_daily_predict_niren.py --date "$TODAY" \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/2nd/run_daily_predict_niren.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_niren.py completed" || echo "[FAIL] run_backtest_predict_niren.py failed"
 
 # 6-9b. モデル実行（run_backtest_predict_trio.py）
@@ -63,7 +73,7 @@ mkdir -p data/train
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット
-FINAL_PREDICTION_FILE="output/predict/csv/1st/final_prediction_niren_${TODAY}.csv"
+FINAL_PREDICTION_FILE="output/predict/csv/2nd/final_prediction_niren_${TODAY}.csv"
 if [ -f "$FINAL_PREDICTION_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
@@ -85,7 +95,7 @@ else
   echo "[SKIP] final prediction file not found: $FINAL_PREDICTION_FILE"
 fi
 
-FINAL_PREDICTION_PDF="docs/predict/pdf/1st/final_prediction_niren_${TODAY}.pdf"
+FINAL_PREDICTION_PDF="docs/predict/pdf/2nd/final_prediction_niren_${TODAY}.pdf"
 if [ -f "$FINAL_PREDICTION_PDF" ]; then
   git status --porcelain | grep -q . && {
     git add "$FINAL_PREDICTION_PDF"
@@ -144,7 +154,7 @@ fi
 
 echo "#11: Add yesterday's PDF to archive"
 YESTERDAY=$(date -v-1d "+%Y-%m-%d")
-YESTERDAY_FILE="docs/predict/pdf/1st/final_prediction_niren_${YESTERDAY}.pdf"
+YESTERDAY_FILE="docs/predict/pdf/2nd/final_prediction_niren_${YESTERDAY}.pdf"
 ARCHIVE_HTML="docs/archive.html"
 
 if [ -f "$YESTERDAY_FILE" ]; then
@@ -153,7 +163,7 @@ if [ -f "$YESTERDAY_FILE" ]; then
   JP_DATE="${YESTERDAY} の予想"
   # すでにリンクが存在しない場合のみ追記
   if ! grep -q "$YESTERDAY_FILE" "$ARCHIVE_HTML"; then
-    INSERT_LINE="    <li><a href=\"predict/pdf/1st/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
+    INSERT_LINE="    <li><a href=\"predict/pdf/2nd/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
     awk -v insert="$INSERT_LINE" '/<!-- ARCHIVE_INSERT_POINT -->/ {
         print;
         print insert;
@@ -183,7 +193,7 @@ PDF_FILE_NAME="final_prediction_niren_${TODAY}.pdf"
 INDEX_HTML_PATH="./docs/index.html"
 
 # index.htmlの中のリンク部分を書き換える（macOS用）
-sed -i '' -E "s|href=\"./predict/pdf/1st/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/1st/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
+sed -i '' -E "s|href=\"./predict/pdf/2nd/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/2nd/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
 sed -i '' -E "s|PDFを開く（.*）|PDFを開く（${TODAY_JP}）|g" "${INDEX_HTML_PATH}"
 
 if git status --porcelain | grep -q 'docs/index.html'; then
