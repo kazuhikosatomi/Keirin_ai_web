@@ -6,13 +6,14 @@ def run_steps_for_date(target_date: str, end_date: str):
     print(f"\n📅 {target_date} の処理を開始します")
 
     steps = [
+        "3rd_step0_generate_race_features.py",
         "3rd_step1_generate_racer_stats.py",
-        "3rd_step2_generate_train_racer_level.py",
+        "3rd_step2_generate_train_racer_level_niren.py",
         "3rd_step3_train_model.py",
-        "3rd_step4-1_generate_entry_like.py",
+        "3rd_step4_generate_entry_like.py",
         "3rd_step5_predict_rank.py",
         "3rd_step6_evaluate_prediction_niren.py",
-        "3rd_step7_feedback_train_data.py",
+        "3rd_step7_feedback_train_data_niren.py",
     ]
 
     for i, step in enumerate(steps, start=1):
@@ -32,14 +33,23 @@ def run_steps_for_date(target_date: str, end_date: str):
             break
 
     if target_date == end_date:
-        print(f"\n🚀 Step8: 実行中: 3rd_step8_generate_final_prediction.py")
+        print(f"\n🚀 Step8: 実行中: 3rd_step8_generate_final_prediction_niren.py")
         try:
             subprocess.run(
-                ["python", "scripts/3rd/3rd_step8_generate_final_prediction.py", "--date", target_date],
+                ["python", "scripts/3rd/3rd_step8_generate_final_prediction_niren.py", "--date", target_date],
                 check=True
             )
         except subprocess.CalledProcessError:
-            print("❌ エラーが発生しました: 3rd_step8_generate_final_prediction.py")
+            print("❌ エラーが発生しました: 3rd_step8_generate_final_prediction_niren.py")
+
+        print(f"\n🚀 Step9: 実行中: 3rd_step9_generate_pdf_niren.py")
+        try:
+            subprocess.run(
+                ["python", "scripts/3rd/3rd_step9_generate_pdf_niren.py", "--date", target_date],
+                check=True
+            )
+        except subprocess.CalledProcessError:
+            print("❌ エラーが発生しました: 3rd_step9_generate_pdf_niren.py")
 
 def main():
     parser = argparse.ArgumentParser()

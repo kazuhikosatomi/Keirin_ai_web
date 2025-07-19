@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 RESULTS_DIR = Path("data/results")
-EVAL_DIR = Path("data/3rd")
-OUTPUT_PATH = Path("data/3rd")
+EVAL_DIR = Path("data/3rd/step6")
+OUTPUT_PATH = Path("data/3rd/step7")
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -17,7 +17,7 @@ def main():
     target_date = datetime.strptime(args.date, "%Y-%m-%d").date()
     prev_date = target_date - timedelta(days=1)
 
-    eval_path = f"data/3rd/step6_evaluation_with_odds_{target_date}_niren.csv"
+    eval_path = f"{EVAL_DIR}/step6_evaluation_niren_{target_date}.csv"
     result_path = f"data/results/{str(target_date.year)}/results_{target_date}.csv"
 
     eval_file = Path(eval_path)
@@ -27,7 +27,7 @@ def main():
         print("⚠️ 評価ファイルまたは結果ファイルが見つかりません")
         return
 
-    print(f"📥 評価ファイル: {eval_path}")
+    print(f"📥 評価ファイル読み込み: {eval_path}")
     print(f"📥 結果ファイル: {result_path}")
 
     eval_df = pd.read_csv(eval_file)
@@ -58,14 +58,19 @@ def main():
                       on=["date", "venue_id", "race_no", "car_no"])
     merged["hit"] = merged["hit"].fillna(0)
 
-    # 出力する特徴量列
-    feature_cols = [
-        "racer_id", "date", "car_no", "rank", "line_pos", "line_id",
-        "grade", "venue_id", "prefecture", "race_no", "age", "hit"
+    final_cols = [
+        "racer_id", "name_kanji", "date", "venue_id", "race_no", "rank", "hit"
     ]
 
-    output_path = OUTPUT_PATH / f"step7_train_feedback_only_{target_date}.csv"
-    merged[feature_cols].to_csv(output_path, index=False)
+    # name_kanji_x/y を name_kanji にリネーム
+    if "name_kanji_x" in merged.columns:
+        merged = merged.rename(columns={"name_kanji_x": "name_kanji"})
+    elif "name_kanji_y" in merged.columns:
+        merged = merged.rename(columns={"name_kanji_y": "name_kanji"})
+
+    output_path = OUTPUT_PATH / f"step7_train_feedback_only_niren_{target_date}.csv"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    merged[final_cols].to_csv(output_path, index=False)
     print(f"✅ フィードバック学習データを保存しました: {output_path}")
 
 if __name__ == "__main__":

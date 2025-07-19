@@ -8,9 +8,11 @@ parser.add_argument("--date", required=True, help="対象日付 (例: 2020-01-01
 args = parser.parse_args()
 target_date = args.date
 
-entry_path = f"data/3rd/step4_entry_with_features_{target_date}.csv"
-output_path = f"data/3rd/step5_predicted_rank_{target_date}.csv"
-model_path = f"models/3rd/step3_rank_model_until_{target_date}.pkl"
+entry_path = f"data/3rd/tmp/step4_entry_with_features.csv"
+output_dir = Path("data/3rd/step5")
+output_dir.mkdir(parents=True, exist_ok=True)
+output_path = output_dir / f"step5_predicted_rank_{target_date}.csv"
+model_path = f"data/3rd/tmp/step3_rank_model.pkl"
 
 entry_df = pd.read_csv(entry_path)
 
@@ -28,11 +30,17 @@ if "racer_id" in cols and "name_kanji" in cols:
 # モデル読み込み
 model = joblib.load(model_path)
 
+missing_cols = [col for col in model.feature_name() if col not in entry_df.columns]
+if missing_cols:
+    print(f"⚠️ 欠損しているカラム: {missing_cols}")
+
 # 特徴量列
 X = entry_df[model.feature_name()].copy()
-for col in ["grade", "prefecture", "venue_id"]:
-    if col in X.columns:
+
+for col in X.columns:
+    if X[col].dtype == "object":
         X[col] = X[col].astype('category').cat.codes
+
 
 # 予測実行
 entry_df["predicted_score"] = model.predict(X)
@@ -54,4 +62,4 @@ entry_df = entry_df[cols]
 
 # 出力保存
 entry_df.to_csv(output_path, index=False)
-print(f"✅ 予測結果を保存しました: {output_path}")
+print(f"📤 上書き保存: {output_path}")
