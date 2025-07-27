@@ -42,13 +42,29 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
   && echo "[OK] append to DuckDB completed" || echo "[FAIL] append to DuckDB failed"
 
 # 4. 出走表のスクレイピング（当日を引数に指定）
+# 当日分の出走表
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today_grade.py "$TODAY" \
-  && echo "[OK] entry scrape completed" || echo "[FAIL] entry scrape failed"
+  && echo "[OK] entry scrape completed (today)" || echo "[FAIL] entry scrape failed (today)"
+
+# 前日分の出走表も取得し直す
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/entries/scrape_entry_today_grade.py "$YESTERDAY" \
+  && echo "[OK] entry scrape completed (yesterday)" || echo "[FAIL] entry scrape failed (yesterday)"
 
 # 5. 出走表のDB登録
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_today_entry_to_duckdb.py --target "$TODAY" \
   && echo "[OK] append today entry to DuckDB completed" || echo "[FAIL] append today entry to DuckDB failed"
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/append/append_today_entry_to_duckdb.py --target "$YESTERDAY" \
+  && echo "[OK] append yesterday entry to DuckDB completed" || echo "[FAIL] append yesterday entry to DuckDB failed"
 
+# 5.5 荒れ度分析ステップ（scripts/arare/）
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 scripts/arare/arare0_arare_label.py --date "$TODAY" \
+  && echo "[OK] arare0_arare_label.py completed" || echo "[FAIL] arare0_arare_label.py failed"
+
+ /Users/satomi/Documents/keirin/venv_shared/bin/python3 scripts/arare/arare1_race_stats.py --date "$TODAY" \
+  && echo "[OK] arare1_race_stats.py completed" || echo "[FAIL] arare1_race_stats.py failed"
+
+ /Users/satomi/Documents/keirin/venv_shared/bin/python3 scripts/arare/arare2_merge.py --date "$TODAY" \
+  && echo "[OK] arare2_merge.py completed" || echo "[FAIL] arare2_merge.py failed"
 ###############################################################################
 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
