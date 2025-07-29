@@ -88,7 +88,7 @@ mkdir -p data/train
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット
-FINAL_PREDICTION_FILE="docs/predict/csv/3nd/final_prediction_niren_${TODAY}.csv"
+FINAL_PREDICTION_FILE="docs/predict/csv/3rd/final_prediction_niren_${TODAY}.csv"
 if [ -f "$FINAL_PREDICTION_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
@@ -110,7 +110,7 @@ else
   echo "[SKIP] final prediction file not found: $FINAL_PREDICTION_FILE"
 fi
 
-FINAL_PREDICTION_PDF="docs/predict/pdf/3nd/final_prediction_niren_${TODAY}.pdf"
+FINAL_PREDICTION_PDF="docs/predict/pdf/3rd/final_prediction_niren_${TODAY}.pdf"
 if [ -f "$FINAL_PREDICTION_PDF" ]; then
   git status --porcelain | grep -q . && {
     git add "$FINAL_PREDICTION_PDF"
@@ -169,7 +169,7 @@ fi
 
 echo "#11: Add yesterday's PDF to archive"
 YESTERDAY=$(date -v-1d "+%Y-%m-%d")
-YESTERDAY_FILE="docs/predict/pdf/3nd/final_prediction_niren_${YESTERDAY}.pdf"
+YESTERDAY_FILE="docs/predict/pdf/3rd/final_prediction_niren_${YESTERDAY}.pdf"
 ARCHIVE_HTML="docs/archive.html"
 
 if [ -f "$YESTERDAY_FILE" ]; then
@@ -178,7 +178,7 @@ if [ -f "$YESTERDAY_FILE" ]; then
   JP_DATE="${YESTERDAY} の予想"
   # すでにリンクが存在しない場合のみ追記
   if ! grep -q "$YESTERDAY_FILE" "$ARCHIVE_HTML"; then
-    INSERT_LINE="    <li><a href=\"predict/pdf/3nd/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
+    INSERT_LINE="    <li><a href=\"predict/pdf/3rd/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
     awk -v insert="$INSERT_LINE" '/<!-- ARCHIVE_INSERT_POINT -->/ {
         print;
         print insert;
@@ -208,7 +208,7 @@ PDF_FILE_NAME="final_prediction_niren_${TODAY}.pdf"
 INDEX_HTML_PATH="./docs/index.html"
 
 # index.htmlの中のリンク部分を書き換える（macOS用）
-sed -i '' -E "s|href=\"./predict/pdf/3nd/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/3nd/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
+sed -i '' -E "s|href=\"./predict/pdf/3rd/final_prediction_niren_.*.pdf\"|href=\"./predict/pdf/3rd/${PDF_FILE_NAME}\"|g" "${INDEX_HTML_PATH}"
 sed -i '' -E "s|PDFを開く（.*）|PDFを開く（${TODAY_JP}）|g" "${INDEX_HTML_PATH}"
 
 if git status --porcelain | grep -q 'docs/index.html'; then
