@@ -66,13 +66,12 @@ exec >> "/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/logs/daily_tasks_${
  /Users/satomi/Documents/keirin/venv_shared/bin/python3 scripts/arare/arare2_merge.py --date "$TODAY" \
   && echo "[OK] arare2_merge.py completed" || echo "[FAIL] arare2_merge.py failed"
 ###############################################################################
-/Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 mkdir -p data/train
 ###############################################################################
 
 # 6-9a. モデル実行（run_backtest_predict_niren.py）
-/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/3nd/run_daily_predict_niren.py --date "$TODAY" \
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/3rd/run_daily_predict_niren.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_niren.py completed" || echo "[FAIL] run_backtest_predict_niren.py failed"
 
 # 6-9b. モデル実行（run_backtest_predict_trio.py）
