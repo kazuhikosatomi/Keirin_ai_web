@@ -7,13 +7,13 @@ def run_daily_prediction(today: str, yesterday: str):
 
     # Step 6 and 7 for yesterday
     for i, step in enumerate([
-        "2nd_step6_evaluate_prediction_niren.py",
-        "2nd_step7_feedback_train_data_niren.py"
+        "3rd_step6_evaluate_prediction_niren.py",
+        "3rd_step7_feedback_train_data_niren.py"
     ], start=6):
         print(f"\n🔁 Step{i}: 実行中（昨日のデータ）: {step}")
         try:
             subprocess.run(
-                ["python", f"scripts/2nd/{step}", "--date", yesterday],
+                ["python", f"scripts/3rd/{step}", "--date", yesterday],
                 check=True
             )
         except subprocess.CalledProcessError:
@@ -22,16 +22,16 @@ def run_daily_prediction(today: str, yesterday: str):
 
     # Step 1 to 5 for today
     for i, step in enumerate([
-        "2nd_step1_generate_racer_stats.py",
-        "2nd_step2_generate_train_racer_level_niren.py",
-        "2nd_step3_train_model.py",
-        "2nd_step4_generate_entry_like.py",
-        "2nd_step5_predict_rank.py",
+        "3rd_step1_generate_racer_stats.py",
+        "3rd_step2_generate_train_racer_level_niren.py",
+        "3rd_step3_train_model.py",
+        "3rd_step4_generate_entry_like.py",
+        "3rd_step5_predict_rank.py",
     ], start=1):
         print(f"\n🚀 Step{i}: 実行中（本日データ）: {step}")
         try:
             subprocess.run(
-                ["python", f"scripts/2nd/{step}", "--date", today],
+                ["python", f"scripts/3rd/{step}", "--date", today],
                 check=True
             )
         except subprocess.CalledProcessError:
@@ -39,24 +39,24 @@ def run_daily_prediction(today: str, yesterday: str):
             return
 
     # Step 8 for today
-    print(f"\n📤 Step8: 実行中: 2nd_step8_generate_final_prediction_niren.py")
+    print(f"\n📤 Step8: 実行中: 3rd_step8_generate_final_prediction_niren.py")
     try:
         subprocess.run(
-            ["python", "scripts/2nd/2nd_step8_generate_final_prediction_niren.py", "--date", today],
+            ["python", "scripts/3rd/3rd_step8_generate_final_prediction_niren.py", "--date", today],
             check=True
         )
     except subprocess.CalledProcessError:
-        print("❌ エラーが発生しました: 2nd_step8_generate_final_prediction_niren.py")
+        print("❌ エラーが発生しました: 3rd_step8_generate_final_prediction_niren.py")
 
     # Step 9 for today
-    print(f"\n🖨️ Step9: 実行中: 2nd_step9_generate_pdf_niren.py")
+    print(f"\n🖨️ Step9: 実行中: 3rd_step9_generate_pdf_niren.py")
     try:
         subprocess.run(
-            ["python", "scripts/2nd/2nd_step9_generate_pdf_niren.py", "--date", today],
+            ["python", "scripts/3rd/3rd_step9_generate_pdf_niren.py", "--date", today],
             check=True
         )
     except subprocess.CalledProcessError:
-        print("❌ エラーが発生しました: 2nd_step9_generate_pdf_niren.py")
+        print("❌ エラーが発生しました: 3rd_step9_generate_pdf_niren.py")
 
 def main():
     parser = argparse.ArgumentParser()
