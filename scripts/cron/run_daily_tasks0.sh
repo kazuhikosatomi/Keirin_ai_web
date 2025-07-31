@@ -147,7 +147,7 @@ else
   echo "[SKIP] final TRIO prediction file not found: $FINAL_PREDICTION_TRIO_FILE"
 fi
 
-FINAL_PREDICTION_ARARE_FILE="output/predict/5th/final_prediction_arare_${TODAY}.csv"
+FINAL_PREDICTION_ARARE_FILE="docs/predict/8th/final_prediction_arare_${TODAY}.pdf"
 if [ -f "$FINAL_PREDICTION_ARARE_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
