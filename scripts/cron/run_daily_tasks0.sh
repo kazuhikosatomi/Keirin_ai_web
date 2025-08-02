@@ -147,7 +147,7 @@ else
   echo "[SKIP] final TRIO prediction file not found: $FINAL_PREDICTION_TRIO_FILE"
 fi
 
-FINAL_PREDICTION_ARARE_FILE="docs/predict/8th/final_prediction_arare_${TODAY}.pdf"
+FINAL_PREDICTION_ARARE_FILE="docs/predict/pdf/8th/final_prediction_arare_${TODAY}.pdf"
 if [ -f "$FINAL_PREDICTION_ARARE_FILE" ]; then
   git config --global user.name "GitHub Actions"
   git config --global user.email "actions@github.com"
@@ -169,7 +169,7 @@ fi
 
 echo "#11: Add yesterday's PDF to archive"
 YESTERDAY=$(date -v-1d "+%Y-%m-%d")
-YESTERDAY_FILE="docs/predict/pdf/3rd/final_prediction_niren_${YESTERDAY}.pdf"
+YESTERDAY_FILE="docs/results/pdf/3rd/prediction_with_results_${YESTERDAY}.pdf"
 ARCHIVE_HTML="docs/archive.html"
 
 if [ -f "$YESTERDAY_FILE" ]; then
@@ -178,7 +178,7 @@ if [ -f "$YESTERDAY_FILE" ]; then
   JP_DATE="${YESTERDAY} の予想"
   # すでにリンクが存在しない場合のみ追記
   if ! grep -q "$YESTERDAY_FILE" "$ARCHIVE_HTML"; then
-    INSERT_LINE="    <li><a href=\"predict/pdf/3rd/final_prediction_niren_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
+    INSERT_LINE="    <li><a href=\"results/pdf/3rd/prediction_with_results_${YESTERDAY}.pdf\" target=\"_blank\">${JP_DATE}</a></li>"
     awk -v insert="$INSERT_LINE" '/<!-- ARCHIVE_INSERT_POINT -->/ {
         print;
         print insert;

@@ -16,7 +16,7 @@ def main(target_date):
 
     # 必要な列だけ抽出
     expected_columns = [
-        "date", "venue_id", "race_no",
+        "date", "venue_id", "race_grade", "race_no",
         "predicted_rank", "car_no", "name_kanji", "prefecture", "predicted_score", "grade"
     ]
 
@@ -38,7 +38,7 @@ def main(target_date):
 
     df_final = df_final.merge(venue_master[["venue_id", "venue_name"]], on="venue_id", how="left")
     final_columns = [
-        "date", "venue_id", "venue_name", "race_no",
+        "date", "venue_id", "venue_name", "race_grade", "race_no",
         "predicted_rank", "car_no", "name_kanji", "prefecture", "predicted_score", "grade"
     ]
     df_final = df_final[final_columns]
