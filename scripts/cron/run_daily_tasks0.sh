@@ -70,19 +70,19 @@ cd /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web
 mkdir -p data/train
 ###############################################################################
 
-# 6-9a. モデル実行（run_backtest_predict_niren.py）
+# 6-9a. モデル実行3rd（run_backtest_predict_niren.py）
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/3rd/run_daily_predict_niren.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_niren.py completed" || echo "[FAIL] run_backtest_predict_niren.py failed"
 
-# 6-9b. モデル実行（run_backtest_predict_trio.py）
+# 6-9b. モデル実行4th（run_backtest_predict_trio.py）
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/4th/run_daily_predict_trio.py --date "$TODAY"  \
   && echo "[OK] run_backtest_predict_trio.py completed" || echo "[FAIL] run_backtest_predict_trio.py failed"
 
-# 6-9c. モデル実行（run_backtest_predict_arare.py）
+# 6-9c. モデル実行5th（run_backtest_predict_arare.py）
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/5th/run_daily_predict_arare.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_arare.py completed" || echo "[FAIL] run_backtest_predict_arare.py failed"
 
-# 6-9d. モデル実行（run_backtest_predict_arare_race.py）
+# 6-9d. モデル実行8th（run_backtest_predict_arare_race.py）
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/8th/run_daily_predict_arare_race.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_arare_race.py completed" || echo "[FAIL] run_backtest_predict_arare_race.py failed"
 ###############################################################################
