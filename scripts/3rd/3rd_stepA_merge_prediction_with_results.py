@@ -32,10 +32,18 @@ def main():
     df_result = pd.read_csv(result_path)
 
     # 🧹 必要なカラムだけ抽出（rankを含める）
-    df_result = df_result[["date", "venue_id", "race_no", "car_no", "rank"]]
+    df_result = df_result[["date", "venue_id", "race_grade", "race_no", "car_no", "rank"]]
 
     # 🔗 マージ処理
     df_merged = pd.merge(df_pred, df_result, on=["date", "venue_id", "race_no", "car_no"], how="left")
+    # race_gradeをrace_noの前に移動
+    if "race_grade" in df_merged.columns:
+        cols = list(df_merged.columns)
+        if "race_no" in cols and "race_grade" in cols:
+            cols.remove("race_grade")
+            race_no_index = cols.index("race_no")
+            cols.insert(race_no_index, "race_grade")
+            df_merged = df_merged[cols]
 
     # 💾 保存
     os.makedirs(os.path.dirname(output_path), exist_ok=True)

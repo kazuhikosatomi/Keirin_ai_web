@@ -9,8 +9,8 @@ def run_daily_prediction(today: str, yesterday: str):
     for i, step in enumerate([
         "3rd_step6_evaluate_prediction_niren.py",
         "3rd_step7_feedback_train_data_niren.py",
-        "3rd_stepA_maege_prediction_with_results.py",
-        "3rd_stepB_generate_pdf_with_results.py"
+        "3rd_stepA_merge_prediction_with_results.py",
+        "3rd_stepB_generate_pdf_niren.py"
     ], start=6):
         print(f"\n🔁 Step{i}: 実行中（昨日のデータ）: {step}")
         try:

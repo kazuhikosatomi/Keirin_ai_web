@@ -21,6 +21,7 @@ for date in date_list:
     print(f"\n==== 処理開始: {base_date} ====")
 
     # 前日処理（フィードバック）
+    subprocess.run(["python", "scripts/3rd/3rd_step6_evaluate_prediction_niren.py", "--date", prev_date])
     subprocess.run(["python", "scripts/3rd/3rd_step7_feedback_train_data_niren.py", "--date", prev_date])
     
     # 前日処理（結果追記）
@@ -34,7 +35,7 @@ for date in date_list:
     subprocess.run(["python", "scripts/3rd/3rd_step3_train_model.py", "--date", base_date])
     subprocess.run(["python", "scripts/3rd/3rd_step4_generate_entry_like.py", "--date", base_date])
     subprocess.run(["python", "scripts/3rd/3rd_step5_predict_rank.py", "--date", base_date])
-    subprocess.run(["python", "scripts/3rd/3rd_step6_evaluate_prediction_niren.py", "--date", base_date])
+    
     subprocess.run(["python", "scripts/3rd/3rd_step8_generate_final_prediction_niren.py", "--date", base_date])
     
     # 最終日のみ出力処理
