@@ -35,7 +35,7 @@ def main():
     df_result = df_result[["date", "venue_id", "race_grade", "race_no", "car_no", "rank"]]
 
     # 🔗 マージ処理
-    df_merged = pd.merge(df_pred, df_result, on=["date", "venue_id", "race_no", "car_no"], how="left")
+    df_merged = pd.merge(df_pred.drop(columns=["race_grade"], errors="ignore"), df_result, on=["date", "venue_id", "race_no", "car_no"], how="left")
     # race_gradeをrace_noの前に移動
     if "race_grade" in df_merged.columns:
         cols = list(df_merged.columns)
