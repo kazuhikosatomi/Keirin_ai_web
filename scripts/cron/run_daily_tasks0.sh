@@ -88,83 +88,44 @@ mkdir -p data/train
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット
-FINAL_PREDICTION_FILE="docs/predict/csv/3rd/final_prediction_niren_${TODAY}.csv"
-if [ -f "$FINAL_PREDICTION_FILE" ]; then
-  git config --global user.name "GitHub Actions"
-  git config --global user.email "actions@github.com"
+git config --global user.name "GitHub Actions"
+git config --global user.email "actions@github.com"
 
-  # 変更があるか確認してからコミット処理を行う
-  git status --porcelain | grep -q . && {
-    git add "$FINAL_PREDICTION_FILE"
-    git commit -m "🤖 Final prediction result for ${TODAY}"
-    
-    # GitHubへのpush（認証情報が必要な環境では失敗する可能性あり）
-    if git push origin main; then
-      echo "✅ final prediction result committed to GitHub"
-    else
-      echo "❌ final prediction result push failed"
-      echo "[FAIL] final prediction result push failed"
-    fi
-  } || echo "[SKIP] No changes to commit"
+TODAY=$(date +%Y-%m-%d)
+YESTERDAY=$(date -v-1d +%Y-%m-%d)
+
+# 対象ファイルを配列にまとめる
+FILES_TO_COMMIT=(
+  "docs/predict/csv/3rd/final_prediction_niren_${TODAY}.csv"
+  "docs/predict/pdf/3rd/final_prediction_niren_${TODAY}.pdf"
+  "output/predict/4th/final_prediction_trio_${TODAY}.csv"
+  "docs/predict/pdf/8th/final_prediction_arare_${TODAY}.pdf"
+  "docs/results/pdf/3rd/prediction_with_result_${YESTERDAY}.pdf"
+)
+
+# 各ファイルをチェックして add
+CHANGED=false
+for FILE in "${FILES_TO_COMMIT[@]}"; do
+  if [ -f "$FILE" ]; then
+    git add "$FILE"
+    CHANGED=true
+    echo "📝 added: $FILE"
+  else
+    echo "⚠️ file not found: $FILE"
+  fi
+done
+
+# 変更があればコミットと push
+if $CHANGED && git status --porcelain | grep -q .; then
+  git commit -m "🤖 Final predictions and results for ${TODAY}"
+  
+  if git push origin main; then
+    echo "✅ All prediction files committed and pushed to GitHub"
+  else
+    echo "❌ GitHub push failed"
+  fi
 else
-  echo "[SKIP] final prediction file not found: $FINAL_PREDICTION_FILE"
-fi
-
-FINAL_PREDICTION_PDF="docs/predict/pdf/3rd/final_prediction_niren_${TODAY}.pdf"
-if [ -f "$FINAL_PREDICTION_PDF" ]; then
-  git status --porcelain | grep -q . && {
-    git add "$FINAL_PREDICTION_PDF"
-    git commit -m "📄 Final prediction PDF for ${TODAY}"
-
-    if git push origin main; then
-      echo "✅ final prediction PDF committed to GitHub"
-    else
-      echo "❌ final prediction PDF push failed"
-      echo "[FAIL] final prediction PDF push failed"
-    fi
-  } || echo "[SKIP] No PDF changes to commit"
-else
-  echo "[SKIP] final prediction PDF file not found: $FINAL_PREDICTION_PDF"
-fi
-
-FINAL_PREDICTION_TRIO_FILE="output/predict/4th/final_prediction_trio_${TODAY}.csv"
-if [ -f "$FINAL_PREDICTION_TRIO_FILE" ]; then
-  git config --global user.name "GitHub Actions"
-  git config --global user.email "actions@github.com"
-
-  git status --porcelain | grep -q . && {
-    git add "$FINAL_PREDICTION_TRIO_FILE"
-    git commit -m "🤖 Final TRIO prediction result for ${TODAY}"
-
-    if git push origin main; then
-      echo "✅ final TRIO prediction result committed to GitHub"
-    else
-      echo "❌ final TRIO prediction result push failed"
-      echo "[FAIL] final TRIO prediction result push failed"
-    fi
-  } || echo "[SKIP] No TRIO changes to commit"
-else
-  echo "[SKIP] final TRIO prediction file not found: $FINAL_PREDICTION_TRIO_FILE"
-fi
-
-FINAL_PREDICTION_ARARE_FILE="docs/predict/pdf/8th/final_prediction_arare_${TODAY}.pdf"
-if [ -f "$FINAL_PREDICTION_ARARE_FILE" ]; then
-  git config --global user.name "GitHub Actions"
-  git config --global user.email "actions@github.com"
-
-  git status --porcelain | grep -q . && {
-    git add "$FINAL_PREDICTION_ARARE_FILE"
-    git commit -m "🤖 Final ARARE prediction result for ${TODAY}"
-
-    if git push origin main; then
-      echo "✅ final ARARE prediction result committed to GitHub"
-    else
-      echo "❌ final ARARE prediction result push failed"
-      echo "[FAIL] final ARARE prediction result push failed"
-    fi
-  } || echo "[SKIP] No ARARE changes to commit"
-else
-  echo "[SKIP] final ARARE prediction file not found: $FINAL_PREDICTION_ARARE_FILE"
+  echo "[SKIP] No changes to commit"
 fi
 
 echo "#11: Add yesterday's PDF to archive"

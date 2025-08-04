@@ -8,14 +8,14 @@ def rank_races_by_arare_score(input_path, output_path):
         print("❌ 'arare_score_mean' カラムが見つかりません")
         return
 
-    # 合成スコア（mean 70%, max 30%）が高い順に順位をつける
-    if "arare_score_max" in df.columns:
-        df["arare_score_combined"] = (
-            0.7 * df["arare_score_mean"] + 0.3 * df["arare_score_max"]
-        )
-        df["arare_rank"] = df["arare_score_combined"].rank(ascending=False, method="min").astype(int)
-    else:
-        df["arare_rank"] = df["arare_score_mean"].rank(ascending=False, method="min").astype(int)
+    # 合成スコア（mean 40%, max 30%, std 20%, min -10%）が高い順に順位をつける
+    df["arare_score_combined"] = (
+        0.4 * df["arare_score_mean"] +
+        0.3 * df["arare_score_max"] +
+        0.2 * df["arare_score_std"] -
+        0.1 * df["arare_score_min"]
+    )
+    df["arare_rank"] = df["arare_score_combined"].rank(ascending=False, method="min").astype(int)
 
     # ソートして見やすく
     df = df.sort_values("arare_rank")
