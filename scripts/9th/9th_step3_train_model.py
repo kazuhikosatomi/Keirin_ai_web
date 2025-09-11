@@ -10,6 +10,11 @@ parser.add_argument('--date', required=True)
 args = parser.parse_args()
 dt = datetime.strptime(args.date, "%Y-%m-%d")
 
+# ---- Logging: Start ----
+SCRIPT_NAME = "9th_step3_train_model.py"
+print(f"🚀 [START] {SCRIPT_NAME} target_date={dt.date()}")
+# ---- /Logging: Start ----
+
 TRAIN_FILE = Path("data/9th/tmp/step2_train_data.csv")
 LABEL_FILE = Path("data/arare/arare2_merged.csv")
 MODEL_PATH = Path("data/9th/tmp/step3_arare_model.pkl")
@@ -30,6 +35,8 @@ if "is_arare" not in df.columns:
 else:
     print("🔍 is_arare カラムはすでに存在するためマージをスキップ")
 
+# データ統計ログ
+print(f"📊 学習データ 読込 rows={len(df)} cols={len(df.columns)}")
 
 # 欠損除去
 required_cols = ["is_arare", "racer_id", "races",
@@ -65,11 +72,6 @@ params = {
 }
 model = lgb.train(params, lgb_train, num_boost_round=100)
 
-# 保存
-MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-joblib.dump(model, MODEL_PATH)
-print(f"📤 上書き保存: {MODEL_PATH}")
-
 # 特徴量の重要度を取得・表示・保存
 importance_df = pd.DataFrame({
     "feature": feature_names,
@@ -80,3 +82,12 @@ print("📊 特徴量の重要度（上位）:")
 print(importance_df.head(10).to_string(index=False))
 
 importance_df.to_csv("data/9th/tmp/step3_feature_importance.csv", index=False)
+
+# 保存
+MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
+joblib.dump(model, MODEL_PATH)
+print(f"📤 上書き保存: {MODEL_PATH}")
+
+# ---- Logging: End ----
+print(f"✅ [END] {SCRIPT_NAME} model={MODEL_PATH} features={len(feature_names)}")
+# ---- /Logging: End ----

@@ -85,6 +85,11 @@ mkdir -p data/train
 # 6-9d. モデル実行8th（run_backtest_predict_arare_race.py）
 /Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/8th/run_daily_predict_arare_race.py --date "$TODAY" \
   && echo "[OK] run_backtest_predict_arare_race.py completed" || echo "[FAIL] run_backtest_predict_arare_race.py failed"
+
+# 6-9e. モデル実行8th（run_daily_predict_arare_race.py）
+/Users/satomi/Documents/keirin/venv_shared/bin/python3 /Users/satomi/Documents/keirin/GitHub/Keirin_ai_web/scripts/9th/run_daily_predict_arare_race.py --date "$TODAY" \
+  && echo "[OK] run_backtest_predict_arare_race.py completed" || echo "[FAIL] run_backtest_predict_arare_race.py failed"
+
 ###############################################################################
 
 # 10. 予測結果ファイルをGitHubへコミット

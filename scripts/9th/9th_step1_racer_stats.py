@@ -8,6 +8,13 @@ args = parser.parse_args()
 target_date = pd.to_datetime(args.date)
 target_year = target_date.year
 
+# ---- Logging: Start ----
+SCRIPT_NAME = "9th_step1_racer_stats.py"
+print(
+    f"🚀 [START] {SCRIPT_NAME} target_date={target_date.date()} window=({(target_date - pd.DateOffset(years=1)).date()} ~ {(target_date - pd.DateOffset(days=1)).date()})"
+)
+# ---- /Logging: Start ----
+
 # 結果格納用リスト
 all_results = []
 
@@ -24,7 +31,7 @@ for file in csv_files:
 
 # 全部まとめて連結
 results_df = pd.concat(all_results, ignore_index=True)
-print(f"✅ 結合済み: {len(results_df)}件")
+print(f"📊 結合済み: {len(results_df)}件")
 
 # 地区マスタの読み込みと prefecture を付加
 pref_path = Path("data/master/prefectures_master.csv")
@@ -82,3 +89,6 @@ output_path = f"data/9th/tmp/step1_racer_stats.csv"
 Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 agg.to_csv(output_path, index=False)
 print(f"📤 上書き保存: {output_path}")
+# ---- Logging: End ----
+print(f"✅ [END] {SCRIPT_NAME} | output={output_path} | racers={len(agg)}")
+# ---- /Logging: End ----

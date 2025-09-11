@@ -30,6 +30,10 @@ def save_pdf(df, output_path):
 
     for venue_id in df["venue_id"].unique():
         df_page = df[df["venue_id"] == venue_id]
+        df_page = df_page.drop(columns=["racer_id"], errors="ignore")
+        # Format 'arare_score' column to 3 decimal places if it exists
+        if "arare_score" in df_page.columns:
+            df_page["arare_score"] = df_page["arare_score"].map(lambda x: f"{x:.3f}")
         date = df_page["date"].iloc[0]
         venue_name = df_page["venue_name"].iloc[0] if "venue_name" in df_page.columns else f"競輪場{venue_id}"
 

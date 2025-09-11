@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 
 def main(target_date: str):
+    print(f"🚀 [START] 9th_step4_make_entry.py target_date={target_date}")
     base_dir = Path("data/9th/tmp")
     if (Path(f"data/entries/{target_date[:4]}/entry_{target_date}.csv")).exists():
         entry_path = Path(f"data/entries/{target_date[:4]}/entry_{target_date}.csv")
@@ -12,6 +13,7 @@ def main(target_date: str):
     output_path = Path("data/9th/tmp") / "step4_make_entry.csv"
 
     entry_df = pd.read_csv(entry_path)
+    print(f"📊 entry_df loaded: {len(entry_df)} rows")
     # 不要なrank列を削除（出走表に含まれるのは不自然）
     if "rank" in entry_df.columns:
         entry_df = entry_df.drop(columns=["rank"])
@@ -27,9 +29,11 @@ def main(target_date: str):
 
     # 最新日のレコードだけを抽出（選手ごとに1件だけ）
     train_df_latest = train_df.sort_values("date").drop_duplicates(subset=["racer_id"], keep="last")
+    print(f"📊 train_df_latest prepared: {len(train_df_latest)} rows")
 
     # 結合（racer_idのみ）
     merged = pd.merge(entry_df, train_df_latest, on="racer_id", how="left")
+    print(f"📊 merged DataFrame: {len(merged)} rows")
     if "date_y" in merged.columns:
         merged = merged.drop(columns=["date_y"])
         merged = merged.rename(columns={"date_x": "date"})
@@ -41,6 +45,7 @@ def main(target_date: str):
     # 出力保存
     merged.to_csv(output_path, index=False)
     print(f"📤 上書き保存: {output_path}")
+    print(f"✅ [END] 9th_step4_make_entry.py output={output_path} rows={len(merged)}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

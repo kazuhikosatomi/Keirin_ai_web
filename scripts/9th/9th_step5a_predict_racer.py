@@ -5,10 +5,11 @@ import pickle
 import os
 
 def predict_arare(date_str):
+    print(f"🚀 [START] 9th_step5a_predict_racer.py | target_date={date_str}")
     # 入力ファイルパス
     entry_file = f"data/9th/tmp/step4_make_entry.csv"
     model_file = f"data/9th/tmp/step3_arare_model.pkl"
-    output_file = "data/9th/tmp/step5_predictions_racer.csv"
+    output_file = f"data/9th/step5a/step5a_predictions_racer_{date_str}.csv"
 
     if not os.path.exists(entry_file):
         print(f"❌ Entryファイルが見つかりません: {entry_file}")
@@ -57,7 +58,9 @@ def predict_arare(date_str):
     output_cols = ["date", "venue_id", "race_no", "car_no", "racer_id", "rank", "arare_score"]
     output_cols = [col for col in output_cols if col in df.columns]
     df[output_cols].to_csv(output_file, index=False)
-    print(f"📤 上書き保存: {output_file}")
+    print(f"📊 予測件数: {len(df)}")
+    print(f"📤 保存完了: {output_file}")
+    print(f"✅ [END] 9th_step5a_predict_racer.py")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -1,7 +1,10 @@
 import pandas as pd
 import os
+import datetime
+import argparse
 
-def aggregate_racer_to_race(input_path, output_path):
+def aggregate_racer_to_race(input_path, output_path, TODAY):
+    print(f"🚀 [START] 9th_step5b_aggregate_to_race.py | target_date={TODAY}")
     if not os.path.exists(input_path):
         print(f"❌ 入力ファイルが見つかりません: {input_path}")
         return
@@ -26,10 +29,19 @@ def aggregate_racer_to_race(input_path, output_path):
 
     # 出力
     race_df.to_csv(output_path, index=False)
-    print(f"📤 出力完了: {output_path}")
+    print(f"📊 集計レース数: {len(race_df)} 件")
+    print(f"📤 保存完了: {output_path}")
+    print("✅ [END] 9th_step5b_aggregate_to_race.py")
 
 
 if __name__ == "__main__":
-    input_file = "data/9th/tmp/step5a_predictions_racer.csv"
-    output_file = "data/9th/tmp/step5b_predictions_race.csv"
-    aggregate_racer_to_race(input_file, output_file)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--date", type=str, help="基準日 (YYYY-MM-DD)")
+    args = parser.parse_args()
+    if args.date:
+        TODAY = args.date
+    else:
+        TODAY = datetime.date.today().strftime("%Y-%m-%d")
+    input_file = f"data/9th/step5a/step5a_predictions_racer_{TODAY}.csv"
+    output_file = f"data/9th/step5b/step5b_predictions_race_{TODAY}.csv"
+    aggregate_racer_to_race(input_file, output_file, TODAY)
