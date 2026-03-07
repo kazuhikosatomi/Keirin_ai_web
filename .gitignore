@@ -1,15 +1,45 @@
-# --- 無視するフォルダ一覧 ---
-data/
-db/
-logs/
+# Ignore everything by default
+*
+.DS_Store
 
-# 仮想環境やキャッシュ
-venv/
-__pycache__/
-*.pyc
+# Keep essential repo files
+!.gitignore
+!README.md
+!requirements.txt
 
-# macOS
-.DS_Storelogs/
-scripts/cron/send_slack.sh
-scripts/cron/send_slack.sh
-scripts/cron/send_slack.sh
+# Keep docs root
+!docs/
+
+# Keep only selected predict/result subtrees
+!docs/predict/
+!docs/predict/csv/
+!docs/predict/csv/3rd/
+!docs/predict/csv/3rd/**
+!docs/predict/csv/gr01/
+!docs/predict/csv/gr01/**
+!docs/predict/pdf/
+!docs/predict/pdf/3rd/
+!docs/predict/pdf/3rd/**
+!docs/predict/pdf/gr01/
+!docs/predict/pdf/gr01/**
+
+!docs/results/
+!docs/results/csv/
+!docs/results/csv/3rd/
+!docs/results/csv/3rd/**
+!docs/results/csv/gr01/
+!docs/results/csv/gr01/**
+!docs/results/pdf/
+!docs/results/pdf/3rd/
+!docs/results/pdf/3rd/**
+!docs/results/pdf/gr01/
+!docs/results/pdf/gr01/**
+
+# Keep LINE notification script
+!send/
+!send/send_line_message0.py
+
+# Keep GitHub Actions workflow
+!.github/
+!.github/workflows/
+!.github/workflows/line_notify.yml
