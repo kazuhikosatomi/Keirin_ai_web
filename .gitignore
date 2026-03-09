@@ -1,6 +1,8 @@
 # Ignore everything by default
 *
 .DS_Store
+.env
+.env.*
 
 # Keep essential repo files
 !.gitignore
