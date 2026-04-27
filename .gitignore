@@ -45,3 +45,4 @@
 !.github/
 !.github/workflows/
 !.github/workflows/line_notify.yml
+docs/results/csv/
