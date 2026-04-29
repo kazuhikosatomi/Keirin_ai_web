@@ -12,6 +12,10 @@
 # Keep docs root
 !docs/
 
+# Keep grade race HTML pages
+!docs/grade/
+!docs/grade/**
+
 # Keep only selected predict/result subtrees
 !docs/predict/
 !docs/predict/csv/
@@ -46,3 +50,7 @@
 !.github/workflows/
 !.github/workflows/line_notify.yml
 docs/results/csv/
+
+# Re-ignore macOS metadata even under allowed paths
+.DS_Store
+**/.DS_Store
