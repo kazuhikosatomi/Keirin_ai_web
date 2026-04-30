@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -56,16 +58,16 @@
     }
 
     .summary-card,
-    .empty-card {
+    .venue-card {
       background: #fff;
       border-radius: 16px;
-      padding: 18px;
+      padding: 16px;
       box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
       margin-bottom: 16px;
     }
 
     .summary-card h2,
-    .empty-card h2 {
+    .venue-card h2 {
       margin: 0 0 10px;
       font-size: 1.2rem;
     }
@@ -94,22 +96,63 @@
       margin-top: 2px;
     }
 
-    .empty-message {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1e40af;
-      border-radius: 14px;
-      padding: 18px;
-      font-weight: 800;
-      text-align: center;
+    .race-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .race-row {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .race-no {
+      font-weight: 900;
       font-size: 1.05rem;
     }
 
-    .note {
-      color: #64748b;
+    .race-meta {
+      color: #475569;
       font-size: 0.92rem;
-      margin-top: 10px;
-      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-right: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .badge.waiting {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge.ready {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .race-link {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.9rem;
     }
 
     footer {
@@ -122,6 +165,15 @@
     @media (max-width: 640px) {
       header h1 {
         font-size: 1.45rem;
+      }
+
+      .race-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .race-link {
+        text-align: center;
       }
     }
   </style>
@@ -139,24 +191,24 @@
     </div>
 
     <section class="summary-card">
-      <h2>📅 本日のグレードレース</h2>
+      <h2>📅 本日のグレードレース <span style="display:inline-block; margin-left:8px; padding:4px 10px; border-radius:999px; background:#fee2e2; color:#991b1b; font-weight:900;">名古屋 GⅢ</span></h2>
       <p>
-        本日の対象レースを自動確認しました。
-        9車のグレードレースがある日は、このページに対象レース一覧と買い目リンクを表示します。
+        このページはサンプルです。朝の自動生成で、当日の対象レース一覧と荒れ度を表示します。
+        発走前にオッズ取得が完了したレースから、詳細ページを順次更新します。
       </p>
 
       <div class="status-grid">
         <div class="status-box">
           <div class="label">対象日</div>
-          <div class="value">2026-04-30</div>
+          <div class="value">2026-04-26</div>
         </div>
         <div class="status-box">
           <div class="label">開催数</div>
-          <div class="value">0</div>
+          <div class="value">1</div>
         </div>
         <div class="status-box">
           <div class="label">対象レース</div>
-          <div class="value">0R</div>
+          <div class="value">9R</div>
         </div>
         <div class="status-box">
           <div class="label">最終更新</div>
@@ -165,13 +217,118 @@
       </div>
     </section>
 
-    <section class="empty-card">
-      <h2>本日の対象レース</h2>
-      <div class="empty-message">
-        本日のグレードレースはありません
-      </div>
-      <div class="note">
-        対象レースがある日は、朝の自動処理後にこのページへ一覧が表示されます。
+    <section class="venue-card">
+      <h2>名古屋 GⅢ</h2>
+      <div class="race-list">
+
+        <div class="race-row">
+          <div class="race-no">04R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">荒れ度 35</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 11:57</div>
+          </div>
+          <a class="race-link" href="./races/v42/r04.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">05R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#fee2e2; color:#991b1b;">荒れ度 52</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 12:21</div>
+          </div>
+          <a class="race-link" href="./races/v42/r05.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">06R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 30</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 12:45</div>
+          </div>
+          <a class="race-link" href="./races/v42/r06.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">07R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#fee2e2; color:#991b1b;">荒れ度 61</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 13:10</div>
+          </div>
+          <a class="race-link" href="./races/v42/r07.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">08R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 25</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 13:35</div>
+          </div>
+          <a class="race-link" href="./races/v42/r08.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">09R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 17</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 14:02</div>
+          </div>
+          <a class="race-link" href="./races/v42/r09.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">10R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 23</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 14:29</div>
+          </div>
+          <a class="race-link" href="./races/v42/r10.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">11R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">荒れ度 42</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 14:59</div>
+          </div>
+          <a class="race-link" href="./races/v42/r11.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">12R</div>
+          <div>
+            <div>
+              <span class="badge" style="background:#fee2e2; color:#991b1b;">荒れ度 52</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 15:30</div>
+          </div>
+          <a class="race-link" href="./races/v42/r12.html">買い目を見る</a>
+        </div>
+      
       </div>
     </section>
   </main>
