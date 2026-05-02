@@ -27,12 +27,11 @@
   </div>
 
   <h1>🏁 競輪AIアタルくん</h1>
-  <h2>neo</h2>
 
   <section>
-    <h2>📌 今日のイチオシ</h2>
+    <h2>📌 本日のグレードレース</h2>
     <ul>
-      <li>🎯 <a href="./grade/today.html">本日のグレードレース</a>~調整中~</li>
+      <li id="grade-race-link">本日のグレードレース：確認中</li>
     </ul>
   </section>
 
@@ -51,5 +50,35 @@
   <footer>
     2025 競輪AIアタルくん
   </footer>
+  <script>
+    async function updateGradeRaceLink() {
+      const target = document.getElementById('grade-race-link');
+      if (!target) return;
+
+      try {
+        const res = await fetch('./grade/today.html', { cache: 'no-store' });
+        if (!res.ok) throw new Error('today.html not found');
+
+        const text = await res.text();
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        const titles = Array.from(doc.querySelectorAll('.summary-card h2 span'));
+        const raceNames = titles
+          .map(el => el.textContent.trim())
+          .filter(Boolean);
+
+        if (raceNames.length > 0) {
+          target.innerHTML = raceNames
+            .map(name => `🎯 <a href="./grade/today.html">${name}</a>`)
+            .join('<br>');
+        } else {
+          target.textContent = '本日のグレードレースはありません';
+        }
+      } catch (e) {
+        target.textContent = '本日のグレードレースはありません';
+      }
+    }
+
+    updateGradeRaceLink();
+  </script>
 </body>
 </html>
