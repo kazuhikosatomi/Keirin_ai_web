@@ -14,7 +14,9 @@
 
 # Keep grade race HTML pages
 !docs/grade/
+!docs/grade01/
 !docs/grade/**
+!docs/grade01/**
 
 # Keep only selected predict/result subtrees
 !docs/predict/
