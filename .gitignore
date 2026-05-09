@@ -17,6 +17,8 @@
 !docs/grade01/
 !docs/grade/**
 !docs/grade01/**
+!docs/grade04/
+!docs/grade04/**
 
 # Keep only selected predict/result subtrees
 !docs/predict/
@@ -56,3 +58,8 @@ docs/results/csv/
 # Re-ignore macOS metadata even under allowed paths
 .DS_Store
 **/.DS_Store
+
+# grade04 local-only
+docs/grade04/latest/snapshot/
+docs/grade04/templates/
+docs/grade04/today_template.html
