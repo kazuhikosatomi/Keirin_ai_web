@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -56,16 +58,16 @@
     }
 
     .summary-card,
-    .empty-card {
+    .venue-card {
       background: #fff;
       border-radius: 16px;
-      padding: 18px;
+      padding: 16px;
       box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
       margin-bottom: 16px;
     }
 
     .summary-card h2,
-    .empty-card h2 {
+    .venue-card h2 {
       margin: 0 0 10px;
       font-size: 1.2rem;
     }
@@ -94,22 +96,65 @@
       margin-top: 2px;
     }
 
-    .empty-message {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1e40af;
-      border-radius: 14px;
-      padding: 18px;
-      font-weight: 800;
-      text-align: center;
-      font-size: 1.05rem;
+    .race-list {
+      display: grid;
+      gap: 10px;
     }
 
-    .note {
-      color: #64748b;
+    .race-row {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .race-no {
+      font-weight: 900;
+      font-size: 1.05rem;
+    
+  white-space: nowrap;
+}
+
+    .race-meta {
+      color: #475569;
       font-size: 0.92rem;
-      margin-top: 10px;
-      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-right: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .badge.waiting {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge.ready {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .race-link {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.9rem;
     }
 
     footer {
@@ -123,6 +168,15 @@
       header h1 {
         font-size: 1.45rem;
       }
+
+      .race-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .race-link {
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -135,28 +189,24 @@
   <main>
     <div class="nav-links">
       <a href="../index.html">← トップへ戻る</a>
-      <a href="../archive.html">通常予想アーカイブ</a>
     </div>
 
     <section class="summary-card">
-      <h2>📅 本日のグレードレース</h2>
-      <p>
-        本日の対象レースを自動確認しました。
-        9車のグレードレースがある日は、このページに対象レース一覧と買い目リンクを表示します。
-      </p>
+      <h2>📅 本日のグレードレース <span style="display:inline-block; margin-left:8px; padding:4px 10px; border-radius:999px; background:#fee2e2; color:#991b1b; font-weight:900;">函館 GⅢ 函館競輪 G3</span></h2>
+
 
       <div class="status-grid">
         <div class="status-box">
           <div class="label">対象日</div>
-          <div class="value">2026-05-13</div>
+          <div class="value">2026-05-14</div>
         </div>
         <div class="status-box">
           <div class="label">開催数</div>
-          <div class="value">0</div>
+          <div class="value">1</div>
         </div>
         <div class="status-box">
           <div class="label">対象レース</div>
-          <div class="value">0R</div>
+          <div class="value">12R</div>
         </div>
         <div class="status-box">
           <div class="label">最終更新</div>
@@ -165,19 +215,251 @@
       </div>
     </section>
 
-    <section class="empty-card">
-      <h2>本日の対象レース</h2>
-      <div class="empty-message">
-        本日のグレードレースはありません
+
+    <section class="summary-card">
+      <h2>📊 競輪場データ</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start;">
+        
+      <div style="min-width:240px; flex:1 1 360px;">
+        <div style="font-weight:900; color:#1e3a8a; margin-bottom:10px; font-size:1.02rem;">函館競輪場</div>
+        
+        <div style="font-weight:900; color:#1e3a8a; margin:0 0 6px;">バンクデータ</div>
+        <div style="overflow-x:auto; margin-bottom:14px;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.88rem; table-layout:fixed;">
+            <thead>
+              <tr>
+                <th style="width:88px; text-align:center; background:#f8fafc;">項目</th>
+                <th style="text-align:center; background:#eef2ff; color:#1e3a8a;">当場</th>
+                <th style="text-align:center; background:#f0fdf4; color:#166534;">400m平均</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">周長</td>
+            <td style="text-align:center; font-weight:800;">400m</td>
+            <td style="text-align:center; color:#4b5563;">-</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">みなし直線</td>
+            <td style="text-align:center; font-weight:800;">51.3m</td>
+            <td style="text-align:center; color:#4b5563;">55.4m</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">カント</td>
+            <td style="text-align:center; font-weight:800;">30.61°</td>
+            <td style="text-align:center; color:#4b5563;">32.21°</td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="font-weight:900; color:#1e3a8a; margin-bottom:6px;">決まり手（グレードレース 過去1年）</div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.88rem; table-layout:fixed;">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width:60px; text-align:center; vertical-align:middle;">決まり手</th>
+                <th colspan="2" style="text-align:center; background:#eef2ff; color:#1e3a8a;">1着</th>
+                <th colspan="2" style="text-align:center; background:#f0fdf4; color:#166534;">2着</th>
+              </tr>
+              <tr>
+                <th style="text-align:center; width:70px;">数</th>
+                <th style="text-align:center; width:70px;">率</th>
+                <th style="text-align:center; width:70px;">数</th>
+                <th style="text-align:center; width:70px;">率</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">逃</td>
+            <td style="text-align:center;">5</td>
+            <td style="text-align:center;">7.6%</td>
+            <td style="text-align:center;">12</td>
+            <td style="text-align:center;">18.2%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">捲</td>
+            <td style="text-align:center;">20</td>
+            <td style="text-align:center;">30.3%</td>
+            <td style="text-align:center;">12</td>
+            <td style="text-align:center;">18.2%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">差</td>
+            <td style="text-align:center;">41</td>
+            <td style="text-align:center;">62.1%</td>
+            <td style="text-align:center;">29</td>
+            <td style="text-align:center;">43.9%</td>
+          </tr>
+          <tr>
+            <td style="font-weight:900; white-space:nowrap; text-align:center; background:#f8fafc;">マ</td>
+            <td style="text-align:center;">0</td>
+            <td style="text-align:center;">0.0%</td>
+            <td style="text-align:center;">13</td>
+            <td style="text-align:center;">19.7%</td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="note">
-        対象レースがある日は、朝の自動処理後にこのページへ一覧が表示されます。
+      </div>
+    </section>
+
+    <section class="venue-card">
+      <h2>函館 GⅢ 函館競輪 G3</h2>
+      <div class="race-list">
+
+        <div class="race-row">
+          <div class="race-no">01R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 24</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 15:25</div>
+          </div>
+          <a class="race-link" href="./races/v11/r01.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">02R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 12</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 15:52</div>
+          </div>
+          <a class="race-link" href="./races/v11/r02.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">03R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">荒れ度 32</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 16:19</div>
+          </div>
+          <a class="race-link" href="./races/v11/r03.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">04R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 21</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 16:46</div>
+          </div>
+          <a class="race-link" href="./races/v11/r04.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">05R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 17</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 17:13</div>
+          </div>
+          <a class="race-link" href="./races/v11/r05.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">06R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">荒れ度 46</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 17:40</div>
+          </div>
+          <a class="race-link" href="./races/v11/r06.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">07R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">荒れ度 32</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 18:08</div>
+          </div>
+          <a class="race-link" href="./races/v11/r07.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">08R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 16</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 18:36</div>
+          </div>
+          <a class="race-link" href="./races/v11/r08.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">09R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 27</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 19:04</div>
+          </div>
+          <a class="race-link" href="./races/v11/r09.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">10R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dbeafe; color:#1e40af;">荒れ度 19</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 19:32</div>
+          </div>
+          <a class="race-link" href="./races/v11/r10.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">11R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">一予選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">荒れ度 39</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 20:01</div>
+          </div>
+          <a class="race-link" href="./races/v11/r11.html">買い目を見る</a>
+        </div>
+
+        <div class="race-row">
+          <div class="race-no">12R<span style="display:inline-block; margin-left:10px; font-size:0.85rem; color:#4b5563; font-weight:800; white-space:nowrap;">初特選</span></div>
+          <div>
+            <div>
+              <span class="badge" style="background:#fee2e2; color:#991b1b;">荒れ度 54</span>
+              <span class="badge waiting" style="background:#dbeafe; color:#1e40af;">オッズ更新中</span>
+            </div>
+            <div class="race-meta">発走予定 20:30</div>
+          </div>
+          <a class="race-link" href="./races/v11/r12.html">買い目を見る</a>
+        </div>
+      
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; 2026 競輪AIアタルくん
+    2026 競輪AIアタルくん
   </footer>
 </body>
 </html>
