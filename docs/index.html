@@ -44,7 +44,16 @@
 
   <section>
     <h2>📚 アーカイブ</h2>
-    <p><a href="./archive.html">→ 過去の予想を見る</a></p>
+
+    <p>
+      <strong>🏁 グレードレースアーカイブ</strong><br>
+      <a href="./grade04/archive/">→ 過去開催を見る</a>
+    </p>
+
+    <p style="margin-top:1em;">
+      <strong>📄 全レース予想アーカイブ</strong><br>
+      <a href="./archive.html">→ 過去の全レース予想を見る</a>
+    </p>
   </section>
 
   <footer>
@@ -56,8 +65,8 @@
       if (!target) return;
 
       try {
-        const res = await fetch('./grade/today.html', { cache: 'no-store' });
-        if (!res.ok) throw new Error('today.html not found');
+        const res = await fetch('./grade04/latest/final/index.html', { cache: 'no-store' });
+        if (!res.ok) throw new Error('grade04 latest final not found');
 
         const text = await res.text();
         const doc = new DOMParser().parseFromString(text, 'text/html');
@@ -68,7 +77,7 @@
 
         if (raceNames.length > 0) {
           target.innerHTML = raceNames
-            .map(name => `🎯 <a href="./grade/today.html">${name}</a>`)
+            .map(name => `🎯 <a href="./grade04/latest/final/index.html">${name}</a>`)
             .join('<br>');
         } else {
           target.textContent = '本日のグレードレースはありません';
