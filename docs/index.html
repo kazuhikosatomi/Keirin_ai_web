@@ -65,19 +65,15 @@
       if (!target) return;
 
       try {
-        const res = await fetch('./grade04/latest/final/index.html', { cache: 'no-store' });
-        if (!res.ok) throw new Error('grade04 latest final not found');
+        const res = await fetch('./grade04/latest/final/latest.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('grade04 latest json not found');
 
-        const text = await res.text();
-        const doc = new DOMParser().parseFromString(text, 'text/html');
-        const titles = Array.from(doc.querySelectorAll('.summary-card h2 span'));
-        const raceNames = titles
-          .map(el => el.textContent.trim())
-          .filter(Boolean);
+        const data = await res.json();
+        const items = Array.isArray(data.items) ? data.items : [];
 
-        if (raceNames.length > 0) {
-          target.innerHTML = raceNames
-            .map(name => `🎯 <a href="./grade04/latest/final/index.html">${name}</a>`)
+        if (items.length > 0) {
+          target.innerHTML = items
+            .map(item => `🎯 <a href="${item.href}">${item.title}</a>`)
             .join('<br>');
         } else {
           target.textContent = '本日のグレードレースはありません';
