@@ -19,6 +19,8 @@
 !docs/grade01/**
 !docs/grade04/
 !docs/grade04/**
+!docs/grade05/
+!docs/grade05/**
 
 # Keep only selected predict/result subtrees
 !docs/predict/
@@ -63,3 +65,11 @@ docs/results/csv/
 docs/grade04/latest/snapshot/
 docs/grade04/templates/
 docs/grade04/today_template.html
+
+# grade05 local-only
+docs/grade05/latest/snapshot/
+docs/grade05/templates/
+docs/grade05/today_template.html
+!docs/grade05/latest/final/
+!docs/grade05/archive/
+!docs/index_grade05.html
