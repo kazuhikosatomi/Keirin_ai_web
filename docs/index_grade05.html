@@ -20,6 +20,8 @@
       --blue-soft: #eff6ff;
       --green: #059669;
       --green-soft: #ecfdf5;
+      --purple: #7c3aed;
+      --purple-soft: #f3e8ff;
       --orange: #ea580c;
       --orange-soft: #fff7ed;
       --hero-a: #172033;
@@ -39,6 +41,8 @@
       --blue-soft: #e0f2fe;
       --green: #16a34a;
       --green-soft: #f0fdf4;
+      --purple: #8b5cf6;
+      --purple-soft: #f5f3ff;
       --orange: #f97316;
       --orange-soft: #fff7ed;
       --hero-a: #0f172a;
@@ -58,6 +62,8 @@
       --blue-soft: #243247;
       --green: #22c55e;
       --green-soft: #163226;
+      --purple: #c084fc;
+      --purple-soft: #2e2548;
       --orange: #f97316;
       --orange-soft: #332414;
       --hero-a: #020617;
@@ -241,9 +247,25 @@
       border-color: rgba(37, 99, 235, 0.30);
     }
 
+    .menu-card.is-disabled {
+      cursor: default;
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .menu-card.is-disabled:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--line);
+    }
+
     .menu-card.primary {
       background: var(--blue-soft);
       border-color: rgba(37, 99, 235, 0.18);
+    }
+
+    .menu-card.primary .menu-label {
+      background: var(--blue);
     }
 
     .menu-card.green {
@@ -251,22 +273,52 @@
       border-color: rgba(5, 150, 105, 0.18);
     }
 
+    .menu-card.green .menu-label {
+      background: var(--green);
+    }
+
+    .menu-card.purple {
+      background: var(--purple-soft);
+      border-color: rgba(124, 58, 237, 0.20);
+    }
+
+    .menu-card.purple .menu-label {
+      background: var(--purple);
+    }
+
+    .menu-card.purple .arrow {
+      color: var(--purple);
+    }
+
     .menu-card.orange {
       background: var(--orange-soft);
       border-color: rgba(234, 88, 12, 0.18);
     }
 
+    .menu-card.orange .menu-label {
+      background: var(--orange);
+    }
+
     .menu-label {
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 0.92rem;
       font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
     }
 
     .menu-title {
-      font-size: 1.08rem;
+      font-size: 1.12rem;
       font-weight: 900;
       line-height: 1.45;
+      letter-spacing: -0.01em;
     }
 
     .menu-desc {
@@ -332,25 +384,22 @@
       </div>
 
       <div class="menu-grid">
-        <a class="menu-card primary" href="./grade05/latest/final/index.html">
+        <a class="menu-card primary" id="grade-race-card" href="./grade05/latest/final/index.html">
           <div class="menu-label">本日のグレードレース</div>
           <div class="menu-title today-links" id="grade-race-link">確認中</div>
-          <div class="menu-desc">本日の開催一覧・各レース予想へ</div>
           <div class="arrow">見る →</div>
         </a>
 
-        <a class="menu-card" href="./grade05/archive/">
+        <a class="menu-card purple" href="./grade05/archive/">
           <div class="menu-label">アーカイブ</div>
           <div class="menu-title">過去のグレードレース予想</div>
-          <div class="menu-desc">過去日の予想ページを確認</div>
           <div class="arrow">開く →</div>
         </a>
 
         <a class="menu-card green" href="./grade05/profit/index.html">
           <div class="menu-label">AI予想成績</div>
           <div class="menu-title">的中・回収率レポート</div>
-          <div class="menu-desc">収支、回収率、的中状況を集計予定</div>
-          <div class="arrow">準備中 →</div>
+          <div class="arrow">見る →</div>
         </a>
       </div>
     </section>
@@ -365,14 +414,12 @@
         <a class="menu-card orange" href="./predict/pdf/gr01/final_prediction_v2_2026-05-17.pdf" target="_blank">
           <div class="menu-label">本日分</div>
           <div class="menu-title">全レース予想（PDF）</div>
-          <div class="menu-desc">スマホでまとめて確認しやすいPDF版</div>
           <div class="arrow">PDFを見る →</div>
         </a>
 
         <a class="menu-card" href="./archive.html">
           <div class="menu-label">アーカイブ</div>
           <div class="menu-title">過去の全レース予想PDF</div>
-          <div class="menu-desc">日付ごとのPDFを確認</div>
           <div class="arrow">開く →</div>
         </a>
       </div>
@@ -393,15 +440,34 @@
         const data = await res.json();
         const items = Array.isArray(data.items) ? data.items : [];
 
+        const card = document.getElementById('grade-race-card');
+
         if (items.length > 0) {
           target.innerHTML = items
-            .map(item => `<a href="${item.href}">${item.title}</a>`)
+            .map(item => `<span>${item.title}</span>`)
             .join('<br>');
+
+          if (card && items[0].href) {
+            card.href = items[0].href;
+            card.classList.remove('is-disabled');
+            card.setAttribute('aria-disabled', 'false');
+          }
         } else {
           target.textContent = '本日のグレードレースはありません';
+          if (card) {
+            card.removeAttribute('href');
+            card.classList.add('is-disabled');
+            card.setAttribute('aria-disabled', 'true');
+          }
         }
       } catch (e) {
         target.textContent = '本日のグレードレースはありません';
+        const card = document.getElementById('grade-race-card');
+        if (card) {
+          card.removeAttribute('href');
+          card.classList.add('is-disabled');
+          card.setAttribute('aria-disabled', 'true');
+        }
       }
     }
 

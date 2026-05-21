@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI予想成績｜競輪AIアタルくん neo</title>
 <style>
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:#f8fafc;color:#111827;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans",sans-serif;line-height:1.7}
 .page{width:min(1080px,calc(100% - 24px));margin:auto;padding:18px 0 48px}
 .hero{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#0f172a,#1e293b,#334155);color:white;border-radius:18px;padding:18px;box-shadow:0 14px 34px rgba(15,23,42,.12)}
@@ -21,14 +22,13 @@ h2{font-size:1.15rem;margin:0 0 12px}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:820px}
 .daily-table{min-width:620px}
-.best-hit-scroll{overflow-x:auto;padding-bottom:2px}
-.best-hit-list{display:flex;gap:10px;min-width:max-content}
-.best-hit-card{flex:0 0 auto;min-width:260px;border:1px solid #e5e7eb;border-radius:14px;background:#f8fafc;padding:12px}
-.best-hit-type{color:#64748b;font-size:.78rem;font-weight:900}
-.best-hit-payout{font-size:1.05rem;font-weight:900;margin-top:3px}
-.best-hit-race{font-size:.88rem;line-height:1.45;margin-top:6px;white-space:nowrap;color:#334155}
+.best-hit-table{min-width:760px}
 th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:right;white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
+.best-hit-table th,.best-hit-table td{text-align:right}
+.best-hit-table th:first-child,.best-hit-table td:first-child{text-align:left}
+.best-hit-table th:nth-child(3),.best-hit-table td:nth-child(3){text-align:left;white-space:nowrap}
+.best-hit-table th:nth-child(6),.best-hit-table td:nth-child(6){text-align:left;white-space:nowrap}
 .daily-table th,.daily-table td{text-align:right}
 .daily-table th:first-child,.daily-table td:first-child{text-align:left}
 .daily-table th:nth-child(2),.daily-table td:nth-child(2){text-align:right;font-weight:900}
@@ -36,9 +36,9 @@ th{font-size:.8rem;color:#64748b}
 .total-row{background:#eff6ff;font-weight:900}
 .profit.plus{color:#dc2626;font-weight:900}
 .profit.minus{color:#2563eb;font-weight:900}
-.nav{margin-top:16px}
+.nav{margin:14px 0 0}
 .nav a{display:inline-block;color:#2563eb;font-weight:900;text-decoration:none}
-@media(max-width:760px){.hero{align-items:flex-start}.cards{grid-template-columns:repeat(2,1fr)}h1{font-size:1.45rem}.best-hit-card{min-width:240px;padding:10px}.best-hit-payout{font-size:1rem}.best-hit-race{font-size:.82rem}.daily-table{min-width:620px}.daily-table th,.daily-table td{padding:9px 10px}}
+@media(max-width:760px){.hero{align-items:flex-start}.cards{grid-template-columns:repeat(2,1fr)}h1{font-size:1.45rem}.best-hit-table{min-width:760px}.best-hit-table th,.best-hit-table td{padding:9px 10px}.daily-table{min-width:620px}.daily-table th,.daily-table td{padding:9px 10px}}
 </style>
 </head>
 <body>
@@ -50,6 +50,10 @@ th{font-size:.8rem;color:#64748b}
       <p class="sub">アーカイブ掲載済みの全グレードレース予想を集計</p>
     </div>
   </header>
+
+  <div class="nav">
+    <a href="../../index_grade05.html">← トップへ戻る</a>
+  </div>
 
   <div class="cards">
     <div class="card"><div class="label">対象日数</div><div class="value">16</div></div>
@@ -64,76 +68,93 @@ th{font-size:.8rem;color:#64748b}
       <table>
         <thead>
           <tr>
-            <th>賭式</th><th>レース数</th><th>的中</th><th>的中率</th><th>購入額</th><th>払戻</th><th>収支</th><th>回収率</th>
+            <th>賭式</th><th>収支</th><th>回収率</th><th>R</th><th>的中</th><th>的中率</th><th>購入</th><th>払戻</th>
           </tr>
         </thead>
         <tbody>
           
         <tr class="">
           <td>2車単</td>
+          <td class="profit minus">-18,300円</td>
+          <td>77.8%</td>
           <td>165</td>
           <td>59</td>
           <td>35.8%</td>
           <td>82,500円</td>
           <td>64,200円</td>
-          <td class="profit minus">-18,300円</td>
-          <td>77.8%</td>
         </tr>
         <tr class="">
           <td>3連単</td>
+          <td class="profit minus">-47,680円</td>
+          <td>71.1%</td>
           <td>165</td>
           <td>34</td>
           <td>20.6%</td>
           <td>165,000円</td>
           <td>117,320円</td>
-          <td class="profit minus">-47,680円</td>
-          <td>71.1%</td>
         </tr>
         <tr class="">
           <td>3連複</td>
+          <td class="profit minus">-11,110円</td>
+          <td>86.5%</td>
           <td>165</td>
           <td>54</td>
           <td>32.7%</td>
           <td>82,500円</td>
           <td>71,390円</td>
-          <td class="profit minus">-11,110円</td>
-          <td>86.5%</td>
         </tr>
         <tr class="total-row">
           <td>Total</td>
+          <td class="profit minus">-77,090円</td>
+          <td>76.6%</td>
           <td>165</td>
           <td>79</td>
           <td>47.9%</td>
           <td>330,000円</td>
           <td>252,910円</td>
-          <td class="profit minus">-77,090円</td>
-          <td>76.6%</td>
         </tr>
         </tbody>
       </table>
     </div>
   </section>
+
   <section class="section">
     <h2>最高的中配当</h2>
-    <div class="best-hit-scroll">
-      <div class="best-hit-list">
-        
-        <div class="best-hit-card">
-          <div class="best-hit-type">2車単</div>
-          <div class="best-hit-payout">8,150円</div>
-          <div class="best-hit-race">2026/5/9 松阪G3 アクアリッズカップＧ３ナイター（初日） 4R</div>
-        </div>
-        <div class="best-hit-card">
-          <div class="best-hit-type">3連単</div>
-          <div class="best-hit-payout">22,790円</div>
-          <div class="best-hit-race">2026/5/4 平塚G1 日本選手権競輪（4日目） 10R</div>
-        </div>
-        <div class="best-hit-card">
-          <div class="best-hit-type">3連複</div>
-          <div class="best-hit-payout">10,480円</div>
-          <div class="best-hit-race">2026/5/2 平塚G1 日本選手権競輪（2日目） 4R</div>
-        </div>
-      </div>
+    <div class="table-wrap">
+      <table class="best-hit-table">
+        <thead>
+          <tr>
+            <th>賭式</th><th>配当</th><th>日付</th><th>開催</th><th>レース</th><th>開催名</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>2車単</td>
+          <td>8,150円</td>
+          <td>2026-05-09</td>
+          <td>松阪G3</td>
+          <td>4R</td>
+          <td>アクアリッズカップＧ３ナイター（初日）</td>
+        </tr>
+        <tr>
+          <td>3連単</td>
+          <td>22,790円</td>
+          <td>2026-05-04</td>
+          <td>平塚G1</td>
+          <td>10R</td>
+          <td>日本選手権競輪（4日目）</td>
+        </tr>
+        <tr>
+          <td>3連複</td>
+          <td>10,480円</td>
+          <td>2026-05-02</td>
+          <td>平塚G1</td>
+          <td>4R</td>
+          <td>日本選手権競輪（2日目）</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -143,7 +164,7 @@ th{font-size:.8rem;color:#64748b}
       <table class="daily-table">
         <thead>
           <tr>
-            <th>日付</th><th>収支</th><th>R</th><th>的中</th><th>的中率</th><th>購入</th><th>払戻</th><th>回収率</th>
+            <th>日付</th><th>収支</th><th>回収率</th><th>R</th><th>的中</th><th>的中率</th><th>購入</th><th>払戻</th>
           </tr>
         </thead>
         <tbody>
@@ -151,171 +172,168 @@ th{font-size:.8rem;color:#64748b}
         <tr>
           <td>2026-05-17</td>
           <td class="profit minus">-3,830円</td>
+          <td>80.8%</td>
           <td>10</td>
           <td>7</td>
           <td>70.0%</td>
           <td>20,000円</td>
           <td>16,170円</td>
-          <td>80.8%</td>
         </tr>
         <tr>
           <td>2026-05-16</td>
           <td class="profit minus">-5,030円</td>
+          <td>79.0%</td>
           <td>12</td>
           <td>8</td>
           <td>66.7%</td>
           <td>24,000円</td>
           <td>18,970円</td>
-          <td>79.0%</td>
         </tr>
         <tr>
           <td>2026-05-15</td>
           <td class="profit minus">-17,880円</td>
+          <td>25.5%</td>
           <td>12</td>
           <td>5</td>
           <td>41.7%</td>
           <td>24,000円</td>
           <td>6,120円</td>
-          <td>25.5%</td>
         </tr>
         <tr>
           <td>2026-05-14</td>
           <td class="profit minus">-15,510円</td>
+          <td>35.4%</td>
           <td>12</td>
           <td>6</td>
           <td>50.0%</td>
           <td>24,000円</td>
           <td>8,490円</td>
-          <td>35.4%</td>
         </tr>
         <tr>
           <td>2026-05-12</td>
           <td class="profit minus">-2,900円</td>
+          <td>75.8%</td>
           <td>6</td>
           <td>2</td>
           <td>33.3%</td>
           <td>12,000円</td>
           <td>9,100円</td>
-          <td>75.8%</td>
         </tr>
         <tr>
           <td>2026-05-11</td>
           <td class="profit minus">-5,240円</td>
+          <td>56.3%</td>
           <td>6</td>
           <td>2</td>
           <td>33.3%</td>
           <td>12,000円</td>
           <td>6,760円</td>
-          <td>56.3%</td>
         </tr>
         <tr>
           <td>2026-05-10</td>
           <td class="profit minus">-10,650円</td>
+          <td>33.4%</td>
           <td>8</td>
           <td>3</td>
           <td>37.5%</td>
           <td>16,000円</td>
           <td>5,350円</td>
-          <td>33.4%</td>
         </tr>
         <tr>
           <td>2026-05-09</td>
           <td class="profit minus">-4,440円</td>
+          <td>75.3%</td>
           <td>9</td>
           <td>2</td>
           <td>22.2%</td>
           <td>18,000円</td>
           <td>13,560円</td>
-          <td>75.3%</td>
         </tr>
         <tr>
           <td>2026-05-06</td>
           <td class="profit minus">-14,360円</td>
+          <td>34.7%</td>
           <td>11</td>
           <td>3</td>
           <td>27.3%</td>
           <td>22,000円</td>
           <td>7,640円</td>
-          <td>34.7%</td>
         </tr>
         <tr>
           <td>2026-05-05</td>
           <td class="profit minus">-14,300円</td>
+          <td>35.0%</td>
           <td>11</td>
           <td>2</td>
           <td>18.2%</td>
           <td>22,000円</td>
           <td>7,700円</td>
-          <td>35.0%</td>
         </tr>
         <tr>
           <td>2026-05-04</td>
           <td class="profit minus">-6,010円</td>
+          <td>72.7%</td>
           <td>11</td>
           <td>4</td>
           <td>36.4%</td>
           <td>22,000円</td>
           <td>15,990円</td>
-          <td>72.7%</td>
         </tr>
         <tr>
           <td>2026-05-03</td>
           <td class="profit minus">-11,240円</td>
+          <td>48.9%</td>
           <td>11</td>
           <td>4</td>
           <td>36.4%</td>
           <td>22,000円</td>
           <td>10,760円</td>
-          <td>48.9%</td>
         </tr>
         <tr>
           <td>2026-05-02</td>
           <td class="profit minus">-1,620円</td>
+          <td>92.6%</td>
           <td>11</td>
           <td>7</td>
           <td>63.6%</td>
           <td>22,000円</td>
           <td>20,380円</td>
-          <td>92.6%</td>
         </tr>
         <tr>
           <td>2026-05-01</td>
           <td class="profit plus">13,170円</td>
+          <td>159.9%</td>
           <td>11</td>
           <td>9</td>
           <td>81.8%</td>
           <td>22,000円</td>
           <td>35,170円</td>
-          <td>159.9%</td>
         </tr>
         <tr>
           <td>2025-05-25</td>
           <td class="profit minus">-930円</td>
+          <td>96.1%</td>
           <td>12</td>
           <td>8</td>
           <td>66.7%</td>
           <td>24,000円</td>
           <td>23,070円</td>
-          <td>96.1%</td>
         </tr>
         <tr>
           <td>2025-05-24</td>
           <td class="profit plus">23,680円</td>
+          <td>198.7%</td>
           <td>12</td>
           <td>7</td>
           <td>58.3%</td>
           <td>24,000円</td>
           <td>47,680円</td>
-          <td>198.7%</td>
         </tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <div class="nav">
-    <a href="../../index_grade05.html">← トップへ戻る</a>
-  </div>
 </main>
 </body>
 </html>
