@@ -411,10 +411,10 @@
       </div>
 
       <div class="menu-grid two">
-        <a class="menu-card orange" href="./predict/pdf/gr01/final_prediction_v2_2026-05-17.pdf" target="_blank">
+        <a class="menu-card orange" id="today-pdf-card" href="./archive.html" target="_blank">
           <div class="menu-label">本日分</div>
-          <div class="menu-title">全レース予想（PDF）</div>
-          <div class="arrow">PDFを見る →</div>
+          <div class="menu-title" id="today-pdf-title">全レース予想（PDF）</div>
+          <div class="arrow" id="today-pdf-arrow">確認中 →</div>
         </a>
 
         <a class="menu-card" href="./archive.html">
@@ -471,7 +471,38 @@
       }
     }
 
+    async function updateTodayPdfLink() {
+      const card = document.getElementById('today-pdf-card');
+      const title = document.getElementById('today-pdf-title');
+      const arrow = document.getElementById('today-pdf-arrow');
+
+      if (!card || !title || !arrow) return;
+
+      try {
+        const res = await fetch('./predict/pdf/gr01/latest.json', {
+          cache: 'no-store'
+        });
+
+        if (!res.ok) throw new Error();
+
+        const data = await res.json();
+
+        if (data.href) {
+          card.href = data.href;
+        }
+
+        title.textContent = data.label || '全レース予想（PDF）';
+        arrow.textContent = 'PDFを見る →';
+
+      } catch (e) {
+        card.href = './archive.html';
+        title.textContent = '本日の予想PDFはありません';
+        arrow.textContent = 'アーカイブを見る →';
+      }
+    }
+
     updateGradeRaceLink();
+    updateTodayPdfLink();
   </script>
 </body>
 </html>
