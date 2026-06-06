@@ -2,88 +2,507 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>競輪AIアタルくん</title>
+  <title>競輪AIアタルくん neo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0070f3">
+  <meta name="theme-color" content="#172033">
   <link rel="icon" type="image/png" sizes="192x192" href="icon_192.png">
   <link rel="apple-touch-icon" href="icon_192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icon_512.png">
   <style>
-    body { font-family: sans-serif; background: #f7f7f7; padding: 1em; }
-    h1 { text-align: center; }
-    section { background: white; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    h2 { border-left: 6px solid #0070f3; padding-left: 0.5em; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 0.5em 0; }
-    a { text-decoration: none; color: #0070f3; }
-    footer { text-align: center; font-size: 0.9em; margin-top: 2em; color: #666; }
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #e5e7eb;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #059669;
+      --green-soft: #ecfdf5;
+      --purple: #7c3aed;
+      --purple-soft: #f3e8ff;
+      --orange: #ea580c;
+      --orange-soft: #fff7ed;
+      --hero-a: #172033;
+      --hero-b: #243b73;
+      --hero-c: #0f766e;
+      --neo: #a7f3d0;
+      --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+      --radius: 22px;
+    }
+
+    body[data-theme="compact"] {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #111827;
+      --muted: #64748b;
+      --blue: #0ea5e9;
+      --blue-soft: #e0f2fe;
+      --green: #16a34a;
+      --green-soft: #f0fdf4;
+      --purple: #8b5cf6;
+      --purple-soft: #f5f3ff;
+      --orange: #f97316;
+      --orange-soft: #fff7ed;
+      --hero-a: #0f172a;
+      --hero-b: #1e293b;
+      --hero-c: #334155;
+      --neo: #38bdf8;
+      --radius: 16px;
+    }
+
+    body[data-theme="premium"] {
+      --bg: #111827;
+      --card: #182235;
+      --ink: #f8fafc;
+      --muted: #cbd5e1;
+      --line: #334155;
+      --blue: #fbbf24;
+      --blue-soft: #243247;
+      --green: #22c55e;
+      --green-soft: #163226;
+      --purple: #c084fc;
+      --purple-soft: #2e2548;
+      --orange: #f97316;
+      --orange-soft: #332414;
+      --hero-a: #020617;
+      --hero-b: #312e81;
+      --hero-c: #064e3b;
+      --neo: #fbbf24;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 34%),
+        radial-gradient(circle at top right, rgba(5, 150, 105, 0.12), transparent 28%),
+        var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", "Yu Gothic", sans-serif;
+      line-height: 1.7;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 18px 0 56px;
+    }
+
+    .sample-button.is-active {
+      background: var(--blue);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    body[data-theme="premium"] .sample-button.is-active {
+      color: #111827;
+    }
+
+    .hero {
+      padding: 22px 20px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--hero-a), var(--hero-b) 52%, var(--hero-c));
+      color: #ffffff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .hero-icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.20);
+      padding: 8px;
+      object-fit: contain;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-main {
+      margin: 0;
+      font-size: clamp(1.8rem, 6vw, 3.1rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .brand-neo {
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: clamp(1.9rem, 7vw, 3.8rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--neo);
+      text-shadow: 0 8px 22px rgba(0,0,0,0.24);
+      transform: rotate(-7deg);
+      display: inline-block;
+    }
+
+    .hero-copy {
+      margin: 10px 0 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+
+    body[data-theme="compact"] .section {
+      margin-top: 14px;
+      padding: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .section-note {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .menu-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .menu-card {
+      display: block;
+      min-height: 128px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    }
+
+    body[data-theme="compact"] .menu-card {
+      min-height: 104px;
+      padding: 14px;
+      border-radius: 14px;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
+      border-color: rgba(37, 99, 235, 0.30);
+    }
+
+    .menu-card.is-disabled {
+      cursor: default;
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .menu-card.is-disabled:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--line);
+    }
+
+    .menu-card.primary {
+      background: var(--blue-soft);
+      border-color: rgba(37, 99, 235, 0.18);
+    }
+
+    .menu-card.primary .menu-label {
+      background: var(--blue);
+    }
+
+    .menu-card.green {
+      background: var(--green-soft);
+      border-color: rgba(5, 150, 105, 0.18);
+    }
+
+    .menu-card.green .menu-label {
+      background: var(--green);
+    }
+
+    .menu-card.purple {
+      background: var(--purple-soft);
+      border-color: rgba(124, 58, 237, 0.20);
+    }
+
+    .menu-card.purple .menu-label {
+      background: var(--purple);
+    }
+
+    .menu-card.purple .arrow {
+      color: var(--purple);
+    }
+
+    .menu-card.orange {
+      background: var(--orange-soft);
+      border-color: rgba(234, 88, 12, 0.18);
+    }
+
+    .menu-card.orange .menu-label {
+      background: var(--orange);
+    }
+
+    .menu-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 0.92rem;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    .menu-title {
+      font-size: 1.12rem;
+      font-weight: 900;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .menu-desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .arrow {
+      margin-top: 14px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .today-links a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .page { width: min(100% - 20px, 960px); padding-top: 14px; }
+      .hero { padding: 22px 18px; border-radius: 24px; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      .hero-icon { width: 74px; height: 74px; }
+      .brand { justify-content: center; }
+      .section { padding: 16px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .section-note { white-space: normal; }
+      .menu-grid, .menu-grid.two { grid-template-columns: 1fr; }
+      .menu-card { min-height: auto; }
+    }
   </style>
 </head>
-<body>
+<body data-theme="compact">
+  <main class="page">
 
-  <div style="text-align: center; margin-bottom: 1em;">
-    <img src="./icon_512.png" alt="競輪AIアタルくん アイコン" style="width: 120px; height: auto; cursor: pointer;" onclick="location.reload();">
-  </div>
+    <header class="hero">
+      <div class="hero-inner">
+        <img class="hero-icon" src="./icon_512.png" alt="競輪AIアタルくん アイコン" onclick="location.reload();">
+        <div>
+          <div class="brand">
+            <h1 class="brand-main">競輪AIアタルくん</h1>
+            <span class="brand-neo">neo</span>
+          </div>
+          <p class="hero-copy">グレードレース予想・全レース予想・AI予想成績をまとめて確認できます。</p>
+        </div>
+      </div>
+    </header>
 
-  <h1>🏁 競輪AIアタルくん</h1>
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">グレードレース予想</h2>
+        <div class="section-note">9車限定 / GⅢ以上を中心に表示</div>
+      </div>
 
-  <section>
-    <h2>📌 本日のグレードレース</h2>
-    <ul>
-      <li id="grade-race-link">本日のグレードレース：確認中</li>
-    </ul>
-  </section>
+      <div class="menu-grid">
+        <a class="menu-card primary" id="grade-race-card" href="./grade05/latest/final/index.html">
+          <div class="menu-label">本日のグレードレース</div>
+          <div class="menu-title today-links" id="grade-race-link">確認中</div>
+          <div class="arrow">見る →</div>
+        </a>
 
-  <section>
-    <h2>📄 本日の全レース予想</h2>
-    <p>
-      <a href="./predict/pdf/gr01/final_prediction_v2_2026-06-06.pdf" target="_blank">🔗 PDFを開く（2026年6月6日）</a>
-    </p>
-  </section>
+        <a class="menu-card purple" href="./grade05/archive/">
+          <div class="menu-label">アーカイブ</div>
+          <div class="menu-title">過去のグレードレース予想</div>
+          <div class="arrow">開く →</div>
+        </a>
 
-  <section>
-    <h2>📚 アーカイブ</h2>
+        <a class="menu-card green" href="./grade05/profit/index.html">
+          <div class="menu-label">AI予想成績</div>
+          <div class="menu-title">的中・回収率レポート</div>
+          <div class="arrow">見る →</div>
+        </a>
+      </div>
+    </section>
 
-    <p>
-      <strong>🏁 グレードレースアーカイブ</strong><br>
-      <a href="./grade04/archive/">→ 過去グレードレースを見る</a>
-    </p>
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">本日の全レース予想（おまけ）</h2>
+        <div class="section-note">PDF版 / 一覧確認用</div>
+      </div>
 
-    <p style="margin-top:1em;">
-      <strong>📄 全レース予想アーカイブ</strong><br>
-      <a href="./archive.html">→ 過去の全レース予想を見る</a>
-    </p>
-  </section>
+      <div class="menu-grid two">
+        <a class="menu-card orange" id="today-pdf-card" href="./archive.html" target="_blank">
+          <div class="menu-label">本日分</div>
+          <div class="menu-title" id="today-pdf-title">全レース予想（PDF）</div>
+          <div class="arrow" id="today-pdf-arrow">確認中 →</div>
+        </a>
 
-  <footer>
-    2025 競輪AIアタルくん
-  </footer>
+        <a class="menu-card" href="./archive.html">
+          <div class="menu-label">アーカイブ</div>
+          <div class="menu-title">過去の全レース予想PDF</div>
+          <div class="arrow">開く →</div>
+        </a>
+      </div>
+    </section>
+
+    <p class="footer-note">Keirin AI Ataru-kun neo</p>
+  </main>
+
   <script>
     async function updateGradeRaceLink() {
       const target = document.getElementById('grade-race-link');
       if (!target) return;
 
       try {
-        const res = await fetch('./grade04/latest/final/latest.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('grade04 latest json not found');
+        const res = await fetch('./grade05/latest/final/latest.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('grade05 latest json not found');
 
         const data = await res.json();
         const items = Array.isArray(data.items) ? data.items : [];
 
+        const card = document.getElementById('grade-race-card');
+
         if (items.length > 0) {
           target.innerHTML = items
-            .map(item => `🎯 <a href="${item.href}">${item.title}</a>`)
+            .map(item => `<span>${item.title}</span>`)
             .join('<br>');
+
+          if (card && items[0].href) {
+            card.href = items[0].href;
+            card.classList.remove('is-disabled');
+            card.setAttribute('aria-disabled', 'false');
+          }
         } else {
           target.textContent = '本日のグレードレースはありません';
+          if (card) {
+            card.removeAttribute('href');
+            card.classList.add('is-disabled');
+            card.setAttribute('aria-disabled', 'true');
+          }
         }
       } catch (e) {
         target.textContent = '本日のグレードレースはありません';
+        const card = document.getElementById('grade-race-card');
+        if (card) {
+          card.removeAttribute('href');
+          card.classList.add('is-disabled');
+          card.setAttribute('aria-disabled', 'true');
+        }
+      }
+    }
+
+    async function updateTodayPdfLink() {
+      const card = document.getElementById('today-pdf-card');
+      const title = document.getElementById('today-pdf-title');
+      const arrow = document.getElementById('today-pdf-arrow');
+
+      if (!card || !title || !arrow) return;
+
+      try {
+        const res = await fetch('./predict/pdf/gr01/latest.json', {
+          cache: 'no-store'
+        });
+
+        if (!res.ok) throw new Error();
+
+        const data = await res.json();
+
+        if (data.href) {
+          card.href = data.href;
+        }
+
+        title.textContent = data.label || '全レース予想（PDF）';
+        arrow.textContent = 'PDFを見る →';
+
+      } catch (e) {
+        card.href = './archive.html';
+        title.textContent = '本日の予想PDFはありません';
+        arrow.textContent = 'アーカイブを見る →';
       }
     }
 
     updateGradeRaceLink();
+    updateTodayPdfLink();
   </script>
 </body>
 </html>
