@@ -340,6 +340,20 @@
       font-weight: 900;
     }
 
+    .notice-content {
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .notice-empty {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
     .footer-note {
       margin-top: 18px;
       color: var(--muted);
@@ -425,6 +439,14 @@
       </div>
     </section>
 
+    <section class="section" id="notice-section" style="display:none;">
+      <div class="section-head">
+        <h2 class="section-title">お知らせ</h2>
+        <div class="section-note">管理人コメント</div>
+      </div>
+      <div class="notice-content" id="notice-content"></div>
+    </section>
+
     <p class="footer-note">Keirin AI Ataru-kun neo</p>
   </main>
 
@@ -501,8 +523,29 @@
       }
     }
 
+    async function updateNotice() {
+      const section = document.getElementById('notice-section');
+      const content = document.getElementById('notice-content');
+
+      if (!section || !content) return;
+
+      try {
+        const res = await fetch('./notice.txt', { cache: 'no-store' });
+        if (!res.ok) throw new Error('notice not found');
+
+        const text = (await res.text()).trim();
+        if (!text) throw new Error('notice empty');
+
+        content.textContent = text;
+        section.style.display = '';
+      } catch (e) {
+        section.style.display = 'none';
+      }
+    }
+
     updateGradeRaceLink();
     updateTodayPdfLink();
+    updateNotice();
   </script>
 </body>
 </html>
