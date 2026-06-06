@@ -14,9 +14,7 @@
 
 # Keep grade race HTML pages
 !docs/grade/
-!docs/grade01/
 !docs/grade/**
-!docs/grade01/**
 !docs/grade04/
 !docs/grade04/**
 !docs/grade05/
