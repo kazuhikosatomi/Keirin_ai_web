@@ -73,3 +73,7 @@ docs/grade05/today_template.html
 !docs/grade05/latest/final/
 !docs/grade05/archive/
 !docs/index_grade05.html
+
+# public top pages
+!docs/index.html
+!docs/index_grade04_last.html
