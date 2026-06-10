@@ -387,7 +387,6 @@
         <a class="menu-card primary" id="grade-race-card" href="./grade05/latest/final/index.html">
           <div class="menu-label">本日のグレードレース</div>
           <div class="menu-title today-links" id="grade-race-link">確認中</div>
-          <div class="arrow">見る →</div>
         </a>
 
         <a class="menu-card purple" href="./grade05/archive/">
@@ -444,11 +443,15 @@
 
         if (items.length > 0) {
           target.innerHTML = items
-            .map(item => `<span>${item.title}</span>`)
+            .map(item => {
+              const href = item.href || './grade05/latest/final/index.html';
+              const title = item.title || '開催ページ';
+              return `<a href="${href}">${title}</a>`;
+            })
             .join('<br>');
 
-          if (card && items[0].href) {
-            card.href = items[0].href;
+          if (card) {
+            card.href = './grade05/latest/final/index.html';
             card.classList.remove('is-disabled');
             card.setAttribute('aria-disabled', 'false');
           }
