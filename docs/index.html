@@ -335,9 +335,22 @@
     }
 
     .today-links a {
+      display: block;
       color: var(--blue);
       text-decoration: none;
       font-weight: 900;
+      padding: 6px 0;
+      line-height: 1.35;
+    }
+
+    .today-links a + a {
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(37, 99, 235, 0.18);
+    }
+
+    .today-links a:hover {
+      text-decoration: underline;
     }
 
     .notice-content {
@@ -398,11 +411,11 @@
       </div>
 
       <div class="menu-grid">
-        <a class="menu-card primary" id="grade-race-card" href="./grade05/latest/final/index.html">
+        <div class="menu-card primary" id="grade-race-card">
           <div class="menu-label">本日のグレードレース</div>
           <div class="menu-title today-links" id="grade-race-link">確認中</div>
           <div class="arrow">見る →</div>
-        </a>
+        </div>
 
         <a class="menu-card purple" href="./grade05/archive/">
           <div class="menu-label">アーカイブ</div>
@@ -466,11 +479,14 @@
 
         if (items.length > 0) {
           target.innerHTML = items
-            .map(item => `<span>${item.title}</span>`)
-            .join('<br>');
+            .map(item => {
+              if (!item.href) return `<span>${item.title}</span>`;
+              return `<a href="${item.href}">${item.title}</a>`;
+            })
+            .join('');
 
-          if (card && items[0].href) {
-            card.href = items[0].href;
+          if (card) {
+            card.removeAttribute('href');
             card.classList.remove('is-disabled');
             card.setAttribute('aria-disabled', 'false');
           }
