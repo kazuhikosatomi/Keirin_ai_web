@@ -70,6 +70,8 @@ docs/grade05/templates/
 docs/grade05/today_template.html
 !docs/grade05/latest/final/
 !docs/grade05/archive/
+!docs/grade05/profit/
+!docs/grade05/profit/**
 !docs/index_grade05.html
 
 # public top pages
