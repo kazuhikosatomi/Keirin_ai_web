@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>グレードレース予想 | 競輪AIアタルくん</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #172554, #1d4ed8);
+      color: #fff;
+      padding: 28px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px 14px 40px;
+    }
+
+    .nav-links {
+      margin: 0 0 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fff;
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    .summary-card,
+    .venue-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .summary-card h2,
+    .venue-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .status-box {
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .status-box .label {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .status-box .value {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .race-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .race-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.15fr) 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .race-no {
+      font-weight: 900;
+      font-size: 1.05rem;
+    }
+
+    .race-meta {
+      color: #475569;
+      font-size: 0.92rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-right: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .badge.waiting {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge.ready {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .race-link {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.82rem;
+      padding: 20px 10px 30px;
+    }
+
+    @media (max-width: 640px) {
+      header h1 {
+        font-size: 1.45rem;
+      }
+
+      .race-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .race-link {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏆 グレードレース予想</h1>
+    <p>荒れ度・買い目・発走前オッズをまとめて確認できます</p>
+  </header>
+
+  <main>
+    <div class="nav-links">
+      <a href="{{TOP_HREF}}">← トップへ戻る</a>
+    </div>
+
+    <section class="summary-card">
+      <h2>📅 本日のグレードレース</h2>
+
+
+      <div class="status-grid">
+        <div class="status-box">
+          <div class="label">対象日</div>
+          <div class="value">YYYY-MM-DD</div>
+        </div>
+        <div class="status-box">
+          <div class="label">開催数</div>
+          <div class="value">0</div>
+        </div>
+        <div class="status-box">
+          <div class="label">対象レース</div>
+          <div class="value">0R</div>
+        </div>
+        <div class="status-box">
+          <div class="label">最終更新</div>
+          <div class="value">--:--</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="venue-card">
+      <h2>サンプル競輪場</h2>
+      <div class="race-list">
+        <div class="race-row">
+          <div class="race-no">00R</div>
+          <div>
+            <div>
+              <span class="badge">荒れ度 --</span>
+              <span class="badge waiting">オッズ更新待ち</span>
+            </div>
+            <div class="race-meta">発走予定 --:-- / 更新予定 --:--</div>
+          </div>
+          <a class="race-link" href="./races/v00/r00.html">買い目を見る</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    2026 競輪AIアタルくん
+  </footer>
+</body>
+</html>

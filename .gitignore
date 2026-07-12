@@ -13,12 +13,10 @@
 !docs/
 
 # Keep grade race HTML pages
-!docs/grade/
-!docs/grade/**
-!docs/grade04/
-!docs/grade04/**
 !docs/grade05/
 !docs/grade05/**
+!docs/seven01/
+!docs/seven01/**
 
 # Keep only selected predict/result subtrees
 !docs/predict/
@@ -59,11 +57,6 @@ docs/results/csv/
 .DS_Store
 **/.DS_Store
 
-# grade04 local-only
-docs/grade04/latest/snapshot/
-docs/grade04/templates/
-docs/grade04/today_template.html
-
 # grade05 local-only
 docs/grade05/latest/snapshot/
 docs/grade05/templates/
@@ -76,5 +69,5 @@ docs/grade05/today_template.html
 
 # public top pages
 !docs/index.html
-!docs/index_grade04_last.html
+!docs/index_seven01.html
 !docs/notice.txt

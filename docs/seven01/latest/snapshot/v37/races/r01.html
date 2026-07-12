@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>レース詳細 | グレードレース予想</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a, #1e40af);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px 14px 40px;
+    }
+
+    .nav {
+      margin-bottom: 16px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .title {
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .arare {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .waiting {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .ready {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+    }
+
+    th {
+      background: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><span style="display:block; line-height:1.35;">伊東 FⅠ 第1レース（一般）</span><span style="display:block; margin-top:6px; font-size:0.95rem; line-height:1.35; color:#dbeafe; font-weight:800;">競輪ワールドシリーズ（最終日）</span></h1>
+</header>
+
+<main>
+
+  <div class="nav">
+    <a href="../index.html">← 一覧に戻る</a>
+  </div>
+
+  
+  <div class="card" style="padding:12px 14px;">
+    <div class="title" style="margin-bottom:8px;">レース移動（伊東）</div>
+    <div style="display:flex; flex-wrap:wrap; align-items:center;">
+      <span style="display:inline-block; padding:5px 9px; border-radius:999px; background:#1d4ed8; color:#ffffff; font-weight:800; font-size:0.85rem; margin:0 4px 6px 0;">1R</span><a href="./r02.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">2R</a><a href="./r03.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">3R</a><a href="./r04.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">4R</a><a href="./r06.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">6R</a><a href="./r08.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">8R</a><a href="./r09.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">9R</a><a href="./r10.html" style="display:inline-block; padding:5px 9px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:800; font-size:0.85rem; text-decoration:none; margin:0 4px 6px 0;">10R</a>
+    </div>
+  </div>
+
+<div class="card">
+    <div class="title">レース情報</div>
+    <span style="display:inline-block; padding:4px 9px; border-radius:999px; background:#dcfce7; color:#166534; border:1px solid #bbf7d0; font-weight:900; font-size:0.85rem; white-space:nowrap;">荒れ度 低 0%</span>
+    <span class="badge waiting" style="background:#f3f4f6; color:#6b7280;">オッズ更新前</span>
+    <p>発走予定：15:55</p>
+  </div>
+
+  
+  <div class="card">
+    <div class="title">選手成績（7車レース 過去1年）</div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th><th style="min-width:92px; white-space:nowrap;">氏名</th><th style="min-width:32px; white-space:nowrap;">府県</th><th style="min-width:40px; white-space:nowrap;">班級</th><th style="min-width:34px; white-space:nowrap;">年齢</th><th style="min-width:32px; white-space:nowrap;">期</th><th style="min-width:48px; white-space:nowrap;">得点</th><th>出走</th><th>S</th><th>B</th>
+            <th style="padding-left:14px;">逃</th><th>捲</th><th>差</th><th>マ</th>
+            <th style="padding-left:14px;">1着</th><th>2着</th><th>3着</th><th>外</th>
+            <th style="padding-left:14px;">1率</th><th>2率</th><th>3率</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr style="background:#ffffff; color:#111827;">
+          <td>1</td>
+          <td style="min-width:92px; white-space:nowrap;">橋本　勝弘</td>
+          <td style="min-width:32px; white-space:nowrap;">愛媛</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ２</td>
+          <td style="min-width:34px; white-space:nowrap;">43</td>
+          <td style="min-width:32px; white-space:nowrap;">89</td>
+          <td style="min-width:48px; white-space:nowrap;">85.81</td>
+          <td>83</td>
+          <td>10</td>
+          <td>0</td>
+          <td style="padding-left:14px;">0</td>
+          <td>0</td>
+          <td>10</td>
+          <td>6</td>
+          <td style="padding-left:14px;">8</td>
+          <td>8</td>
+          <td>17</td>
+          <td>50</td>
+          <td style="padding-left:14px;">9.6%</td>
+          <td>9.6%</td>
+          <td>20.5%</td>
+        </tr>
+        <tr style="background:#e5e7eb; color:#111827;">
+          <td>2</td>
+          <td style="min-width:92px; white-space:nowrap;">谷澤　優貴</td>
+          <td style="min-width:32px; white-space:nowrap;">三重</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ２</td>
+          <td style="min-width:34px; white-space:nowrap;">21</td>
+          <td style="min-width:32px; white-space:nowrap;">127</td>
+          <td style="min-width:48px; white-space:nowrap;">83.58</td>
+          <td>68</td>
+          <td>9</td>
+          <td>26</td>
+          <td style="padding-left:14px;">16</td>
+          <td>23</td>
+          <td>3</td>
+          <td>1</td>
+          <td style="padding-left:14px;">34</td>
+          <td>9</td>
+          <td>5</td>
+          <td>20</td>
+          <td style="padding-left:14px;">50.0%</td>
+          <td>13.2%</td>
+          <td>7.4%</td>
+        </tr>
+        <tr style="background:#fee2e2; color:#111827;">
+          <td>3</td>
+          <td style="min-width:92px; white-space:nowrap;">宮下　一歩</td>
+          <td style="min-width:32px; white-space:nowrap;">長野</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ１</td>
+          <td style="min-width:34px; white-space:nowrap;">33</td>
+          <td style="min-width:32px; white-space:nowrap;">115</td>
+          <td style="min-width:48px; white-space:nowrap;">86.79</td>
+          <td>94</td>
+          <td>15</td>
+          <td>60</td>
+          <td style="padding-left:14px;">30</td>
+          <td>2</td>
+          <td>1</td>
+          <td>2</td>
+          <td style="padding-left:14px;">16</td>
+          <td>19</td>
+          <td>10</td>
+          <td>49</td>
+          <td style="padding-left:14px;">17.0%</td>
+          <td>20.2%</td>
+          <td>10.6%</td>
+        </tr>
+        <tr style="background:#dbeafe; color:#111827;">
+          <td>4</td>
+          <td style="min-width:92px; white-space:nowrap;">若林　耕司</td>
+          <td style="min-width:32px; white-space:nowrap;">群馬</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ２</td>
+          <td style="min-width:34px; white-space:nowrap;">45</td>
+          <td style="min-width:32px; white-space:nowrap;">87</td>
+          <td style="min-width:48px; white-space:nowrap;">81.65</td>
+          <td>86</td>
+          <td>1</td>
+          <td>0</td>
+          <td style="padding-left:14px;">0</td>
+          <td>1</td>
+          <td>6</td>
+          <td>4</td>
+          <td style="padding-left:14px;">6</td>
+          <td>5</td>
+          <td>14</td>
+          <td>61</td>
+          <td style="padding-left:14px;">7.0%</td>
+          <td>5.8%</td>
+          <td>16.3%</td>
+        </tr>
+        <tr style="background:#fef9c3; color:#111827;">
+          <td>5</td>
+          <td style="min-width:92px; white-space:nowrap;">吉川　裕二</td>
+          <td style="min-width:32px; white-space:nowrap;">大分</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ２</td>
+          <td style="min-width:34px; white-space:nowrap;">45</td>
+          <td style="min-width:32px; white-space:nowrap;">86</td>
+          <td style="min-width:48px; white-space:nowrap;">84.00</td>
+          <td>51</td>
+          <td>4</td>
+          <td>0</td>
+          <td style="padding-left:14px;">0</td>
+          <td>0</td>
+          <td>5</td>
+          <td>6</td>
+          <td style="padding-left:14px;">3</td>
+          <td>8</td>
+          <td>8</td>
+          <td>32</td>
+          <td style="padding-left:14px;">5.9%</td>
+          <td>15.7%</td>
+          <td>15.7%</td>
+        </tr>
+        <tr style="background:#dcfce7; color:#111827;">
+          <td>6</td>
+          <td style="min-width:92px; white-space:nowrap;">柴田　祐也</td>
+          <td style="min-width:32px; white-space:nowrap;">岐阜</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ２</td>
+          <td style="min-width:34px; white-space:nowrap;">42</td>
+          <td style="min-width:32px; white-space:nowrap;">94</td>
+          <td style="min-width:48px; white-space:nowrap;">80.45</td>
+          <td>68</td>
+          <td>2</td>
+          <td>0</td>
+          <td style="padding-left:14px;">0</td>
+          <td>1</td>
+          <td>10</td>
+          <td>7</td>
+          <td style="padding-left:14px;">7</td>
+          <td>11</td>
+          <td>8</td>
+          <td>42</td>
+          <td style="padding-left:14px;">10.3%</td>
+          <td>16.2%</td>
+          <td>11.8%</td>
+        </tr>
+        <tr style="background:#ffedd5; color:#111827;">
+          <td>7</td>
+          <td style="min-width:92px; white-space:nowrap;">北村　貴幸</td>
+          <td style="min-width:32px; white-space:nowrap;">群馬</td>
+          <td style="min-width:40px; white-space:nowrap;">Ａ２</td>
+          <td style="min-width:34px; white-space:nowrap;">54</td>
+          <td style="min-width:32px; white-space:nowrap;">71</td>
+          <td style="min-width:48px; white-space:nowrap;">84.50</td>
+          <td>57</td>
+          <td>0</td>
+          <td>0</td>
+          <td style="padding-left:14px;">0</td>
+          <td>0</td>
+          <td>5</td>
+          <td>2</td>
+          <td style="padding-left:14px;">3</td>
+          <td>4</td>
+          <td>10</td>
+          <td>40</td>
+          <td style="padding-left:14px;">5.3%</td>
+          <td>7.0%</td>
+          <td>17.5%</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="title">並び予想</div>
+    <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:0; overflow-x:auto; white-space:nowrap;">
+      <span style="font-size:1.05rem; font-weight:900; margin-right:6px; color:#374151; flex:0 0 auto;">←</span>
+      <span style="display:inline-flex; align-items:center; margin:0 12px 6px 0; flex:0 0 auto;"><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#222222; color:#ffffff; border:1px solid #222222; font-weight:900; font-size:0.78rem; line-height:1;">2</span><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#16a34a; color:#ffffff; border:1px solid #16a34a; font-weight:900; font-size:0.78rem; line-height:1;">6</span><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#ffffff; color:#111827; border:1px solid #d1d5db; font-weight:900; font-size:0.78rem; line-height:1;">1</span></span><span style="display:inline-flex; align-items:center; margin:0 12px 6px 0; flex:0 0 auto;"><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#dc2626; color:#ffffff; border:1px solid #dc2626; font-weight:900; font-size:0.78rem; line-height:1;">3</span><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#ea580c; color:#ffffff; border:1px solid #ea580c; font-weight:900; font-size:0.78rem; line-height:1;">7</span><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#2563eb; color:#ffffff; border:1px solid #2563eb; font-weight:900; font-size:0.78rem; line-height:1;">4</span></span><span style="display:inline-flex; align-items:center; margin:0 12px 6px 0; flex:0 0 auto;"><span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:4px; margin-right:2px; background:#facc15; color:#111827; border:1px solid #facc15; font-weight:900; font-size:0.78rem; line-height:1;">5</span></span>
+    </div>
+    
+  <div style="margin-top:14px; border-top:1px solid #e5e7eb; padding-top:12px;">
+    <div style="font-weight:900; color:#1e3a8a; margin-bottom:8px;">ライン連携（過去3年）</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:0.82rem; table-layout:fixed;">
+        <thead>
+          <tr>
+            <th style="width:28%;">ライン</th>
+            <th style="width:15%;">出走</th>
+            <th style="width:15%; white-space:nowrap;">1-2着</th>
+            <th style="width:15%; white-space:nowrap;">2-1着</th>
+            <th style="width:27%; white-space:nowrap;">ライン決着</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+      <tr>
+        <td style="font-weight:900; padding:5px 8px;"><span style="display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px; border-radius:4px; margin-right:2px; background:#222222; color:#ffffff; border:1px solid #222222; font-weight:900; font-size:0.72rem; line-height:1;">2</span><span style="display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px; border-radius:4px; margin-right:2px; background:#16a34a; color:#ffffff; border:1px solid #16a34a; font-weight:900; font-size:0.72rem; line-height:1;">6</span></td>
+        <td style="padding:5px 8px;">1回</td>
+        <td style="padding:5px 8px;">0回</td>
+        <td style="padding:5px 8px;">0回</td>
+        <td style="padding:5px 8px;">0.0%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:900; padding:5px 8px;"><span style="display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px; border-radius:4px; margin-right:2px; background:#dc2626; color:#ffffff; border:1px solid #dc2626; font-weight:900; font-size:0.72rem; line-height:1;">3</span><span style="display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px; border-radius:4px; margin-right:2px; background:#ea580c; color:#ffffff; border:1px solid #ea580c; font-weight:900; font-size:0.72rem; line-height:1;">7</span></td>
+        <td style="padding:5px 8px;">1回</td>
+        <td style="padding:5px 8px;">1回</td>
+        <td style="padding:5px 8px;">0回</td>
+        <td style="padding:5px 8px;">100.0%</td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+<div class="card">
+    <div class="title">AI予想（買い目）</div>
+    <table>
+      <thead>
+        <tr>
+          <th>買い目</th>
+          <th>確率</th>
+          <th>オッズ</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td colspan="3" style="background:#eef2ff; color:#1e3a8a; font-weight:800; text-align:left;">
+            2車単
+          </td>
+        </tr>
+
+        <tr>
+          <td>2-6</td>
+          <td>15.43%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>3-7</td>
+          <td>12.58%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>6-2</td>
+          <td>7.97%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>7-3</td>
+          <td>7.32%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>3-2</td>
+          <td>6.69%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td colspan="3" style="background:#eef2ff; color:#1e3a8a; font-weight:800; text-align:left;">
+            3連単
+          </td>
+        </tr>
+
+        <tr>
+          <td>2-6-1</td>
+          <td>7.18%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>3-7-4</td>
+          <td>5.30%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>6-2-1</td>
+          <td>3.80%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>7-3-4</td>
+          <td>3.69%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-6-3</td>
+          <td>2.86%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>3-7-2</td>
+          <td>2.71%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-6-7</td>
+          <td>2.34%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>3-2-7</td>
+          <td>2.31%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-3-7</td>
+          <td>2.15%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-6-4</td>
+          <td>1.63%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td colspan="3" style="background:#eef2ff; color:#1e3a8a; font-weight:800; text-align:left;">
+            3連複
+          </td>
+        </tr>
+
+        <tr>
+          <td>1-2-6</td>
+          <td>15.46%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>3-4-7</td>
+          <td>11.16%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-3-7</td>
+          <td>10.09%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-3-6</td>
+          <td>8.32%</td>
+          <td>--</td>
+        </tr>
+
+        <tr>
+          <td>2-6-7</td>
+          <td>5.30%</td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</main>
+
+</body>
+</html>
