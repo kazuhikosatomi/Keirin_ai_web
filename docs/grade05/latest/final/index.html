@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>グレードレース予想 | 競輪AIアタルくん</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #172554, #1d4ed8);
+      color: #fff;
+      padding: 28px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px 14px 40px;
+    }
+
+    .nav-links {
+      margin: 0 0 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fff;
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    .summary-card,
+    .empty-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .summary-card h2,
+    .empty-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .status-box {
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .status-box .label {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .status-box .value {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .empty-message {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      border-radius: 14px;
+      padding: 18px;
+      font-weight: 800;
+      text-align: center;
+      font-size: 1.05rem;
+    }
+
+    .note {
+      color: #64748b;
+      font-size: 0.92rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.82rem;
+      padding: 20px 10px 30px;
+    }
+
+    @media (max-width: 640px) {
+      header h1 {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏆 グレードレース予想</h1>
+    <p>荒れ度・買い目・発走前オッズをまとめて確認できます</p>
+  </header>
+
+  <main>
+    <div class="nav-links">
+      <a href="../../../index.html">← トップへ戻る</a>
+      <a href="../../archive/index.html">Grade04アーカイブ</a>
+    </div>
+
+    <section class="summary-card">
+      <h2>📅 本日のグレードレース</h2>
+      <p>
+        本日の対象レースを自動確認しました。
+        9車のグレードレースがある日は、このページに対象レース一覧と買い目リンクを表示します。
+      </p>
+
+      <div class="status-grid">
+        <div class="status-box">
+          <div class="label">対象日</div>
+          <div class="value">2026-08-10</div>
+        </div>
+        <div class="status-box">
+          <div class="label">開催数</div>
+          <div class="value">0</div>
+        </div>
+        <div class="status-box">
+          <div class="label">対象レース</div>
+          <div class="value">0R</div>
+        </div>
+        <div class="status-box">
+          <div class="label">最終更新</div>
+          <div class="value">--:--</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="empty-card">
+      <h2>本日の対象レース</h2>
+      <div class="empty-message">
+        本日のグレードレースはありません
+      </div>
+      <div class="note">
+        対象レースがある日は、朝の自動処理後にこのページへ一覧が表示されます。
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 競輪AIアタルくん
+  </footer>
+</body>
+</html>
