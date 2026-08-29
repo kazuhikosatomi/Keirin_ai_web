@@ -75,3 +75,6 @@ docs/grade05/today_template.html
 scripts/public9_preview/
 data/public9_preview/
 tmp/public9_audit/
+
+# Local LINE Messaging API credentials
+config/line.env

@@ -1,8 +1,6 @@
 name: LINE通知送信
 
 on:
-  schedule:
-    - cron: '10 22 * * 0,1,2,3,4,5,6'  # JST 7:30（UTC 23:00）水曜除外 一時的に水曜を追加
   workflow_dispatch:
 
 jobs:
