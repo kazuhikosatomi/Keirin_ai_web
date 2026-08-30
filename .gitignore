@@ -21,25 +21,17 @@
 # Keep only selected predict/result subtrees
 !docs/predict/
 !docs/predict/csv/
-!docs/predict/csv/3rd/
-!docs/predict/csv/3rd/**
 !docs/predict/csv/gr01/
 !docs/predict/csv/gr01/**
 !docs/predict/pdf/
-!docs/predict/pdf/3rd/
-!docs/predict/pdf/3rd/**
 !docs/predict/pdf/gr01/
 !docs/predict/pdf/gr01/**
 
 !docs/results/
 !docs/results/csv/
-!docs/results/csv/3rd/
-!docs/results/csv/3rd/**
 !docs/results/csv/gr01/
 !docs/results/csv/gr01/**
 !docs/results/pdf/
-!docs/results/pdf/3rd/
-!docs/results/pdf/3rd/**
 !docs/results/pdf/gr01/
 !docs/results/pdf/gr01/**
 

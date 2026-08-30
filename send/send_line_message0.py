@@ -72,12 +72,40 @@ today_str = jst.strftime("%Y-%m-%d")
 # bet01
 # ============================================================
 
-BET01_STEP43 = Path(
-    "data/bet01/car9/step43"
-) / (
-    f"bet01_car9_step43_all_top_tickets_"
-    f"{today_str}.csv"
-)
+# ============================================================
+# LINE予想元
+#
+# 正式移行前 : sim06
+# 正式移行後 : bet01
+#
+# public01 / bet01へ正式移行したら、
+# PREDICTION_SOURCE = "bet01"
+# に変更するだけで切替可能。
+# ============================================================
+
+PREDICTION_SOURCE = "sim06"
+
+if PREDICTION_SOURCE == "sim06":
+    LINE_STEP43 = Path(
+        "data/sim06/step43"
+    ) / (
+        f"sim06_step43_all_top_tickets_"
+        f"{today_str}.csv"
+    )
+
+elif PREDICTION_SOURCE == "bet01":
+    LINE_STEP43 = Path(
+        "data/bet01/car9/step43"
+    ) / (
+        f"bet01_car9_step43_all_top_tickets_"
+        f"{today_str}.csv"
+    )
+
+else:
+    raise ValueError(
+        f"unknown PREDICTION_SOURCE: "
+        f"{PREDICTION_SOURCE}"
+    )
 
 TOP_N = 3
 
@@ -513,6 +541,28 @@ def build_message(
     df: pd.DataFrame,
 ) -> str:
 
+    # ========================================================
+    # source column normalization
+    #
+    # sim06 : race_num
+    # bet01 : race_no
+    #
+    # LINE内部では race_no に統一する。
+    # ========================================================
+
+    df = df.copy()
+
+    if (
+        "race_no" not in df.columns
+        and "race_num" in df.columns
+    ):
+        df = df.rename(
+            columns={
+                "race_num": "race_no",
+            }
+        )
+
+
     required = {
         "ticket_type",
         "ticket_key",
@@ -526,7 +576,7 @@ def build_message(
 
     if missing:
         raise ValueError(
-            "bet01 Step43 required "
+            f"{PREDICTION_SOURCE} Step43 required "
             f"columns missing: {missing}"
         )
 
@@ -681,10 +731,10 @@ def build_message(
 # main
 # ============================================================
 
-if BET01_STEP43.exists():
+if LINE_STEP43.exists():
 
     df = pd.read_csv(
-        BET01_STEP43,
+        LINE_STEP43,
         low_memory=False,
     )
 
@@ -693,8 +743,8 @@ if BET01_STEP43.exists():
     )
 
     print(
-        "✅ bet01 Step43:",
-        BET01_STEP43,
+        f"✅ LINE prediction source: {PREDICTION_SOURCE}",
+        LINE_STEP43,
     )
 
     print(
@@ -707,7 +757,7 @@ else:
 
     message_text = (
         f"{today_str} の"
-        "bet01 Step43予測結果が"
+        f"{PREDICTION_SOURCE} Step43予測結果が"
         "見つかりませんでした。"
     )
 
