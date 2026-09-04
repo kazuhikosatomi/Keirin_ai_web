@@ -727,6 +727,28 @@ def build_message(
     return "\n".join(lines)
 
 
+def has_car9_races(date: str) -> bool:
+    """当日のentryメタ情報に9車レースが1つでもあるか確認する。"""
+    entry_meta = load_entry_meta(date)
+
+    if entry_meta.empty:
+        return False
+
+    required = {"venue_id", "race_no"}
+
+    if not required.issubset(entry_meta.columns):
+        return False
+
+    race_sizes = (
+        entry_meta
+        .dropna(subset=["venue_id", "race_no"])
+        .groupby(["venue_id", "race_no"])
+        .size()
+    )
+
+    return bool((race_sizes == 9).any())
+
+
 # ============================================================
 # main
 # ============================================================
@@ -754,6 +776,13 @@ if LINE_STEP43.exists():
     )
 
 else:
+
+    if not has_car9_races(today_str):
+        print(
+            f"ℹ️ {today_str}: 9車レースなし。"
+            "LINE送信をスキップします。"
+        )
+        raise SystemExit(0)
 
     message_text = (
         f"{today_str} の"
