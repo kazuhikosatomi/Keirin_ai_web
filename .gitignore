@@ -1,72 +1,83 @@
-# Ignore everything by default
+# ============================================================
+# Default: ignore everything
+# Git is used primarily for files that need to be published.
+# ============================================================
 *
-.DS_Store
-.env
-.env.*
 
-# Keep essential repo files
+# ============================================================
+# Repository essentials
+# ============================================================
 !.gitignore
 !README.md
 !requirements.txt
 
-# Keep docs root
+# ============================================================
+# Public website root
+# ============================================================
 !docs/
 
-# Keep grade race HTML pages
+# Main public pages
+!docs/index.html
+!docs/index_grade05.html
+!docs/index_seven01.html
+!docs/archive.html
+!docs/notice.txt
+
+# ============================================================
+# grade05 - current production site
+# ============================================================
 !docs/grade05/
 !docs/grade05/**
+
+# Local-only grade05 files
+docs/grade05/latest/snapshot/
+docs/grade05/templates/
+docs/grade05/today_template.html
+
+# ============================================================
+# seven01 - occasional public test site
+# ============================================================
 !docs/seven01/
 !docs/seven01/**
 
-# Keep only selected predict/result subtrees
+# ============================================================
+# Full-race prediction PDFs - public
+# ============================================================
 !docs/predict/
-!docs/predict/csv/
-!docs/predict/csv/gr01/
-!docs/predict/csv/gr01/**
 !docs/predict/pdf/
 !docs/predict/pdf/gr01/
 !docs/predict/pdf/gr01/**
 
+# Prediction CSV - local processing only
+docs/predict/csv/
+
+# ============================================================
+# Full-race result PDFs - public
+# ============================================================
 !docs/results/
-!docs/results/csv/
-!docs/results/csv/gr01/
-!docs/results/csv/gr01/**
 !docs/results/pdf/
 !docs/results/pdf/gr01/
 !docs/results/pdf/gr01/**
 
-# Keep LINE notification script
-!send/
-!send/send_line_message0.py
-
-# Keep GitHub Actions workflow
-!.github/
-!.github/workflows/
-!.github/workflows/line_notify.yml
+# Result CSV - local processing only
 docs/results/csv/
 
-# Re-ignore macOS metadata even under allowed paths
+# ============================================================
+# public01 - local test site for now
+# Will be enabled for Git when production migration is complete.
+# ============================================================
+docs/public/
+
+# ============================================================
+# Local / temporary files
+# ============================================================
 .DS_Store
 **/.DS_Store
+.env
+.env.*
+config/line.env
 
-# grade05 local-only
-docs/grade05/latest/snapshot/
-docs/grade05/templates/
-docs/grade05/today_template.html
-!docs/grade05/latest/final/
-!docs/grade05/archive/
-!docs/grade05/profit/
-!docs/grade05/profit/**
-!docs/index_grade05.html
-
-# public top pages
-!docs/index.html
-!docs/index_seven01.html
-!docs/notice.txt
-# public9 migration preview (local only)
+# Old public9 migration test files
 scripts/public9_preview/
 data/public9_preview/
 tmp/public9_audit/
-
-# Local LINE Messaging API credentials
-config/line.env
