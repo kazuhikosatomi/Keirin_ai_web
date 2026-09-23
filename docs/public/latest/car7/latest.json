@@ -3,32 +3,32 @@
   "items": [
     {
       "venue_id": "v12",
-      "title": "青森 FⅠ ＴＩＰＳＴＡＲ杯 週刊大衆杯（最終日）",
+      "title": "グレードレース予想",
       "href": "./public/latest/car7/v12/index.html"
     },
     {
       "venue_id": "v25",
-      "title": "大宮 FⅡ スピードチャンネル・スカパー杯（最終日）",
+      "title": "グレードレース予想",
       "href": "./public/latest/car7/v25/index.html"
     },
     {
       "venue_id": "v28",
-      "title": "立川 FⅠ 報知ゴールドカップ・山口健治杯（2日目）",
+      "title": "グレードレース予想",
       "href": "./public/latest/car7/v28/index.html"
     },
     {
       "venue_id": "v37",
-      "title": "伊東 FⅠ（初日）",
+      "title": "グレードレース予想",
       "href": "./public/latest/car7/v37/index.html"
     },
     {
       "venue_id": "v44",
-      "title": "大垣 FⅡ 福井ケーブルテレビ杯（2日目）",
+      "title": "グレードレース予想",
       "href": "./public/latest/car7/v44/index.html"
     },
     {
       "venue_id": "v73",
-      "title": "小松島 FⅠ（初日）",
+      "title": "グレードレース予想",
       "href": "./public/latest/car7/v73/index.html"
     }
   ]
