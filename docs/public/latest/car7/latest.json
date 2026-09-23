@@ -1,35 +1,50 @@
 {
-  "date": "2026-09-23",
+  "date": "2026-09-24",
   "items": [
     {
-      "venue_id": "v12",
-      "title": "グレードレース予想",
-      "href": "./public/latest/car7/v12/index.html"
-    },
-    {
-      "venue_id": "v25",
-      "title": "グレードレース予想",
-      "href": "./public/latest/car7/v25/index.html"
+      "venue_id": "v21",
+      "title": "弥彦 FⅡ（初日）",
+      "href": "./public/latest/car7/v21/index.html"
     },
     {
       "venue_id": "v28",
-      "title": "グレードレース予想",
+      "title": "立川 FⅠ 報知ゴールドカップ・山口健治杯（最終日）",
       "href": "./public/latest/car7/v28/index.html"
     },
     {
+      "venue_id": "v34",
+      "title": "川崎 FⅡ（初日）",
+      "href": "./public/latest/car7/v34/index.html"
+    },
+    {
       "venue_id": "v37",
-      "title": "グレードレース予想",
+      "title": "伊東 FⅠ スポーツニッポン杯争奪戦（2日目）",
       "href": "./public/latest/car7/v37/index.html"
     },
     {
       "venue_id": "v44",
-      "title": "グレードレース予想",
+      "title": "大垣 FⅡ 福井ケーブルテレビ杯（最終日）",
       "href": "./public/latest/car7/v44/index.html"
     },
     {
+      "venue_id": "v53",
+      "title": "奈良 FⅡ（初日）",
+      "href": "./public/latest/car7/v53/index.html"
+    },
+    {
       "venue_id": "v73",
-      "title": "グレードレース予想",
+      "title": "小松島 FⅠ 西日本カップ ＴＩＰＳＴＡＲ杯（2日目）",
       "href": "./public/latest/car7/v73/index.html"
+    },
+    {
+      "venue_id": "v86",
+      "title": "別府 FⅡ（初日）",
+      "href": "./public/latest/car7/v86/index.html"
+    },
+    {
+      "venue_id": "v87",
+      "title": "熊本 FⅡ（初日）",
+      "href": "./public/latest/car7/v87/index.html"
     }
   ]
 }
