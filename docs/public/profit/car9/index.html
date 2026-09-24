@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI予想成績｜競輪AIアタルくん neo</title>
+<style>
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:#f8fafc;color:#111827;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans",sans-serif;line-height:1.7}
+.page{width:min(1080px,calc(100% - 24px));margin:auto;padding:18px 0 48px}
+.hero{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#0f172a,#1e293b,#334155);color:white;border-radius:18px;padding:18px;box-shadow:0 14px 34px rgba(15,23,42,.12)}
+.icon{width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,.14);padding:6px}
+h1{margin:0;font-size:1.8rem;line-height:1.2}
+.neo{font-family:"Brush Script MT","Segoe Script",cursive;color:#38bdf8;font-size:1.25em;font-style:italic}
+.sub{margin:4px 0 0;color:#cbd5e1;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.card{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:14px;box-shadow:0 10px 24px rgba(15,23,42,.06)}
+.label{color:#64748b;font-size:.78rem;font-weight:900}
+.value{font-size:1.25rem;font-weight:900;margin-top:4px}
+.section{background:white;border:1px solid #e5e7eb;border-radius:16px;margin-top:14px;padding:16px;box-shadow:0 10px 24px rgba(15,23,42,.06)}
+h2{font-size:1.15rem;margin:0 0 12px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:820px}
+.daily-table{min-width:620px}
+.grade-table{min-width:760px}
+.best-hit-table{min-width:760px}
+th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+.grade-table th,.grade-table td{text-align:right}
+.grade-table th:first-child,.grade-table td:first-child,.grade-table th:nth-child(2),.grade-table td:nth-child(2){text-align:left}
+.best-hit-table th,.best-hit-table td{text-align:right}
+.best-hit-table th:first-child,.best-hit-table td:first-child{text-align:left}
+.best-hit-table th:nth-child(3),.best-hit-table td:nth-child(3){text-align:left;white-space:nowrap}
+.best-hit-table th:nth-child(6),.best-hit-table td:nth-child(6){text-align:left;white-space:nowrap}
+.daily-table th,.daily-table td{text-align:right}
+.daily-table th:first-child,.daily-table td:first-child{text-align:left}
+.daily-table th:nth-child(2),.daily-table td:nth-child(2){text-align:right;font-weight:900}
+th{font-size:.8rem;color:#64748b}
+.total-row{background:#eff6ff;font-weight:900}
+.profit.plus{color:#dc2626;font-weight:900}
+.profit.minus{color:#2563eb;font-weight:900}
+.nav{margin:14px 0 0}
+.nav a{display:inline-block;color:#2563eb;font-weight:900;text-decoration:none}
+@media(max-width:760px){.hero{align-items:flex-start}.cards{grid-template-columns:repeat(2,1fr)}h1{font-size:1.45rem}.grade-table{min-width:760px}.grade-table th,.grade-table td{padding:9px 10px}.best-hit-table{min-width:760px}.best-hit-table th,.best-hit-table td{padding:9px 10px}.daily-table{min-width:620px}.daily-table th,.daily-table td{padding:9px 10px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <img class="icon" src="../../icon_512.png" alt="競輪AIアタルくん">
+    <div>
+      <h1>AI予想成績 <span class="neo">neo</span></h1>
+      <p class="sub">アーカイブ掲載済みの全グレードレース予想を集計</p>
+    </div>
+  </header>
+
+  <div class="nav">
+    <a href="../../../index.html">← トップへ戻る</a>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="label">対象日数</div><div class="value">7</div></div>
+    <div class="card"><div class="label">レース数</div><div class="value">75</div></div>
+    <div class="card"><div class="label">的中</div><div class="value">25</div></div>
+    <div class="card"><div class="label">回収率</div><div class="value">82.7%</div></div>
+  </div>
+
+  <section class="section">
+    <h2>賭式別・トータル集計</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>賭式</th><th>収支</th><th>回収率</th><th>R</th><th>的中</th><th>的中率</th><th>購入</th><th>払戻</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr class="">
+          <td>2車単</td>
+          <td class="profit minus">-10,840円</td>
+          <td>71.1%</td>
+          <td>75</td>
+          <td>20</td>
+          <td>26.7%</td>
+          <td>37,500円</td>
+          <td>26,660円</td>
+        </tr>
+        <tr class="">
+          <td>3連単</td>
+          <td class="profit minus">-1,180円</td>
+          <td>98.4%</td>
+          <td>75</td>
+          <td>12</td>
+          <td>16.0%</td>
+          <td>75,000円</td>
+          <td>73,820円</td>
+        </tr>
+        <tr class="">
+          <td>3連複</td>
+          <td class="profit minus">-13,880円</td>
+          <td>63.0%</td>
+          <td>75</td>
+          <td>15</td>
+          <td>20.0%</td>
+          <td>37,500円</td>
+          <td>23,620円</td>
+        </tr>
+        <tr class="total-row">
+          <td>Total</td>
+          <td class="profit minus">-25,900円</td>
+          <td>82.7%</td>
+          <td>75</td>
+          <td>25</td>
+          <td>33.3%</td>
+          <td>150,000円</td>
+          <td>124,100円</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>グレード別集計</h2>
+    <div class="table-wrap">
+      <table class="grade-table">
+        <thead>
+          <tr>
+            <th>G</th><th>賭式</th><th>収支</th><th>回収率</th><th>R</th><th>的中</th><th>的中率</th><th>購入</th><th>払戻</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr class="">
+          <td>GⅡ</td>
+          <td>2車単</td>
+          <td class="profit minus">-5,520円</td>
+          <td>76.0%</td>
+          <td>46</td>
+          <td>13</td>
+          <td>28.3%</td>
+          <td>23,000円</td>
+          <td>17,480円</td>
+        </tr>
+        <tr class="">
+          <td>GⅡ</td>
+          <td>3連単</td>
+          <td class="profit plus">16,070円</td>
+          <td>134.9%</td>
+          <td>46</td>
+          <td>8</td>
+          <td>17.4%</td>
+          <td>46,000円</td>
+          <td>62,070円</td>
+        </tr>
+        <tr class="">
+          <td>GⅡ</td>
+          <td>3連複</td>
+          <td class="profit minus">-7,750円</td>
+          <td>66.3%</td>
+          <td>46</td>
+          <td>9</td>
+          <td>19.6%</td>
+          <td>23,000円</td>
+          <td>15,250円</td>
+        </tr>
+        <tr class="total-row">
+          <td>GⅡ</td>
+          <td>Total</td>
+          <td class="profit plus">2,800円</td>
+          <td>103.0%</td>
+          <td>46</td>
+          <td>15</td>
+          <td>32.6%</td>
+          <td>92,000円</td>
+          <td>94,800円</td>
+        </tr>
+        <tr class="">
+          <td>GⅢ</td>
+          <td>2車単</td>
+          <td class="profit minus">-5,320円</td>
+          <td>63.3%</td>
+          <td>29</td>
+          <td>7</td>
+          <td>24.1%</td>
+          <td>14,500円</td>
+          <td>9,180円</td>
+        </tr>
+        <tr class="">
+          <td>GⅢ</td>
+          <td>3連単</td>
+          <td class="profit minus">-17,250円</td>
+          <td>40.5%</td>
+          <td>29</td>
+          <td>4</td>
+          <td>13.8%</td>
+          <td>29,000円</td>
+          <td>11,750円</td>
+        </tr>
+        <tr class="">
+          <td>GⅢ</td>
+          <td>3連複</td>
+          <td class="profit minus">-6,130円</td>
+          <td>57.7%</td>
+          <td>29</td>
+          <td>6</td>
+          <td>20.7%</td>
+          <td>14,500円</td>
+          <td>8,370円</td>
+        </tr>
+        <tr class="total-row">
+          <td>GⅢ</td>
+          <td>Total</td>
+          <td class="profit minus">-28,700円</td>
+          <td>50.5%</td>
+          <td>29</td>
+          <td>10</td>
+          <td>34.5%</td>
+          <td>58,000円</td>
+          <td>29,300円</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>最高的中配当</h2>
+    <div class="table-wrap">
+      <table class="best-hit-table">
+        <thead>
+          <tr>
+            <th>賭式</th><th>配当</th><th>日付</th><th>開催</th><th>レース</th><th>開催名</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>2車単</td>
+          <td>3,180円</td>
+          <td>2026-09-21</td>
+          <td>富山G2</td>
+          <td>1R</td>
+          <td>共同通信社杯競輪（最終日）</td>
+        </tr>
+        <tr>
+          <td>3連単</td>
+          <td>30,510円</td>
+          <td>2026-09-21</td>
+          <td>富山G2</td>
+          <td>1R</td>
+          <td>共同通信社杯競輪（最終日）</td>
+        </tr>
+        <tr>
+          <td>3連複</td>
+          <td>3,600円</td>
+          <td>2026-09-18</td>
+          <td>富山G2</td>
+          <td>2R</td>
+          <td>共同通信社杯競輪（初日）</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>日別明細（Totalのみ）</h2>
+    <div class="table-wrap">
+      <table class="daily-table">
+        <thead>
+          <tr>
+            <th>日付</th><th>収支</th><th>回収率</th><th>R</th><th>的中</th><th>的中率</th><th>購入</th><th>払戻</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>2026-09-21</td>
+          <td class="profit plus">29,780円</td>
+          <td>235.4%</td>
+          <td>11</td>
+          <td>6</td>
+          <td>54.5%</td>
+          <td>22,000円</td>
+          <td>51,780円</td>
+        </tr>
+        <tr>
+          <td>2026-09-20</td>
+          <td class="profit minus">-4,710円</td>
+          <td>78.6%</td>
+          <td>11</td>
+          <td>5</td>
+          <td>45.5%</td>
+          <td>22,000円</td>
+          <td>17,290円</td>
+        </tr>
+        <tr>
+          <td>2026-09-19</td>
+          <td class="profit minus">-11,590円</td>
+          <td>51.7%</td>
+          <td>12</td>
+          <td>2</td>
+          <td>16.7%</td>
+          <td>24,000円</td>
+          <td>12,410円</td>
+        </tr>
+        <tr>
+          <td>2026-09-18</td>
+          <td class="profit minus">-10,680円</td>
+          <td>55.5%</td>
+          <td>12</td>
+          <td>2</td>
+          <td>16.7%</td>
+          <td>24,000円</td>
+          <td>13,320円</td>
+        </tr>
+        <tr>
+          <td>2026-09-13</td>
+          <td class="profit minus">-13,060円</td>
+          <td>27.4%</td>
+          <td>9</td>
+          <td>2</td>
+          <td>22.2%</td>
+          <td>18,000円</td>
+          <td>4,940円</td>
+        </tr>
+        <tr>
+          <td>2026-09-12</td>
+          <td class="profit minus">-15,350円</td>
+          <td>14.7%</td>
+          <td>9</td>
+          <td>3</td>
+          <td>33.3%</td>
+          <td>18,000円</td>
+          <td>2,650円</td>
+        </tr>
+        <tr>
+          <td>2026-09-11</td>
+          <td class="profit minus">-290円</td>
+          <td>98.7%</td>
+          <td>11</td>
+          <td>5</td>
+          <td>45.5%</td>
+          <td>22,000円</td>
+          <td>21,710円</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
