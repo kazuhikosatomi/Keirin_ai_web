@@ -4,47 +4,56 @@
     {
       "venue_id": "v21",
       "title": "弥彦 FⅡ（初日）",
-      "href": "./public/latest/car7/v21/index.html"
+      "href": "./public/latest/car7/v21/index.html",
+      "publish_group": "watch"
     },
     {
       "venue_id": "v28",
       "title": "立川 FⅠ 報知ゴールドカップ・山口健治杯（最終日）",
-      "href": "./public/latest/car7/v28/index.html"
+      "href": "./public/latest/car7/v28/index.html",
+      "publish_group": "other"
     },
     {
       "venue_id": "v34",
       "title": "川崎 FⅡ（初日）",
-      "href": "./public/latest/car7/v34/index.html"
+      "href": "./public/latest/car7/v34/index.html",
+      "publish_group": "other"
     },
     {
       "venue_id": "v37",
       "title": "伊東 FⅠ スポーツニッポン杯争奪戦（2日目）",
-      "href": "./public/latest/car7/v37/index.html"
+      "href": "./public/latest/car7/v37/index.html",
+      "publish_group": "watch"
     },
     {
       "venue_id": "v44",
       "title": "大垣 FⅡ 福井ケーブルテレビ杯（最終日）",
-      "href": "./public/latest/car7/v44/index.html"
+      "href": "./public/latest/car7/v44/index.html",
+      "publish_group": "other"
     },
     {
       "venue_id": "v53",
       "title": "奈良 FⅡ（初日）",
-      "href": "./public/latest/car7/v53/index.html"
+      "href": "./public/latest/car7/v53/index.html",
+      "publish_group": "other"
     },
     {
       "venue_id": "v73",
       "title": "小松島 FⅠ 西日本カップ ＴＩＰＳＴＡＲ杯（2日目）",
-      "href": "./public/latest/car7/v73/index.html"
+      "href": "./public/latest/car7/v73/index.html",
+      "publish_group": "other"
     },
     {
       "venue_id": "v86",
       "title": "別府 FⅡ（初日）",
-      "href": "./public/latest/car7/v86/index.html"
+      "href": "./public/latest/car7/v86/index.html",
+      "publish_group": "other"
     },
     {
       "venue_id": "v87",
       "title": "熊本 FⅡ（初日）",
-      "href": "./public/latest/car7/v87/index.html"
+      "href": "./public/latest/car7/v87/index.html",
+      "publish_group": "other"
     }
   ]
 }
