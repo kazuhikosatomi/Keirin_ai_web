@@ -1515,6 +1515,8 @@
       </div>
 
       <div id="transition-box" class="transition" hidden>
+        <div id="transition-preopen"
+             style="font-weight:800; color:#dc2626; margin-bottom:6px;"></div>
         <h2 id="transition-title"></h2>
         <p id="transition-message"></p>
       </div>
@@ -1814,6 +1816,9 @@
 
         const box = document.getElementById('transition-box');
         box.hidden = false;
+
+        document.getElementById('transition-preopen').textContent =
+          '現在プレオープン中です';
 
         document.getElementById('transition-title').textContent =
           'サイトリニューアルしました';
