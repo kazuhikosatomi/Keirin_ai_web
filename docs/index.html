@@ -1,511 +1,1910 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>競輪AIアタルくん neo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172033">
-  <link rel="icon" type="image/png" sizes="192x192" href="icon_192.png">
-  <link rel="apple-touch-icon" href="icon_192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="icon_512.png">
+  <title>競輪AIアタルくん</title>
+
   <style>
-    :root {
-      --bg: #f4f6fb;
-      --card: #ffffff;
-      --ink: #172033;
-      --muted: #667085;
-      --line: #e5e7eb;
-      --blue: #2563eb;
-      --blue-soft: #eff6ff;
-      --green: #059669;
-      --green-soft: #ecfdf5;
-      --purple: #7c3aed;
-      --purple-soft: #f3e8ff;
-      --orange: #ea580c;
-      --orange-soft: #fff7ed;
-      --hero-a: #172033;
-      --hero-b: #243b73;
-      --hero-c: #0f766e;
-      --neo: #a7f3d0;
-      --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
-      --radius: 22px;
-    }
+  :root {
+    --bg: #eef3f8;
+    --panel: #ffffff;
+    --line: #d8e1ea;
+    --text: #243142;
+    --muted: #6e7c8e;
+    --blue: #3e78b8;
+    --blue-dark: #2f5f93;
+    --blue-soft: #eaf2fa;
+    --accent: #6ca0d3;
+    --gold: #b7934c;
+  }
 
-    body[data-theme="compact"] {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --ink: #111827;
-      --muted: #64748b;
-      --blue: #0ea5e9;
-      --blue-soft: #e0f2fe;
-      --green: #16a34a;
-      --green-soft: #f0fdf4;
-      --purple: #8b5cf6;
-      --purple-soft: #f5f3ff;
-      --orange: #f97316;
-      --orange-soft: #fff7ed;
-      --hero-a: #0f172a;
-      --hero-b: #1e293b;
-      --hero-c: #334155;
-      --neo: #38bdf8;
-      --radius: 16px;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    body[data-theme="premium"] {
-      --bg: #111827;
-      --card: #182235;
-      --ink: #f8fafc;
-      --muted: #cbd5e1;
-      --line: #334155;
-      --blue: #fbbf24;
-      --blue-soft: #243247;
-      --green: #22c55e;
-      --green-soft: #163226;
-      --purple: #c084fc;
-      --purple-soft: #2e2548;
-      --orange: #f97316;
-      --orange-soft: #332414;
-      --hero-a: #020617;
-      --hero-b: #312e81;
-      --hero-c: #064e3b;
-      --neo: #fbbf24;
-      --shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Hiragino Sans",
+      "Yu Gothic",
+      sans-serif;
+    color: var(--text);
+    background:
+      linear-gradient(180deg, #e9f1f8 0%, #f4f7fa 260px, var(--bg) 100%);
+  }
 
-    * { box-sizing: border-box; }
+  a {
+    color: inherit;
+  }
 
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 34%),
-        radial-gradient(circle at top right, rgba(5, 150, 105, 0.12), transparent 28%),
-        var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", "Yu Gothic", sans-serif;
-      line-height: 1.7;
-      transition: background 180ms ease, color 180ms ease;
-    }
+  .page {
+    width: min(1040px, calc(100% - 28px));
+    margin: 0 auto;
+    padding: 24px 0 52px;
+  }
 
-    a { color: inherit; text-decoration: none; }
+  .hero {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 26px rgba(52, 81, 111, .08);
+  }
 
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .brand-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(42, 66, 92, .14);
+    flex: 0 0 auto;
+  }
+
+  .brand-copy {
+    min-width: 0;
+  }
+
+  .site-title {
+    margin: 0;
+    font-size: clamp(25px, 5vw, 33px);
+    line-height: 1.15;
+    font-weight: 850;
+    color: #26384c;
+  }
+
+  .site-sub {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .edition {
+    display: inline-flex;
+    margin-top: 8px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    color: var(--blue-dark);
+    background: var(--blue-soft);
+    border: 1px solid #d5e3f1;
+  }
+
+  .transition {
+    margin-top: 20px;
+    padding: 17px 18px;
+    border-radius: 15px;
+    border: 1px solid #d2dfec;
+    background: #f4f8fc;
+  }
+
+  .transition h2 {
+    margin: 0 0 7px;
+    font-size: 18px;
+    color: var(--blue-dark);
+  }
+
+  .transition p {
+    margin: 5px 0;
+    line-height: 1.7;
+    color: #617286;
+  }
+
+
+  .section {
+    margin-top: 17px;
+    padding: 22px;
+    border-radius: 19px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: 0 8px 22px rgba(52, 81, 111, .06);
+  }
+
+  .section h2 {
+    margin: 0 0 16px;
+    font-size: 19px;
+    color: #34485e;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    min-height: 126px;
+    border-radius: 15px;
+    padding: 19px;
+    border: 1px solid #dfe6ee;
+    background: #ffffff;
+    transition:
+      transform .18s ease,
+      border-color .18s ease,
+      box-shadow .18s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: #b8cee3;
+    box-shadow: 0 8px 18px rgba(52, 81, 111, .09);
+  }
+
+  .card-car9,
+  .card-car7 {
+    min-height: 142px;
+    padding: 21px;
+    overflow: hidden;
+  }
+
+  .card-car9 {
+    border-color: #d6dbe1;
+    background: linear-gradient(135deg, #f4f5f6 0%, #eef0f2 100%);
+  }
+
+  .card-car7 {
+    border-color: #f3cfd2;
+    background: linear-gradient(135deg, #fff5f5 0%, #fff0f1 100%);
+  }
+
+  .card-car9::after,
+  .card-car7::after {
+    position: absolute;
+    right: 12px;
+    bottom: -27px;
+    font-size: 142px;
+    line-height: 1;
+    font-weight: 900;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card-car9::after {
+    content: "9";
+    color: rgba(80, 87, 94, .16);
+  }
+
+  .card-car7::after {
+    content: "7";
+    color: rgba(220, 72, 82, .16);
+  }
+
+  .card-label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 76px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .08em;
+    margin-bottom: 9px;
+  }
+
+  .card-car9 .card-label {
+    color: #ffffff;
+    background: #8b8f92;
+  }
+
+  .card-car7 .card-label {
+    color: #ffffff;
+    background: #ed7b82;
+  }
+
+  .card-title {
+    position: relative;
+    z-index: 1;
+    font-size: 20px;
+    font-weight: 820;
+  }
+
+  .card-car9 .card-title {
+    color: #666b70;
+  }
+
+  .card-car7 .card-title {
+    color: #e66d75;
+  }
+
+  .card-status {
+    position: relative;
+    z-index: 1;
+    margin-top: 8px;
+    color: var(--muted);
+  }
+
+  .card-arrow {
+    position: relative;
+    z-index: 1;
+    margin-top: 17px;
+    font-weight: 750;
+    color: var(--blue-dark);
+  }
+
+  .card-car9 .card-arrow {
+    color: #666b70;
+  }
+
+  .card-car7 .card-arrow {
+    color: #e66d75;
+  }
+
+  .disabled {
+    opacity: .6;
+    pointer-events: none;
+  }
+
+  .section:nth-of-type(4) {
+    background: #fbfaf7;
+  }
+
+  .section:nth-of-type(4) .card {
+    background: #fffefa;
+    border-color: #ebe3d5;
+  }
+
+  .section:nth-of-type(4) .card-label {
+    color: var(--gold);
+  }
+
+  @media (max-width: 720px) {
     .page {
-      width: min(960px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 18px 0 56px;
-    }
-
-    .sample-button.is-active {
-      background: var(--blue);
-      color: #ffffff;
-      border-color: transparent;
-    }
-
-    body[data-theme="premium"] .sample-button.is-active {
-      color: #111827;
+      width: min(100% - 20px, 1040px);
+      padding-top: 12px;
     }
 
     .hero {
-      padding: 22px 20px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, var(--hero-a), var(--hero-b) 52%, var(--hero-c));
-      color: #ffffff;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -70px;
-      top: -70px;
-      width: 190px;
-      height: 190px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .hero-icon {
-      width: 76px;
-      height: 76px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.14);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.20);
-      padding: 8px;
-      object-fit: contain;
+      padding: 19px;
+      border-radius: 19px;
     }
 
     .brand {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .brand-main {
-      margin: 0;
-      font-size: clamp(1.8rem, 6vw, 3.1rem);
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-      font-weight: 900;
-    }
-
-    .brand-neo {
-      font-family: "Brush Script MT", "Segoe Script", cursive;
-      font-size: clamp(1.9rem, 7vw, 3.8rem);
-      font-style: italic;
-      font-weight: 400;
-      line-height: 1;
-      color: var(--neo);
-      text-shadow: 0 8px 22px rgba(0,0,0,0.24);
-      transform: rotate(-7deg);
-      display: inline-block;
-    }
-
-    .hero-copy {
-      margin: 10px 0 0;
-      color: rgba(255,255,255,0.78);
-      font-size: 0.95rem;
-      font-weight: 700;
-    }
-
-    .section {
-      margin-top: 22px;
-      padding: 22px;
-      border-radius: var(--radius);
-      background: var(--card);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--line);
-    }
-
-    body[data-theme="compact"] .section {
-      margin-top: 14px;
-      padding: 16px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 12px;
-      padding-bottom: 14px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid var(--line);
     }
 
-    .section-title {
-      margin: 0;
-      font-size: 1.25rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-    }
-
-    .section-note {
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .menu-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-    .menu-card {
-      display: block;
-      min-height: 128px;
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: var(--card);
-      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
-    }
-
-    body[data-theme="compact"] .menu-card {
-      min-height: 104px;
-      padding: 14px;
+    .brand-icon {
+      width: 56px;
+      height: 56px;
       border-radius: 14px;
     }
 
-    .menu-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
-      border-color: rgba(37, 99, 235, 0.30);
+    .site-title {
+      font-size: 24px;
     }
 
-    .menu-card.is-disabled {
-      cursor: default;
-      opacity: 0.72;
-      pointer-events: none;
+    .section {
+      padding: 16px;
+      border-radius: 17px;
     }
 
-    .menu-card.is-disabled:hover {
-      transform: none;
-      box-shadow: none;
-      border-color: var(--line);
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
     }
 
-    .menu-card.primary {
-      background: var(--blue-soft);
-      border-color: rgba(37, 99, 235, 0.18);
+    .card {
+      min-width: 0;
     }
 
-    .menu-card.primary .menu-label {
-      background: var(--blue);
+    .card-car9,
+    .card-car7 {
+      min-height: 142px;
+      padding: 16px;
     }
 
-    .menu-card.green {
-      background: var(--green-soft);
-      border-color: rgba(5, 150, 105, 0.18);
+    .card-car9::after,
+    .card-car7::after {
+      right: 4px;
+      bottom: -22px;
+      font-size: 112px;
     }
+  }
+</style>
 
-    .menu-card.green .menu-label {
-      background: var(--green);
-    }
+<style id="keirin-nine-color-theme">
+  /* =========================================================
+     競輪1〜9番車カラー
+     レース画面の選手データ配色と統一
+     ========================================================= */
 
-    .menu-card.purple {
-      background: var(--purple-soft);
-      border-color: rgba(124, 58, 237, 0.20);
-    }
+  /* 1番車：白 ── ヘッダー */
+  .hero {
+    background: #ffffff;
+    border-color: #d1d5db;
+  }
 
-    .menu-card.purple .menu-label {
-      background: var(--purple);
-    }
+  .site-title {
+    color: #111827;
+  }
 
-    .menu-card.purple .arrow {
-      color: var(--purple);
-    }
+  .edition {
+    margin-top: 9px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .18em;
+    color: #f4c542;
+    background: #111827;
+    border: 1px solid #111827;
+    box-shadow: 0 3px 8px rgba(17, 24, 39, .18);
+  }
 
-    .menu-card.orange {
-      background: var(--orange-soft);
-      border-color: rgba(234, 88, 12, 0.18);
-    }
 
-    .menu-card.orange .menu-label {
-      background: var(--orange);
-    }
+  /* 共通カード */
+  .card {
+    border-width: 1px;
+  }
 
-    .menu-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 12px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      color: #ffffff;
-      background: var(--blue);
-      font-size: 0.92rem;
-      font-weight: 900;
-      line-height: 1.25;
-      letter-spacing: 0.01em;
-    }
+  .card-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    padding: 5px 15px;
+    margin-bottom: 11px;
 
-    .menu-title {
-      font-size: 1.12rem;
-      font-weight: 900;
-      line-height: 1.45;
-      letter-spacing: -0.01em;
-    }
+    border-radius: 999px;
 
-    .menu-desc {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .10em;
+  }
 
-    .arrow {
-      margin-top: 14px;
-      font-weight: 900;
-      color: var(--blue);
-    }
+  .card-title {
+    font-weight: 900;
+  }
 
-    .today-links a {
-      display: block;
-      color: var(--blue);
-      text-decoration: none;
-      font-weight: 900;
-      padding: 6px 0;
-      line-height: 1.35;
-    }
 
-    .today-links a + a {
-      margin-top: 8px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(37, 99, 235, 0.18);
-    }
+  /* -----------------------------------------
+     2番車：黒
+     AI予想 9車
+     ----------------------------------------- */
+  .section:nth-of-type(2) .card:nth-child(1) {
+    background: #e5e7eb;
+    border-color: #cbd0d6;
+    color: #111827;
+    box-shadow: none;
+  }
 
-    .today-links a:hover {
-      text-decoration: underline;
-    }
+  .section:nth-of-type(2) .card:nth-child(1)::after {
+    color: rgba(34,34,34,.055);
+  }
 
-    .notice-content {
-      color: var(--ink);
-      font-size: 0.95rem;
-      font-weight: 700;
-      line-height: 1.8;
-      white-space: pre-wrap;
-    }
+  .section:nth-of-type(2) .card:nth-child(1) .card-label {
+    background: #222222;
+    color: #ffffff;
+  }
 
-    .notice-empty {
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
+  .section:nth-of-type(2) .card:nth-child(1) .card-title {
+    color: #222222;
+  }
 
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      text-align: center;
-    }
+  .section:nth-of-type(2) .card:nth-child(1) .card-status {
+    color: #4b5563;
+  }
 
-    @media (max-width: 760px) {
-      .page { width: min(100% - 20px, 960px); padding-top: 14px; }
-      .hero { padding: 22px 18px; border-radius: 24px; }
-      .hero-inner { grid-template-columns: 1fr; text-align: center; justify-items: center; }
-      .hero-icon { width: 74px; height: 74px; }
-      .brand { justify-content: center; }
-      .section { padding: 16px; }
-      .section-head { align-items: flex-start; flex-direction: column; gap: 4px; }
-      .section-note { white-space: normal; }
-      .menu-grid, .menu-grid.two { grid-template-columns: 1fr; }
-      .menu-card { min-height: auto; }
+  .section:nth-of-type(2) .card:nth-child(1) .card-arrow {
+    color: #222222;
+  }
+
+
+  /* -----------------------------------------
+     3番車：赤
+     AI予想 7車
+     ----------------------------------------- */
+  .section:nth-of-type(2) .card:nth-child(2) {
+    background: #fee2e2;
+    border-color: #fecaca;
+  }
+
+  .section:nth-of-type(2) .card:nth-child(2) .card-label {
+    background: #dc2626;
+  }
+
+  .section:nth-of-type(2) .card:nth-child(2) .card-title,
+  .section:nth-of-type(2) .card:nth-child(2) .card-arrow {
+    color: #dc2626;
+  }
+
+
+  /* -----------------------------------------
+     4番車：青
+     アーカイブ
+     ----------------------------------------- */
+  .section:nth-of-type(3) .card:nth-child(1) {
+    background: #dbeafe;
+    border-color: #bfdbfe;
+  }
+
+  .section:nth-of-type(3) .card:nth-child(1) .card-label {
+    background: #2563eb;
+  }
+
+  .section:nth-of-type(3) .card:nth-child(1) .card-title,
+  .section:nth-of-type(3) .card:nth-child(1) .card-arrow {
+    color: #2563eb;
+  }
+
+
+  /* -----------------------------------------
+     5番車：黄
+     収支
+     ----------------------------------------- */
+  .section:nth-of-type(3) .card:nth-child(2) {
+    background: #fef9c3;
+    border-color: #fde68a;
+  }
+
+  .section:nth-of-type(3) .card:nth-child(2) .card-label {
+    background: #facc15;
+    color: #111827;
+  }
+
+  .section:nth-of-type(3) .card:nth-child(2) .card-title,
+  .section:nth-of-type(3) .card:nth-child(2) .card-arrow {
+    color: #a16207;
+  }
+
+
+  /* -----------------------------------------
+     6番車：緑
+     旧アーカイブ
+     ----------------------------------------- */
+  .section:nth-of-type(4) .card:nth-child(1) {
+    background: #dcfce7;
+    border-color: #bbf7d0;
+  }
+
+  .section:nth-of-type(4) .card:nth-child(1) .card-label {
+    background: #16a34a;
+    color: #ffffff;
+  }
+
+  .section:nth-of-type(4) .card:nth-child(1) .card-title,
+  .section:nth-of-type(4) .card:nth-child(1) .card-arrow {
+    color: #16a34a;
+  }
+
+
+  /* -----------------------------------------
+     7番車：橙
+     旧収支
+     ----------------------------------------- */
+  .section:nth-of-type(4) .card:nth-child(2) {
+    background: #ffedd5;
+    border-color: #fed7aa;
+  }
+
+  .section:nth-of-type(4) .card:nth-child(2) .card-label {
+    background: #ea580c;
+    color: #ffffff;
+  }
+
+  .section:nth-of-type(4) .card:nth-child(2) .card-title,
+  .section:nth-of-type(4) .card:nth-child(2) .card-arrow {
+    color: #ea580c;
+  }
+
+
+  /* -----------------------------------------
+     8番車：桃
+     全レース
+     ----------------------------------------- */
+  .section:nth-of-type(5) .card:nth-child(1) {
+    background: #fce7f3;
+    border-color: #fbcfe8;
+  }
+
+  .section:nth-of-type(5) .card:nth-child(1) .card-label {
+    background: #db2777;
+    color: #ffffff;
+  }
+
+  .section:nth-of-type(5) .card:nth-child(1) .card-title,
+  .section:nth-of-type(5) .card:nth-child(1) .card-arrow {
+    color: #db2777;
+  }
+
+
+  /* -----------------------------------------
+     9番車：紫
+     全レースアーカイブ
+     ----------------------------------------- */
+  .section:nth-of-type(5) .card:nth-child(2) {
+    background: #ede9fe;
+    border-color: #ddd6fe;
+  }
+
+  .section:nth-of-type(5) .card:nth-child(2) .card-label {
+    background: #7c3aed;
+    color: #ffffff;
+  }
+
+  .section:nth-of-type(5) .card:nth-child(2) .card-title,
+  .section:nth-of-type(5) .card:nth-child(2) .card-arrow {
+    color: #7c3aed;
+  }
+
+
+  /* 以前のD案で設定した一部section背景を解除 */
+  .section:nth-of-type(4) {
+    background: #ffffff;
+  }
+
+  .section:nth-of-type(4) .card {
+    /* 各車番色を優先 */
+  }
+
+
+  @media (max-width: 720px) {
+    .card-label {
+      min-width: 138px;
+      padding: 5px 13px;
     }
-  </style>
+  }
+</style>
+
+
+<style id="next-card-design-v1">
+/* =========================================================
+   競輪AIアタルくん NEXT
+   参考デザイン版カード
+   ========================================================= */
+
+.section-next {
+  background: #f7f9fc !important;
+  border: 1px solid #e5eaf0 !important;
+  box-shadow: 0 5px 18px rgba(15, 23, 42, .045) !important;
+}
+
+.section-next h2 {
+  margin-bottom: 14px;
+}
+
+/* 旧カードテーマから独立 */
+.section-next .next-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  min-height: 100px;
+  padding: 16px;
+
+  border: 1px solid transparent !important;
+  border-radius: 15px;
+
+  text-decoration: none;
+  overflow: hidden;
+
+  box-shadow: 0 3px 10px rgba(15, 23, 42, .055);
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+}
+
+.section-next .next-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(15, 23, 42, .08);
+}
+
+.section-next .next-card::before,
+.section-next .next-card::after {
+  content: none !important;
+}
+
+.next-icon {
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.next-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.section-next .next-card .card-title {
+  margin: 0 0 5px;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 900;
+  color: #1f2937;
+}
+
+.section-next .next-card .card-status {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.45;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.next-arrow {
+  flex: 0 0 auto;
+  font-size: 21px;
+  line-height: 1;
+  font-weight: 700;
+  color: #64748b;
+}
+
+/* -------------------------
+   本日のAI予想
+   ------------------------- */
+
+.section-next .card-today9 {
+  background: #ffffff !important;
+  border-color: #e1e5ea !important;
+}
+
+.card-today9 .next-icon {
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.section-next .card-today7 {
+  background: #30343a !important;
+  border-color: #30343a !important;
+}
+
+.card-today7 .next-icon {
+  background: #15181c;
+  color: #ffffff;
+  border: 1px solid #555b63;
+}
+
+.section-next .card-today7 .card-title,
+.section-next .card-today7 .card-status,
+.section-next .card-today7 .next-arrow {
+  color: #ffffff !important;
+}
+
+/* -------------------------
+   その他7車
+   ------------------------- */
+
+.section-next .card-other7 {
+  background: #fff0f0 !important;
+  border-color: #f7d8d8 !important;
+}
+
+.card-other7 .next-icon {
+  background: #f9dada;
+  color: #a94444;
+}
+
+.card-other7 .next-arrow {
+  color: #a94444;
+}
+
+/* -------------------------
+   AI過去予想・収支
+   ------------------------- */
+
+.section-next .card-archive9 {
+  background: #edf7fd !important;
+  border-color: #d5eaf7 !important;
+}
+
+.card-archive9 .next-icon {
+  background: #d9edf9;
+  color: #287aa8;
+}
+
+.section-next .card-archive7 {
+  background: #fff9df !important;
+  border-color: #f3e8b9 !important;
+}
+
+.card-archive7 .next-icon {
+  background: #f7ebbd;
+  color: #8a6a12;
+}
+
+.section-next .card-profit9 {
+  background: #eefaf2 !important;
+  border-color: #d4eddd !important;
+}
+
+.card-profit9 .next-icon {
+  background: #d9f0e1;
+  color: #347a4d;
+}
+
+.section-next .card-profit7 {
+  background: #fff4e8 !important;
+  border-color: #f2dfca !important;
+}
+
+.card-profit7 .next-icon {
+  background: #f7e3cb;
+  color: #a36225;
+}
+
+/* -------------------------
+   旧システム
+   ------------------------- */
+
+.section-next .card-old-archive {
+  background: #fff1f6 !important;
+  border-color: #f3dce6 !important;
+}
+
+.card-old-archive .next-icon {
+  background: #f5dce7;
+  color: #9a4f70;
+}
+
+.section-next .card-old-profit {
+  background: #f7f1fc !important;
+  border-color: #e7daf2 !important;
+}
+
+.card-old-profit .next-icon {
+  background: #e8dcf2;
+  color: #74518e;
+}
+
+/* その他7車は横長 */
+.other7-grid {
+  grid-template-columns: 1fr !important;
+}
+
+/* 開催なしも色を潰さない */
+.section-next .next-card.disabled {
+  opacity: .68;
+}
+
+/* スマホ */
+@media (max-width: 620px) {
+  .section-next {
+    padding: 15px !important;
+  }
+
+  .section-next .grid {
+    gap: 9px;
+  }
+
+  .section-next .next-card {
+    min-height: 94px;
+    padding: 13px 12px;
+    gap: 9px;
+    border-radius: 13px;
+  }
+
+  .next-icon {
+    flex-basis: 32px;
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .section-next .next-card .card-title {
+    font-size: 14px;
+  }
+
+  .section-next .next-card .card-status {
+    font-size: 10px;
+  }
+
+  .next-arrow {
+    font-size: 17px;
+  }
+
+  .history-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+</style>
+
+
+<style id="home-zero-base-v1">
+
+/* ==========================================================
+   競輪AIアタルくん NEXT
+   HOME UI / mobile first
+   ========================================================== */
+
+.home-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+
+/* --------------------------
+   CATEGORY
+   -------------------------- */
+
+.home-section {
+  padding: 18px;
+
+  background: #f7f9fc;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, .045);
+}
+
+.home-heading {
+  margin: 0 0 15px;
+
+  color: #26394d;
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 900;
+  letter-spacing: .01em;
+}
+
+
+/* --------------------------
+   LIST
+   smartphone = 1 column
+   -------------------------- */
+
+.home-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 11px;
+}
+
+
+/* --------------------------
+   CARD
+   -------------------------- */
+
+.home-card {
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 88px;
+  padding: 15px 16px;
+
+  border: 1px solid transparent;
+  border-radius: 17px;
+
+  color: #263442;
+  text-decoration: none;
+
+  box-shadow:
+    0 3px 10px rgba(15, 23, 42, .045);
+
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease;
+}
+
+.home-card:active {
+  transform: scale(.99);
+}
+
+.home-card-body {
+  flex: 1;
+  min-width: 0;
+  padding: 0 12px;
+}
+
+.home-card-title {
+  margin: 0 0 5px;
+
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 900;
+
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.home-card-sub {
+  color: #687789;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 700;
+}
+
+.home-chevron {
+  flex: 0 0 auto;
+
+  color: #657486;
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+
+/* --------------------------
+   SYMBOL
+   -------------------------- */
+
+.home-symbol {
+  flex: 0 0 43px;
+
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+
+/* ==========================================================
+   COLORS
+   レースページの選手一覧を意識した淡色
+   ========================================================== */
+
+/* 9車 TODAY / WHITE */
+
+.home-white {
+  background: #ffffff;
+  border-color: #dce3ea;
+}
+
+.symbol-white {
+  background: #f2f4f6;
+  border: 1px solid #d8dde3;
+  color: #374151;
+}
+
+
+/* 7車 TODAY / BLACK */
+
+.home-black {
+  background: #202428;
+  border-color: #202428;
+
+  color: #ffffff;
+}
+
+.home-black .home-card-title,
+.home-black .home-card-sub,
+.home-black .home-chevron {
+  color: #ffffff;
+}
+
+.symbol-black {
+  background: #34393f;
+  border: 1px solid #555b62;
+  color: #ffffff;
+}
+
+
+/* OTHER 7 / RED */
+
+.home-red {
+  background: #fff0f0;
+  border-color: #f6d2d2;
+}
+
+.home-red .home-card-title {
+  color: #9f3535;
+}
+
+.symbol-red {
+  background: #f8dddd;
+  color: #a53d3d;
+}
+
+
+/* ARCHIVE 9 / BLUE */
+
+.home-blue {
+  background: #edf7fd;
+  border-color: #cfe8f7;
+}
+
+.home-blue .home-card-title {
+  color: #276e96;
+}
+
+.symbol-blue {
+  background: #dceef9;
+  color: #2679a7;
+}
+
+
+/* ARCHIVE 7 / YELLOW */
+
+.home-yellow {
+  background: #fff9e4;
+  border-color: #efe2ad;
+}
+
+.home-yellow .home-card-title {
+  color: #806514;
+}
+
+.symbol-yellow {
+  background: #f7ecc4;
+  color: #806514;
+}
+
+
+/* PROFIT 9 / GREEN */
+
+.home-green {
+  background: #eefaf2;
+  border-color: #cfe9d8;
+}
+
+.home-green .home-card-title {
+  color: #34704a;
+}
+
+.symbol-green {
+  background: #dcefe3;
+  color: #34704a;
+}
+
+
+/* PROFIT 7 / ORANGE */
+
+.home-orange {
+  background: #fff4e9;
+  border-color: #efd9c0;
+}
+
+.home-orange .home-card-title {
+  color: #925b27;
+}
+
+.symbol-orange {
+  background: #f5e3cf;
+  color: #925b27;
+}
+
+
+/* OLD ARCHIVE / PINK */
+
+.home-pink {
+  background: #fff1f6;
+  border-color: #f0d7e2;
+}
+
+.home-pink .home-card-title {
+  color: #914d6b;
+}
+
+.symbol-pink {
+  background: #f4dfe8;
+  color: #914d6b;
+}
+
+
+/* OLD PROFIT / PURPLE */
+
+.home-purple {
+  background: #f7f1fc;
+  border-color: #e4d6ef;
+}
+
+.home-purple .home-card-title {
+  color: #704e88;
+}
+
+.symbol-purple {
+  background: #e9def2;
+  color: #704e88;
+}
+
+
+/* --------------------------
+   disabled
+   開催なし
+   -------------------------- */
+
+.home-card.disabled {
+  opacity: .60;
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   DESKTOP
+   横幅がある時だけ2列
+   ========================================================== */
+
+@media (min-width: 760px) {
+
+  .home-list-today,
+  .home-list-history,
+  .home-list-old {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .home-card {
+    min-height: 96px;
+  }
+
+  .home-card-title {
+    font-size: 18px;
+  }
+
+}
+
+
+/* ==========================================================
+   SMALL SMARTPHONE
+   ========================================================== */
+
+@media (max-width: 420px) {
+
+  .home-sections {
+    gap: 15px;
+  }
+
+  .home-section {
+    padding: 15px;
+    border-radius: 19px;
+  }
+
+  .home-heading {
+    margin-bottom: 12px;
+    font-size: 19px;
+  }
+
+  .home-card {
+    min-height: 82px;
+    padding: 13px 14px;
+    border-radius: 15px;
+  }
+
+  .home-symbol {
+    flex-basis: 39px;
+    width: 39px;
+    height: 39px;
+    font-size: 14px;
+  }
+
+  .home-card-body {
+    padding: 0 10px;
+  }
+
+  .home-card-title {
+    font-size: 16px;
+  }
+
+  .home-card-sub {
+    font-size: 11px;
+  }
+
+  .home-chevron {
+    font-size: 27px;
+  }
+
+}
+
+</style>
+
+
+<style id="home-svg-icons-v1">
+/* HTML inline SVG icons */
+
+.home-svg-icon {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  padding: 7px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: rgba(255,255,255,.42);
+}
+
+.home-svg-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.home-svg-icon svg circle,
+.home-svg-icon svg path,
+.home-svg-icon svg ellipse {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-svg-icon svg .svg-fill,
+.home-svg-icon svg rect.svg-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* カード色に合わせたアイコン色 */
+.home-white .home-svg-icon  { color: #243b64; background: #f3f6fa; }
+.home-black .home-svg-icon  { color: #ffffff; background: rgba(255,255,255,.10); }
+.home-red .home-svg-icon    { color: #b64040; background: #f9dddd; }
+.home-blue .home-svg-icon   { color: #347ca5; background: #dceef9; }
+.home-yellow .home-svg-icon { color: #866a18; background: #f7ecc4; }
+.home-green .home-svg-icon  { color: #34704a; background: #dcefe3; }
+.home-orange .home-svg-icon { color: #925b27; background: #f5e3cf; }
+.home-pink .home-svg-icon   { color: #914d6b; background: #f4dfe8; }
+.home-purple .home-svg-icon { color: #704e88; background: #e9def2; }
+
+@media (max-width: 420px) {
+  .home-svg-icon {
+    flex-basis: 46px;
+    width: 46px;
+    height: 46px;
+    padding: 7px;
+  }
+}
+</style>
+
+
+<style id="home-color-tuning-v1">
+
+/* ==========================================================
+   HOME color tuning v1
+   骨格は変更せず、色の見え方だけ調整
+   ========================================================== */
+
+/* 開催なしでもカード本来の色を維持 */
+.home-card.disabled {
+  opacity: 1 !important;
+  pointer-events: none;
+}
+
+/* 開催なしの補足文字だけ控えめに */
+.home-card.disabled .home-card-sub {
+  opacity: .58;
+}
+
+/* ---------- TODAY ---------- */
+
+.home-white .home-card-title {
+  color: #24364b;
+}
+
+.home-white .home-svg-icon {
+  color: #29466f;
+}
+
+.home-black {
+  background: #202428 !important;
+  border-color: #202428 !important;
+}
+
+.home-black .home-card-title {
+  color: #ffffff !important;
+}
+
+.home-black .home-card-sub {
+  color: #d9dee4 !important;
+}
+
+.home-black .home-svg-icon {
+  color: #ffffff !important;
+  background: rgba(255,255,255,.11) !important;
+}
+
+.home-black .home-chevron {
+  color: #ffffff !important;
+}
+
+
+/* ---------- OTHER 7 ---------- */
+
+.home-red .home-card-title {
+  color: #a83232;
+}
+
+.home-red .home-svg-icon {
+  color: #b63737;
+}
+
+
+/* ---------- ARCHIVE ---------- */
+
+.home-blue .home-card-title {
+  color: #1f6f9d;
+}
+
+.home-blue .home-svg-icon {
+  color: #2479a8;
+}
+
+.home-yellow .home-card-title {
+  color: #7a5e08;
+}
+
+.home-yellow .home-svg-icon {
+  color: #876a0e;
+}
+
+
+/* ---------- PROFIT ---------- */
+
+.home-green .home-card-title {
+  color: #287044;
+}
+
+.home-green .home-svg-icon {
+  color: #287b49;
+}
+
+.home-orange .home-card-title {
+  color: #94551e;
+}
+
+.home-orange .home-svg-icon {
+  color: #a15c20;
+}
+
+
+/* ---------- OLD ---------- */
+
+.home-pink .home-card-title {
+  color: #944767;
+}
+
+.home-pink .home-svg-icon {
+  color: #a14c70;
+}
+
+.home-purple .home-card-title {
+  color: #70438d;
+}
+
+.home-purple .home-svg-icon {
+  color: #78499a;
+}
+
+
+/* 通常の説明文は少し濃くして読みやすく */
+.home-card:not(.disabled) .home-card-sub {
+  color: #5c6d7e;
+}
+
+/* 矢印も少しだけ濃く */
+.home-card:not(.home-black) .home-chevron {
+  color: #526579;
+}
+
+</style>
+
+
+<style id="home-color-tuning-v2">
+
+/* ==========================================================
+   HOME color tuning v2
+   9色の帯背景をワントーンだけ濃く
+   ========================================================== */
+
+/* 1 白 */
+.home-white {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* 2 黒 */
+.home-black {
+  background: #171a1e !important;
+  border-color: #171a1e !important;
+}
+
+/* 3 赤 */
+.home-red {
+  background: #fbdede !important;
+  border-color: #efbcbc !important;
+}
+
+/* 4 青 */
+.home-blue {
+  background: #dceef9 !important;
+  border-color: #b9dced !important;
+}
+
+/* 5 黄 */
+.home-yellow {
+  background: #faefbd !important;
+  border-color: #eadb94 !important;
+}
+
+/* 6 緑 */
+.home-green {
+  background: #dcefe3 !important;
+  border-color: #bcdcc8 !important;
+}
+
+/* 7 橙 */
+.home-orange {
+  background: #f7e3cd !important;
+  border-color: #e9c9a7 !important;
+}
+
+/* 8 桃 */
+.home-pink {
+  background: #f5dfe9 !important;
+  border-color: #e8c1d2 !important;
+}
+
+/* 9 紫 */
+.home-purple {
+  background: #e9def2 !important;
+  border-color: #d4bee5 !important;
+}
+
+</style>
+
 </head>
-<body data-theme="compact">
+
+<body>
   <main class="page">
 
-    <header class="hero">
-      <div class="hero-inner">
-        <img class="hero-icon" src="./icon_512.png" alt="競輪AIアタルくん アイコン" onclick="location.reload();">
-        <div>
-          <div class="brand">
-            <h1 class="brand-main">競輪AIアタルくん</h1>
-            <span class="brand-neo">neo</span>
-          </div>
-          <p class="hero-copy">グレードレース予想・全レース予想・AI予想成績をまとめて確認できます。</p>
+    <section class="hero">
+      <div class="brand">
+        <img
+          class="brand-icon"
+          src="./icon_192.png"
+          alt="競輪AIアタルくん"
+        >
+        <div class="brand-copy">
+          <h1 class="site-title">競輪AIアタルくん</h1>
+          <div class="edition">NEXT</div>
         </div>
       </div>
-    </header>
 
-    <section class="section">
-      <div class="section-head">
-        <h2 class="section-title">グレードレース予想</h2>
-        <div class="section-note">9車限定 / GⅢ以上を中心に表示</div>
+      <div id="transition-box" class="transition" hidden>
+        <h2 id="transition-title"></h2>
+        <p id="transition-message"></p>
       </div>
+    </section>
 
-      <div class="menu-grid">
-        <div class="menu-card primary" id="grade-race-card">
-          <div class="menu-label">本日のグレードレース</div>
-          <div class="menu-title today-links" id="grade-race-link">確認中</div>
-          <div class="arrow">見る →</div>
+    <div class="home-sections">
+
+      <!-- ==================================================
+           本日のAI予想
+           ================================================== -->
+      <section class="home-section">
+        <h2 class="home-heading">本日のAI予想</h2>
+
+        <div class="home-list home-list-today">
+
+          <a id="today-car9-card"
+             class="home-card home-white disabled"
+             href="./public/latest/car9/">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="15" cy="45" r="10"></circle>
+    <circle cx="49" cy="45" r="10"></circle>
+    <circle cx="35" cy="14" r="5" class="svg-fill"></circle>
+    <path d="M31 21 L24 31 L36 35 L43 23"></path>
+    <path d="M24 31 L15 45 L34 45 L24 31"></path>
+    <path d="M34 45 L49 45 L39 29"></path>
+    <path d="M31 21 L42 27 L50 25"></path>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">9車 AI予想</div>
+              <div id="today-car9-status" class="home-card-sub">
+                開催なし
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+
+          <a id="today-car7-card"
+             class="home-card home-black disabled"
+             href="./public/latest/car7/watch/">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="15" cy="45" r="10"></circle>
+    <circle cx="49" cy="45" r="10"></circle>
+    <circle cx="35" cy="14" r="5" class="svg-fill"></circle>
+    <path d="M31 21 L24 31 L36 35 L43 23"></path>
+    <path d="M24 31 L15 45 L34 45 L24 31"></path>
+    <path d="M34 45 L49 45 L39 29"></path>
+    <path d="M31 21 L42 27 L50 25"></path>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">7車 AI予想</div>
+              <div id="today-car7-status" class="home-card-sub">
+                開催なし
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
         </div>
+      </section>
 
-        <a class="menu-card purple" href="./grade05/archive/">
-          <div class="menu-label">アーカイブ</div>
-          <div class="menu-title">過去のグレードレース予想</div>
-          <div class="arrow">開く →</div>
-        </a>
 
-        <a class="menu-card green" href="./grade05/profit/index.html">
-          <div class="menu-label">AI予想成績</div>
-          <div class="menu-title">的中・回収率レポート</div>
-          <div class="arrow">見る →</div>
-        </a>
-      </div>
-    </section>
+      <!-- ==================================================
+           その他の7車予想
+           ================================================== -->
+      <section class="home-section">
+        <h2 class="home-heading">その他の7車予想</h2>
 
-    <section class="section">
-      <div class="section-head">
-        <h2 class="section-title">本日の全レース予想（おまけ）</h2>
-        <div class="section-note">PDF版 / 一覧確認用</div>
-      </div>
+        <div class="home-list">
 
-      <div class="menu-grid two">
-        <a class="menu-card orange" id="today-pdf-card" href="./archive.html" target="_blank">
-          <div class="menu-label">本日分</div>
-          <div class="menu-title" id="today-pdf-title">全レース予想（PDF）</div>
-          <div class="arrow" id="today-pdf-arrow">確認中 →</div>
-        </a>
+          <a id="other-car7-card" class="home-card home-red"
+             href="./public/latest/car7/other/">
 
-        <a class="menu-card" href="./archive.html">
-          <div class="menu-label">アーカイブ</div>
-          <div class="menu-title">過去の全レース予想PDF</div>
-          <div class="arrow">開く →</div>
-        </a>
-      </div>
-    </section>
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <circle cx="15" cy="45" r="10"></circle>
+    <circle cx="49" cy="45" r="10"></circle>
+    <circle cx="35" cy="14" r="5" class="svg-fill"></circle>
+    <path d="M31 21 L24 31 L36 35 L43 23"></path>
+    <path d="M24 31 L15 45 L34 45 L24 31"></path>
+    <path d="M34 45 L49 45 L39 29"></path>
+    <path d="M31 21 L42 27 L50 25"></path>
+  </svg>
+</div>
 
-    <section class="section" id="notice-section" style="display:none;">
-      <div class="section-head">
-        <h2 class="section-title">お知らせ</h2>
-        <div class="section-note">管理人コメント</div>
-      </div>
-      <div class="notice-content" id="notice-content"></div>
-    </section>
+            <div class="home-card-body">
+              <div class="home-card-title">
+                その他の7車AI予想
+              </div>
+              <div class="home-card-sub">
+                本日のその他の7車レースを見る
+              </div>
+            </div>
 
-    <p class="footer-note">Keirin AI Ataru-kun neo</p>
+            <div class="home-chevron">›</div>
+          </a>
+
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           AI過去予想・収支実績
+           ================================================== -->
+      <section class="home-section">
+        <h2 class="home-heading">AI過去予想・収支実績</h2>
+
+        <div class="home-list home-list-history">
+
+          <a class="home-card home-blue"
+             href="./public/archive/car9/">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M18 9 H39 L49 19 V55 H18 Z"></path>
+    <path d="M39 9 V20 H49"></path>
+    <path d="M25 30 H42"></path>
+    <path d="M25 38 H42"></path>
+    <path d="M25 46 H37"></path>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">
+                9車 予想アーカイブ
+              </div>
+              <div class="home-card-sub">
+                過去のAI予想を見る
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+
+          <a class="home-card home-yellow"
+             href="./public/archive/car7/">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M18 9 H39 L49 19 V55 H18 Z"></path>
+    <path d="M39 9 V20 H49"></path>
+    <path d="M25 30 H42"></path>
+    <path d="M25 38 H42"></path>
+    <path d="M25 46 H37"></path>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">
+                7車 予想アーカイブ
+              </div>
+              <div class="home-card-sub">
+                過去のAI予想を見る
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+
+          <a class="home-card home-green"
+             href="./public/profit/car9/index.html">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <rect x="12" y="37" width="9" height="17" rx="2" class="svg-fill"></rect>
+    <rect x="28" y="25" width="9" height="29" rx="2" class="svg-fill"></rect>
+    <rect x="44" y="12" width="9" height="42" rx="2" class="svg-fill"></rect>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">
+                9車 収支実績
+              </div>
+              <div class="home-card-sub">
+                回収率・的中実績を見る
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+
+          <a class="home-card home-orange"
+             href="./public/profit/car7/index.html">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <rect x="12" y="37" width="9" height="17" rx="2" class="svg-fill"></rect>
+    <rect x="28" y="25" width="9" height="29" rx="2" class="svg-fill"></rect>
+    <rect x="44" y="12" width="9" height="42" rx="2" class="svg-fill"></rect>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">
+                7車 収支実績
+              </div>
+              <div class="home-card-sub">
+                回収率・的中実績を見る
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           旧予想アーカイブ
+           ================================================== -->
+      <section class="home-section">
+        <h2 class="home-heading">旧予想アーカイブ</h2>
+
+        <div class="home-list home-list-old">
+
+          <a class="home-card home-pink"
+             href="./grade05/">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M18 9 H39 L49 19 V55 H18 Z"></path>
+    <path d="M39 9 V20 H49"></path>
+    <path d="M25 30 H42"></path>
+    <path d="M25 38 H42"></path>
+    <path d="M25 46 H37"></path>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">
+                旧システム 予想アーカイブ
+              </div>
+              <div class="home-card-sub">
+                旧システムの予想を見る
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+
+          <a class="home-card home-purple"
+             href="./grade05/profit/index.html">
+
+            <div class="home-symbol home-svg-icon">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <rect x="12" y="37" width="9" height="17" rx="2" class="svg-fill"></rect>
+    <rect x="28" y="25" width="9" height="29" rx="2" class="svg-fill"></rect>
+    <rect x="44" y="12" width="9" height="42" rx="2" class="svg-fill"></rect>
+  </svg>
+</div>
+
+            <div class="home-card-body">
+              <div class="home-card-title">
+                旧システム 収支実績
+              </div>
+              <div class="home-card-sub">
+                旧システムの収支を見る
+              </div>
+            </div>
+
+            <div class="home-chevron">›</div>
+          </a>
+
+        </div>
+      </section>
+
+    </div>
+
   </main>
 
   <script>
-    async function updateGradeRaceLink() {
-      const target = document.getElementById('grade-race-link');
-      if (!target) return;
+    async function loadSiteState() {
+      try {
+        const res = await fetch('./public/site_state.json', {
+          cache: 'no-store'
+        });
+
+        if (!res.ok) throw new Error();
+
+        const state = await res.json();
+
+        const box = document.getElementById('transition-box');
+        box.hidden = false;
+
+        document.getElementById('transition-title').textContent =
+          'サイトリニューアルしました';
+
+        document.getElementById('transition-message').textContent =
+          '予想ロジックを変更し、レース予想に「AI1着率」「AI3連対率」などを追加しました。7車レースのAI予想も不定期で公開していきます。';
+
+
+        const car9 = document.getElementById('car9-card');
+        const car7 = document.getElementById('car7-card');
+
+        document.getElementById('car9-status').textContent =
+          state.car9_status || '';
+
+        document.getElementById('car7-status').textContent =
+          state.car7_status || '';
+
+        if (state.mode === 'live' && state.show_car9) {
+          car9.classList.remove('disabled');
+        }
+
+        if (state.mode === 'live' && state.show_car7) {
+          car7.classList.remove('disabled');
+        }
+
+        if (!state.show_car7) {
+          car7.style.display = 'none';
+        }
+
+      } catch (e) {
+        console.error('site_state load failed', e);
+      }
+    }
+
+    async function updateCar7Cards() {
+      const watchCard = document.getElementById('today-car7-card');
+      const otherCard = document.getElementById('other-car7-card');
+      const watchStatus = document.getElementById('today-car7-status');
+
+      if (!watchCard || !otherCard) return;
 
       try {
-        const res = await fetch('./grade05/latest/final/latest.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('grade05 latest json not found');
+        const res = await fetch(
+          './public/latest/car7/latest.json',
+          { cache: 'no-store' }
+        );
+
+        if (!res.ok) throw new Error();
 
         const data = await res.json();
         const items = Array.isArray(data.items) ? data.items : [];
 
-        const card = document.getElementById('grade-race-card');
+        const now = new Date();
+        const today = [
+          now.getFullYear(),
+          String(now.getMonth() + 1).padStart(2, '0'),
+          String(now.getDate()).padStart(2, '0'),
+        ].join('-');
 
-        if (items.length > 0) {
-          target.innerHTML = items
-            .map(item => {
-              if (!item.href) return `<span>${item.title}</span>`;
-              return `<a href="${item.href}">${item.title}</a>`;
-            })
-            .join('');
+        const isToday = data.date === today;
 
-          if (card) {
-            card.removeAttribute('href');
-            card.classList.remove('is-disabled');
-            card.setAttribute('aria-disabled', 'false');
+        const hasWatch = isToday && items.some(
+          item => item.publish_group === 'watch'
+        );
+
+        const hasOther = isToday && items.some(
+          item => item.publish_group === 'other'
+        );
+
+        watchCard.style.display = hasWatch ? '' : 'none';
+        otherCard.style.display = hasOther ? '' : 'none';
+
+        if (hasWatch) {
+          watchCard.classList.remove('disabled');
+
+          if (watchStatus) {
+            watchStatus.textContent = '';
           }
         } else {
-          target.textContent = '本日のグレードレースはありません';
-          if (card) {
-            card.removeAttribute('href');
-            card.classList.add('is-disabled');
-            card.setAttribute('aria-disabled', 'true');
+          watchCard.classList.add('disabled');
+
+          if (watchStatus) {
+            watchStatus.textContent = '開催なし';
           }
         }
+
       } catch (e) {
-        target.textContent = '本日のグレードレースはありません';
-        const card = document.getElementById('grade-race-card');
-        if (card) {
-          card.removeAttribute('href');
-          card.classList.add('is-disabled');
-          card.setAttribute('aria-disabled', 'true');
-        }
+        console.error('car7 latest load failed', e);
+
+        watchCard.style.display = 'none';
+        otherCard.style.display = 'none';
       }
     }
 
@@ -514,12 +1913,11 @@
       const title = document.getElementById('today-pdf-title');
       const arrow = document.getElementById('today-pdf-arrow');
 
-      if (!card || !title || !arrow) return;
-
       try {
-        const res = await fetch('./predict/pdf/gr01/latest.json', {
-          cache: 'no-store'
-        });
+        const res = await fetch(
+          './predict/pdf/gr01/latest.json',
+          { cache: 'no-store' }
+        );
 
         if (!res.ok) throw new Error();
 
@@ -529,7 +1927,9 @@
           card.href = data.href;
         }
 
-        title.textContent = data.label || '全レース予想（PDF）';
+        title.textContent =
+          data.label || '全レース予想（PDF）';
+
         arrow.textContent = 'PDFを見る →';
 
       } catch (e) {
@@ -539,29 +1939,250 @@
       }
     }
 
-    async function updateNotice() {
-      const section = document.getElementById('notice-section');
-      const content = document.getElementById('notice-content');
-
-      if (!section || !content) return;
-
-      try {
-        const res = await fetch('./notice.txt', { cache: 'no-store' });
-        if (!res.ok) throw new Error('notice not found');
-
-        const text = (await res.text()).trim();
-        if (!text) throw new Error('notice empty');
-
-        content.textContent = text;
-        section.style.display = '';
-      } catch (e) {
-        section.style.display = 'none';
-      }
-    }
-
-    updateGradeRaceLink();
+    loadSiteState();
+    updateCar7Cards();
     updateTodayPdfLink();
-    updateNotice();
   </script>
+
+
+<style>
+/* ===== NEXT wordmark 2026-09-24 ===== */
+.edition {
+  position: relative;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 0 27px 2px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #c89216;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 950;
+  font-style: italic;
+  letter-spacing: -.04em;
+  transform: skewX(-8deg);
+  text-shadow:
+    0 1px 0 #fff0a6,
+    0 2px 0 rgba(116, 75, 0, .16);
+}
+
+.edition::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  right: 0;
+  bottom: -5px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #9d6a00 0%,
+    #f0c94d 42%,
+    rgba(240, 201, 77, 0) 100%
+  );
+}
+
+.edition::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  right: 0;
+  top: 5px;
+  background: #d6a62c;
+  box-shadow:
+    5px 5px 0 rgba(214, 166, 44, .68),
+    10px 10px 0 rgba(214, 166, 44, .35);
+}
+</style>
+
+<style>
+/* =========================================================
+   NEXT top page color layout - 2026-09-24
+   4カテゴリーの外枠は共通色、カードのみ淡色で識別
+   ========================================================= */
+
+/* カテゴリー背景を統一 */
+.section {
+  background: #f6f8fb;
+  border-color: #e1e7ee;
+}
+
+/* 旧 nth-of-type 配色よりこちらを優先 */
+.section .card {
+  background-image: none;
+}
+
+/* 本日のAI予想：9車 = 白 */
+.section .card.card-today9 {
+  background: #ffffff;
+  border-color: #d9dee5;
+}
+
+/* 本日のAI予想：7車 = 黒 */
+.section .card.card-today7 {
+  background: #34383d;
+  border-color: #34383d;
+  color: #ffffff;
+}
+.section .card.card-today7 .card-label,
+.section .card.card-today7 .card-title,
+.section .card.card-today7 .card-arrow {
+  color: #ffffff;
+}
+
+/* その他7車 = 淡い赤 */
+.section .card.card-other7 {
+  background: #fde8e8;
+  border-color: #f7caca;
+}
+
+/* 9車アーカイブ = 淡い青 */
+.section .card.card-archive9 {
+  background: #e0f2fe;
+  border-color: #c5e5f7;
+}
+
+/* 7車アーカイブ = 淡い黄 */
+.section .card.card-archive7 {
+  background: #fef3c7;
+  border-color: #f5e5a8;
+}
+
+/* 9車収支 = 淡い緑 */
+.section .card.card-profit9 {
+  background: #dcfce7;
+  border-color: #bfeecd;
+}
+
+/* 7車収支 = 淡い橙 */
+.section .card.card-profit7 {
+  background: #ffedd5;
+  border-color: #f5d8b5;
+}
+
+/* 旧予想 = 淡い桃 */
+.section .card.card-old-archive {
+  background: #fce7f3;
+  border-color: #f2cfe2;
+}
+
+/* 旧収支 = 淡い紫 */
+.section .card.card-old-profit {
+  background: #f3e8ff;
+  border-color: #e4d0f5;
+}
+
+/* 新配色では大きな透かし数字を使わない */
+.section .card.card-today9::after,
+.section .card.card-today7::after {
+  content: none;
+}
+
+/* その他7車は横幅いっぱい */
+.other7-grid {
+  grid-template-columns: 1fr;
+}
+
+/* スマホでも過去予想・収支は2列維持 */
+@media (max-width: 620px) {
+  .history-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .history-grid .card {
+    min-height: 118px;
+    padding: 15px;
+  }
+
+  .history-grid .card-title {
+    font-size: 16px;
+  }
+}
+</style>
+
+
+<style>
+/* NEXT top final palette fix */
+
+/* 4カテゴリー共通背景 */
+main .section {
+  background: #f7f9fc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* 本日のAI予想 */
+main .section .card.card-today9 {
+  background: #ffffff !important;
+  border-color: #d9dee5 !important;
+}
+
+main .section .card.card-today7 {
+  background: #2f3338 !important;
+  border-color: #2f3338 !important;
+}
+
+main .section .card.card-today7 .card-label,
+main .section .card.card-today7 .card-title,
+main .section .card.card-today7 .card-sub,
+main .section .card.card-today7 .card-arrow {
+  color: #ffffff !important;
+}
+
+/* その他7車：淡い赤 */
+main .section .card.card-other7 {
+  background: #fee2e2 !important;
+  border-color: #fecaca !important;
+}
+
+main .section .card.card-other7 .card-label,
+main .section .card.card-other7 .card-title,
+main .section .card.card-other7 .card-arrow {
+  color: #b91c1c !important;
+}
+
+/* アーカイブ */
+main .section .card.card-archive9 {
+  background: #e0f2fe !important;
+  border-color: #bae6fd !important;
+}
+
+main .section .card.card-archive7 {
+  background: #fef3c7 !important;
+  border-color: #fde68a !important;
+}
+
+/* 収支 */
+main .section .card.card-profit9 {
+  background: #dcfce7 !important;
+  border-color: #bbf7d0 !important;
+}
+
+main .section .card.card-profit7 {
+  background: #ffedd5 !important;
+  border-color: #fed7aa !important;
+}
+
+/* 旧システム */
+main .section .card.card-old-archive {
+  background: #fce7f3 !important;
+  border-color: #fbcfe8 !important;
+}
+
+main .section .card.card-old-profit {
+  background: #f3e8ff !important;
+  border-color: #e9d5ff !important;
+}
+
+/* 透かし数字は本日の2カードだけ非表示 */
+main .card-today9::after,
+main .card-today7::after {
+  content: none !important;
+}
+</style>
+
 </body>
 </html>
