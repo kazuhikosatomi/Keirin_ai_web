@@ -1805,6 +1805,29 @@
 
   <script>
     async function loadSiteState() {
+      const box = document.getElementById('transition-box');
+
+      if (box) {
+        box.hidden = false;
+      }
+
+      const preopen = document.getElementById('transition-preopen');
+      const title = document.getElementById('transition-title');
+      const message = document.getElementById('transition-message');
+
+      if (preopen) {
+        preopen.textContent = '現在プレオープン中です';
+      }
+
+      if (title) {
+        title.textContent = 'サイトリニューアルしました';
+      }
+
+      if (message) {
+        message.textContent =
+          '予想ロジックを変更し、レース予想に「AI1着率」「AI3連対率」などを追加しました。7車レースのAI予想も不定期で公開していきます。';
+      }
+
       try {
         const res = await fetch('./public/site_state.json', {
           cache: 'no-store'
@@ -1813,18 +1836,6 @@
         if (!res.ok) throw new Error();
 
         const state = await res.json();
-
-        const box = document.getElementById('transition-box');
-        box.hidden = false;
-
-        document.getElementById('transition-preopen').textContent =
-          '現在プレオープン中です';
-
-        document.getElementById('transition-title').textContent =
-          'サイトリニューアルしました';
-
-        document.getElementById('transition-message').textContent =
-          '予想ロジックを変更し、レース予想に「AI1着率」「AI3連対率」などを追加しました。7車レースのAI予想も不定期で公開していきます。';
 
 
         const car9 = document.getElementById('car9-card');
