@@ -28,6 +28,7 @@ import time
 import os
 import sys
 import shutil
+import json
 from datetime import datetime
 from pathlib import Path
 
@@ -35,13 +36,32 @@ from pathlib import Path
 PUBLIC01_FINAL_DIR = Path("tmp/public01/car9/latest/final")
 PUBLISH_FINAL_DIR = Path("docs/public/latest/car9")
 
-ADD_PATHS = [
-    Path("docs/index_grade05.html"),
+BASE_ADD_PATHS = [
     PUBLISH_FINAL_DIR,
     Path("docs/public/site_state.json"),
-    Path("docs/public/archive"),
-    Path("docs/public/profit"),
+    Path("docs/public/archive/car9/index.html"),
+    Path("docs/public/profit/car9/index.html"),
 ]
+
+
+def get_publish_paths() -> list[Path]:
+    """car9 の現在公開に必要なファイルだけを返す。"""
+    paths = list(BASE_ADD_PATHS)
+
+    latest_json = PUBLISH_FINAL_DIR / "latest.json"
+    if latest_json.exists():
+        try:
+            data = json.loads(latest_json.read_text())
+            publish_date = str(data.get("date", "")).strip()
+
+            if publish_date:
+                paths.append(
+                    Path("docs/public/archive/car9") / publish_date
+                )
+        except Exception as exc:
+            print(f"⚠️ failed to read latest date: {exc}")
+
+    return paths
 
 
 def run(cmd: list[str], *, check: bool = False) -> subprocess.CompletedProcess[str]:
@@ -89,8 +109,10 @@ def sync_public01_final() -> None:
 
 
 def add_publish_targets() -> None:
-    existing_paths = [str(path) for path in ADD_PATHS if path.exists()]
-    missing_paths = [str(path) for path in ADD_PATHS if not path.exists()]
+    add_paths = get_publish_paths()
+
+    existing_paths = [str(path) for path in add_paths if path.exists()]
+    missing_paths = [str(path) for path in add_paths if not path.exists()]
 
     if missing_paths:
         print("⚠️ missing publish targets:")
@@ -119,7 +141,17 @@ def add_publish_targets() -> None:
         run(["git", "add", *normal_paths], check=True)
 
     if force_paths:
-        run(["git", "add", "-f", *force_paths], check=True)
+        run(
+            [
+                "git",
+                "add",
+                "-f",
+                "--",
+                *force_paths,
+                ":(exclude)**/.DS_Store",
+            ],
+            check=True,
+        )
 
 
 
@@ -186,7 +218,7 @@ def main() -> int:
     sync_public01_final()
 
     print("📦 publish targets:")
-    for path in ADD_PATHS:
+    for path in get_publish_paths():
         status = "OK" if path.exists() else "missing"
         print(f"  - {path} [{status}]")
 
