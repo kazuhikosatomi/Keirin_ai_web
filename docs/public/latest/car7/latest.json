@@ -1,46 +1,34 @@
 {
-  "date": "2026-09-26",
+  "date": "2026-09-27",
   "items": [
     {
       "venue_id": "v12",
-      "title": "青森 FⅡ（初日）",
+      "title": "青森 FⅡ ウィンチケット ニッカン・コム（2日目）",
       "href": "./public/latest/car7/v12/index.html",
       "publish_group": "other"
     },
     {
-      "venue_id": "v21",
-      "title": "弥彦 FⅡ オッズパーク杯（最終日）",
-      "href": "./public/latest/car7/v21/index.html",
-      "publish_group": "other"
-    },
-    {
-      "venue_id": "v34",
-      "title": "川崎 FⅡ 前検コメはウィンチケット杯（最終日）",
-      "href": "./public/latest/car7/v34/index.html",
-      "publish_group": "other"
-    },
-    {
-      "venue_id": "v53",
-      "title": "奈良 FⅡ 競輪投票サービスＢｅｔｉｍｏ杯（最終日）",
-      "href": "./public/latest/car7/v53/index.html",
+      "venue_id": "v13",
+      "title": "いわき平 FⅡ（初日）",
+      "href": "./public/latest/car7/v13/index.html",
       "publish_group": "other"
     },
     {
       "venue_id": "v56",
-      "title": "岸和田 FⅠ（初日）",
+      "title": "岸和田 FⅠ 中井光雄記念杯ＣＴＣ杯（2日目）",
       "href": "./public/latest/car7/v56/index.html",
       "publish_group": "other"
     },
     {
-      "venue_id": "v86",
-      "title": "別府 FⅡ 第８回 三洋産業杯（最終日）",
-      "href": "./public/latest/car7/v86/index.html",
+      "venue_id": "v61",
+      "title": "玉野 FⅡ（初日）",
+      "href": "./public/latest/car7/v61/index.html",
       "publish_group": "other"
     },
     {
-      "venue_id": "v87",
-      "title": "熊本 FⅡ レイメイ藤井杯（最終日）",
-      "href": "./public/latest/car7/v87/index.html",
+      "venue_id": "v84",
+      "title": "武雄 FⅠ（初日）",
+      "href": "./public/latest/car7/v84/index.html",
       "publish_group": "other"
     }
   ]
