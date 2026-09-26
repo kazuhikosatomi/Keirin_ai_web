@@ -1,0 +1,11 @@
+{
+  "mode": "transition",
+  "title": "サイトリニューアル中",
+  "message": "9月26日の次回9車開催に向けて、AI予想サイトを新しい公開構成へ移行しています。",
+  "next_publish_date": "2026-09-26",
+  "next_publish_label": "次回9車予想公開予定",
+  "show_car9": true,
+  "show_car7": true,
+  "car9_status": "準備中",
+  "car7_status": "準備中"
+}
