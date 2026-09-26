@@ -160,6 +160,9 @@ print(
 )
 PYTIME
 
+        echo "💰 OTHER finalize: rebuild car7 profit index | $(date '+%Y-%m-%d %H:%M:%S')"
+        "$PYTHON" scripts/public01/car7/build/build_profit_index.py
+
         echo "🪄 OTHER finalize: build final snapshot | $(date '+%Y-%m-%d %H:%M:%S')"
         "$PYTHON" scripts/public01/car7/build/build_final_from_snapshot.py --force
 

@@ -1934,7 +1934,9 @@
           item => item.publish_group === 'other'
         );
 
-        watchCard.style.display = hasWatch ? '' : 'none';
+        // WATCH対象がなくても7車カード自体は残す。
+        // 対象なしの場合は disabled + 「開催なし」表示。
+        watchCard.style.display = '';
         otherCard.style.display = hasOther ? '' : 'none';
 
         if (hasWatch) {
@@ -1954,7 +1956,15 @@
       } catch (e) {
         console.error('car7 latest load failed', e);
 
-        watchCard.style.display = 'none';
+        // latest.json が無い/読めない場合もWATCHカードは残し、
+        // 9車と同様に「開催なし」扱いにする。
+        watchCard.style.display = '';
+        watchCard.classList.add('disabled');
+
+        if (watchStatus) {
+          watchStatus.textContent = '開催なし';
+        }
+
         otherCard.style.display = 'none';
       }
     }
