@@ -6,6 +6,12 @@
       "title": "青森 FⅡ（初日）",
       "href": "./public/latest/car7/v12/index.html",
       "publish_group": "other"
+    },
+    {
+      "venue_id": "v56",
+      "title": "岸和田 FⅠ（初日）",
+      "href": "./public/latest/car7/v56/index.html",
+      "publish_group": "other"
     }
   ]
 }
