@@ -137,18 +137,22 @@ def add_publish_targets() -> None:
         if path.startswith("docs/public/")
     ]
 
-    if normal_paths:
-        run(["git", "add", *normal_paths], check=True)
+    for path in normal_paths:
+        run(
+            ["git", "add", "--", path],
+            check=True,
+        )
 
-    if force_paths:
+    # docs/public はgitignore対象なので -f が必要。
+    # 新規archiveを確実に拾うため、公開対象ごとに個別stageする。
+    for path in force_paths:
         run(
             [
                 "git",
                 "add",
                 "-f",
                 "--",
-                *force_paths,
-                ":(exclude)**/.DS_Store",
+                path,
             ],
             check=True,
         )
