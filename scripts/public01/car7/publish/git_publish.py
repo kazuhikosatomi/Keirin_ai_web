@@ -154,18 +154,19 @@ def stage_car7_only() -> None:
         raise RuntimeError("car7 publish target does not exist")
 
     # docs/public はgitignore対象なので -f が必要。
-    # .DS_Store は公開対象にしない。
-    run(
-        [
-            "git",
-            "add",
-            "-f",
-            "--",
-            *paths,
-            ":(exclude)**/.DS_Store",
-        ],
-        check=True,
-    )
+    # 複数pathを一括stageすると新規archiveが拾われないケースがあるため、
+    # 公開対象ごとに個別stageする。
+    for path in paths:
+        run(
+            [
+                "git",
+                "add",
+                "-f",
+                "--",
+                path,
+            ],
+            check=True,
+        )
 
     staged = run(
         [

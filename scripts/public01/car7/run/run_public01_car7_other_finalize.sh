@@ -24,14 +24,10 @@ if [ ! -f "$TERM_TABLE" ]; then
   echo "✅ term table detected: $TERM_TABLE"
 fi
 
-if [ ! -f "$WATCH_TARGETS" ]; then
-  echo "⏳ watch targets not found yet → wait: $WATCH_TARGETS"
-
-  while [ ! -f "$WATCH_TARGETS" ]; do
-    sleep 60
-  done
-
+if [ -f "$WATCH_TARGETS" ]; then
   echo "✅ watch targets detected: $WATCH_TARGETS"
+else
+  echo "ℹ️ watch targets not found → WATCH 0 venues: $WATCH_TARGETS"
 fi
 
 if [ ! -f "$FINALIZER" ]; then
@@ -135,13 +131,13 @@ PY
         echo "✅ OTHER finalize completed v${VENUE}"
 
         echo "🪄 OTHER finalize: build final snapshot | $(date '+%Y-%m-%d %H:%M:%S')"
-        "$PYTHON" scripts/public01/car7/build/build_final_from_snapshot.py           --date "$DATE"           --force
+        "$PYTHON" scripts/public01/car7/build/build_final_from_snapshot.py --force
 
         echo "📁 OTHER finalize: local sync | $(date '+%Y-%m-%d %H:%M:%S')"
         "$PYTHON" scripts/public01/car7/publish/local_sync.py           --date "$DATE"
 
         echo "🗂️ OTHER finalize: archive update | $(date '+%Y-%m-%d %H:%M:%S')"
-        "$PYTHON" scripts/public01/car7/build/archive_day.py           --date "$DATE"           --force           --skip-no-grade
+        "$PYTHON" scripts/public01/car7/build/archive_day.py --date "$DATE" --force
 
         if [ "${PUBLIC01_PUBLISH:-0}" = "1" ]; then
           echo "🚀 OTHER finalize: git publish | $(date '+%Y-%m-%d %H:%M:%S')"
