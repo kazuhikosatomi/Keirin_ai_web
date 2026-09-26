@@ -157,123 +157,6 @@ cd /Users/satomi/keirin/GitHub/keirin_ai_web
 mkdir -p data/train
 ###############################################################################
 
-# 8-9a. モデル実行gr01（run_daily_predict.py）
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/gr01/run_daily_predict.py --date "$TODAY" \
-  && echo "[OK] run_daily_predict.py completed" || echo "[FAIL] run_daily_predict.py failed"
-
-# grade05/index_grade05.html 用: 本日の全レース予想PDF latest.json を生成
-PDF_FILE_NAME="final_prediction_v2_${TODAY}.pdf"
-PDF_LATEST_JSON="docs/predict/pdf/gr01/latest.json"
-mkdir -p "$(dirname "$PDF_LATEST_JSON")"
-python3 - <<PY
-from pathlib import Path
-import json
-
-today = "${TODAY}"
-out = Path("${PDF_LATEST_JSON}")
-out.write_text(
-    json.dumps(
-        {
-            "href": f"./predict/pdf/gr01/final_prediction_v2_{today}.pdf",
-            "label": f"全レース予想（{today}）",
-        },
-        ensure_ascii=False,
-        indent=2,
-    ),
-    encoding="utf-8",
-)
-print(f"[OK] wrote {out}")
-PY
-
-# gr01公開ファイルを直近30日分に同期し、archive.htmlを実在PDFから再生成
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/gr01/sync_public_gr01_outputs.py --keep-days 30 \
-  && echo "[OK] sync_public_gr01_outputs.py completed" || echo "[FAIL] sync_public_gr01_outputs.py failed"
-
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/gr01/build_gr01_archive_index.py \
-  && echo "[OK] build_gr01_archive_index.py completed" || echo "[FAIL] build_gr01_archive_index.py failed"
-
-###############################################################################
-
-# 10. 予測結果ファイルをGitHubへコミット
-
-# 対象ファイルを配列にまとめる
-FILES_TO_COMMIT=(
-  "docs/predict/pdf/gr01"
-  "docs/results/pdf/gr01"
-  "docs/predict/pdf/gr01/latest.json"
-  "docs/archive.html"
-)
-
-# 各ファイルをチェックして add
-CHANGED=false
-for FILE in "${FILES_TO_COMMIT[@]}"; do
-  if [ -e "$FILE" ]; then
-    git add -A "$FILE"
-    CHANGED=true
-    echo "📝 added: $FILE"
-  else
-    echo "⚠️ file not found: $FILE"
-  fi
-done
-
-# 変更があればコミットと push
-if $CHANGED && git status --porcelain | grep -q .; then
-  git commit -m "🤖 Final predictions and results for ${TODAY}"
-  
-  if git push origin main; then
-    echo "✅ All prediction files committed and pushed to GitHub"
-  else
-    echo "❌ GitHub push failed"
-  fi
-else
-  echo "[SKIP] No changes to commit"
-fi
-
-# ========================================
-# トップページ docs/index.html
-# ========================================
-# 2026-09-21:
-# 新トップは docs/predict/pdf/gr01/latest.json を参照して
-# 本日の全レースPDFを表示する方式へ移行。
-#
-# そのため、旧仕様の
-#   - docs/index.html の日付入りPDFリンク直接書換
-#   - docs/index.html の自動 git add / commit / push
-# は廃止する。
-#
-# トップページはデザイン・公開構成確定後に手動で公開する。
-echo "[SKIP] docs/index.html auto update/publish disabled (latest.json mode)"
-
-
-
-# 11.5 展開AI / 荒れAI / top3AI の日次実行
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/tenkai01/run_daily_tenkai01.py --date "$TODAY" \
-  && echo "[OK] run_daily_tenkai01.py completed" || echo "[FAIL] run_daily_tenkai01.py failed"
-
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/arare02/run_daily_arare02.py --date "$TODAY" \
-  && echo "[OK] run_daily_arare02.py completed" || echo "[FAIL] run_daily_arare02.py failed"
-
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/top3racer01/run_daily_top3racer01.py --date "$TODAY" \
-  && echo "[OK] run_daily_top3racer01.py completed" || echo "[FAIL] run_daily_top3racer01.py failed"
-
-# ========================================
-# sim06 日次実行
-# ========================================
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 \
-  /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/sim06/run_daily_sim06.py \
-  --date "$TODAY" \
-  && echo "[OK] run_daily_sim06.py completed" \
-  || echo "[FAIL] run_daily_sim06.py failed"
-
-# ========================================
-# grade05 実行（表示生成）
-# ========================================
-echo "========================================"
-echo "🎯 START grade05 morning"
-echo "========================================"
-
-bash /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/grade05/run/run_grade05_morning.sh "$TODAY"
-
 # ========================================
 # bet01 car9 毎朝運用
 # B1 + feedback 正式運用
@@ -338,7 +221,7 @@ echo "========================================"
 # watch_targets未作成時はwatch側で待機し、手動選択後に開始する。
 # ========================================
 echo "========================================"
-echo "🧪 START public01 car7 morning (LOCAL)"
+echo "🌐 START public01 car7 morning"
 echo "========================================"
 
 PUBLIC01_PUBLISH=1 bash /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/public01/car7/run/run_public01_car7_morning.sh "$TODAY"
