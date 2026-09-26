@@ -130,6 +130,36 @@ PY
       if [ "$RC" -eq 0 ]; then
         echo "✅ OTHER finalize completed v${VENUE}"
 
+        # この開催場のOTHER最終処理完了時刻をterm tableへ保存する。
+        "$PYTHON" - "$TERM_TABLE" "$VENUE" <<'PYTIME'
+import sys
+from datetime import datetime
+
+import pandas as pd
+
+term_path, venue = sys.argv[1:3]
+
+df = pd.read_csv(term_path, dtype=str).fillna("")
+
+venue_num = int(float(venue))
+venue_col = pd.to_numeric(df["venue_id"], errors="coerce")
+
+if "other_finalize_time" not in df.columns:
+    df["other_finalize_time"] = ""
+
+finalize_time = datetime.now().strftime("%H:%M")
+
+mask = venue_col.eq(venue_num)
+df.loc[mask, "other_finalize_time"] = finalize_time
+
+df.to_csv(term_path, index=False)
+
+print(
+    f"🕒 OTHER finalize time saved: "
+    f"v{venue_num:02d} {finalize_time}"
+)
+PYTIME
+
         echo "🪄 OTHER finalize: build final snapshot | $(date '+%Y-%m-%d %H:%M:%S')"
         "$PYTHON" scripts/public01/car7/build/build_final_from_snapshot.py --force
 
