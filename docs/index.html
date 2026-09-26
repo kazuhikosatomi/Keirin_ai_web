@@ -961,6 +961,16 @@
   font-weight: 700;
 }
 
+
+.home-card-venue {
+  margin-top: 6px;
+  font-size: 1.08rem !important;
+  font-weight: 900 !important;
+  color: #111 !important;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+}
+
 .home-chevron {
   flex: 0 0 auto;
 
@@ -1550,9 +1560,8 @@
 
             <div class="home-card-body">
               <div class="home-card-title">9車 AI予想</div>
-              <div id="today-car9-status" class="home-card-sub">
-                開催なし
-              </div>
+              <div id="today-car9-status"
+                   class="home-card-sub home-card-venue"></div>
             </div>
 
             <div class="home-chevron">›</div>
@@ -1837,26 +1846,52 @@
 
         const state = await res.json();
 
+        const car9 = document.getElementById('today-car9-card');
+        const car9Status = document.getElementById('today-car9-status');
 
-        const car9 = document.getElementById('car9-card');
-        const car7 = document.getElementById('car7-card');
+        if (car9) {
+          if (state.show_car9) {
+            car9.classList.remove('disabled');
 
-        document.getElementById('car9-status').textContent =
-          state.car9_status || '';
+            try {
+              const latestRes = await fetch(
+                './public/latest/car9/latest.json',
+                { cache: 'no-store' }
+              );
 
-        document.getElementById('car7-status').textContent =
-          state.car7_status || '';
+              if (latestRes.ok) {
+                const latest = await latestRes.json();
+                const items = Array.isArray(latest.items)
+                  ? latest.items
+                  : [];
 
-        if (state.mode === 'live' && state.show_car9) {
-          car9.classList.remove('disabled');
-        }
+                if (items.length > 0) {
+                  const item = items[0];
 
-        if (state.mode === 'live' && state.show_car7) {
-          car7.classList.remove('disabled');
-        }
+                  if (car9Status) {
+                    car9Status.textContent = item.title || '';
+                  }
 
-        if (!state.show_car7) {
-          car7.style.display = 'none';
+                  if (item.href) {
+                    car9.href = item.href;
+                  }
+                }
+              }
+            } catch (latestError) {
+              console.error(
+                'car9 latest load failed',
+                latestError
+              );
+            }
+
+          } else {
+            car9.classList.add('disabled');
+
+            if (car9Status) {
+              car9Status.textContent =
+                state.car9_status || '開催なし';
+            }
+          }
         }
 
       } catch (e) {
