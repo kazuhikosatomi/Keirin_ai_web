@@ -72,7 +72,7 @@ def fix_archive_venue_index_links(archive_day_dir: Path) -> None:
         }
 
         before = html
-        top_href = "../../index.html"
+        top_href = "../index.html"
         for old, new in replacements.items():
             html = html.replace(old, new.format(top_href=top_href))
 
