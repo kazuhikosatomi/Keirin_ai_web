@@ -6,6 +6,12 @@
       "title": "青森 FⅡ ウィンチケット ニッカン・コム（最終日）",
       "href": "./public/latest/car7/v12/index.html",
       "publish_group": "other"
+    },
+    {
+      "venue_id": "v62",
+      "title": "広島 FⅠ（初日）",
+      "href": "./public/latest/car7/v62/index.html",
+      "publish_group": "other"
     }
   ]
 }
