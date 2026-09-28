@@ -4,26 +4,37 @@
     {
       "venue_id": "v12",
       "title": "青森 FⅡ ウィンチケット ニッカン・コム（最終日）",
-      "href": "./public/latest/car7/v12/index.html",
-      "publish_group": "other"
+      "publish_group": "other",
+      "status": "ready",
+      "href": "./public/latest/car7/v12/index.html"
+    },
+    {
+      "venue_id": "v35",
+      "title": "平塚 FⅡ（初日）",
+      "publish_group": "other",
+      "status": "ready",
+      "href": "./public/latest/car7/v35/index.html"
     },
     {
       "venue_id": "v56",
       "title": "岸和田 FⅠ 中井光雄記念杯ＣＴＣ杯（最終日）",
-      "href": "./public/latest/car7/v56/index.html",
-      "publish_group": "other"
+      "publish_group": "other",
+      "status": "ready",
+      "href": "./public/latest/car7/v56/index.html"
     },
     {
       "venue_id": "v62",
       "title": "広島 FⅠ（初日）",
-      "href": "./public/latest/car7/v62/index.html",
-      "publish_group": "other"
+      "publish_group": "other",
+      "status": "ready",
+      "href": "./public/latest/car7/v62/index.html"
     },
     {
       "venue_id": "v84",
       "title": "武雄 FⅠ 日本名輪会Ｃ第２８回井上茂徳杯（2日目）",
-      "href": "./public/latest/car7/v84/index.html",
-      "publish_group": "other"
+      "publish_group": "other",
+      "status": "ready",
+      "href": "./public/latest/car7/v84/index.html"
     }
   ]
 }
