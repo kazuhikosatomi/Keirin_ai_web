@@ -2,6 +2,14 @@
   "date": "2026-09-29",
   "items": [
     {
+      "venue_id": "v13",
+      "title": "いわき平 FⅡ オッズパーク杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v13/index.html"
+    },
+    {
       "venue_id": "v35",
       "title": "平塚 FⅡ 平塚法人会杯（2日目）",
       "publish_group": "other",
