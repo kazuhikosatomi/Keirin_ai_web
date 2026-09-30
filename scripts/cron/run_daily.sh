@@ -91,12 +91,22 @@ echo "=== run_daily.sh started at $(date '+%Y-%m-%d %H:%M:%S') ==="
   && echo "[OK] oddspark entry scrape completed (yesterday)" || echo "[FAIL] oddspark entry scrape failed (yesterday)"
 
 
-# 7b. feature_base master train 作成（前日分）
+# 7b. OddsPark開催カレンダーの time_type を正式entryへマージ
+# 当日分
+/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/09merge_calendar_time_type_to_entry.py --date "$TODAY" \
+  && echo "[OK] calendar time_type merge completed (today)" || echo "[FAIL] calendar time_type merge failed (today)"
+
+# 前日分
+/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/09merge_calendar_time_type_to_entry.py --date "$YESTERDAY" \
+  && echo "[OK] calendar time_type merge completed (yesterday)" || echo "[FAIL] calendar time_type merge failed (yesterday)"
+
+
+# 7c. feature_base master train 作成（前日分）
 # results が確定した前日分を正式feature_base master trainとして作成。
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/feature_base/master/run_feature_base_train_master.py --date "$YESTERDAY" \
   && echo "[OK] feature_base master train completed (yesterday)" || echo "[FAIL] feature_base master train failed (yesterday)"
 
-# 7c. feature_base master predict 作成（当日分）
+# 7d. feature_base master predict 作成（当日分）
 # 当日予測用。resultsを使わない正式feature_base master predictを作成。
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/feature_base/master/run_feature_base_predict_master.py --date "$TODAY" \
   && echo "[OK] feature_base master predict completed (today)" || echo "[FAIL] feature_base master predict failed (today)"

@@ -603,15 +603,22 @@ def enrich_racer_stats_with_entry(date: str, race_id: str, stats_df: pd.DataFram
     if stats_df.empty:
         return stats_df
 
-    # 並び予想はセリ情報を含む oddspark entry を優先する。
-    # 通常entryはセリを別line_idへ分離しているため、
-    # line_seri_order / line_is_seri を復元できない。
+    # 並び予想は正式entryのCharilotoライン情報を正とする。
+    # 現在の通常entryには line_id / line_pos に加えて、
+    # line_is_seri / line_seri_order / line_has_seri も保持される。
+    # OddsPark entry は通常entryが無い場合だけフォールバックする。
     year = str(date)[:4]
+
+    normal_entry_path = Path(
+        f"data/entries/{year}/entry_{date}.csv"
+    )
     oddspark_entry_path = Path(
         f"data/entries/oddspark/{year}/entry_{date}.csv"
     )
 
-    if oddspark_entry_path.exists():
+    if normal_entry_path.exists():
+        entry_path = normal_entry_path
+    elif oddspark_entry_path.exists():
         entry_path = oddspark_entry_path
     else:
         entry_path = find_entry_path(date)

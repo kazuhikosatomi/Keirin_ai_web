@@ -629,6 +629,73 @@ def load_watch_venue_ids(date: str) -> set[int]:
 
 def write_latest_json(date: str):
     """docsトップ用に、対象日と開催別 index ページへのリンク情報をJSON出力する。"""
+
+    # 正式entryのライン情報から開催単位の公開可否を判定する。
+    # READY: 通常リンクを公開
+    # WAIT : 開催名だけ表示し、AI予想は後ほど公開予定とする
+    year = str(date)[:4]
+    entry_path = Path(f"data/entries/{year}/entry_{date}.csv")
+    ready_venues = set()
+    venue_time_types = {}
+
+    if entry_path.exists():
+        try:
+            entry_df = pd.read_csv(entry_path, low_memory=False)
+
+            venue_col = (
+                "venue_id"
+                if "venue_id" in entry_df.columns
+                else "place_code"
+                if "place_code" in entry_df.columns
+                else None
+            )
+
+            required_cols = [
+                "line_id",
+                "line_pos",
+                "line_is_seri",
+                "line_has_seri",
+            ]
+
+            if venue_col and all(c in entry_df.columns for c in required_cols):
+                for venue_value, g in entry_df.groupby(venue_col):
+                    base_ready = all(g[c].notna().all() for c in required_cols)
+
+                    seri_ready = True
+                    if "line_seri_order" in g.columns:
+                        seri_mask = (
+                            pd.to_numeric(
+                                g["line_is_seri"],
+                                errors="coerce",
+                            ).fillna(0).eq(1)
+                        )
+                        if seri_mask.any():
+                            seri_ready = g.loc[
+                                seri_mask,
+                                "line_seri_order",
+                            ].notna().all()
+
+                    try:
+                        venue_number = int(float(venue_value))
+                    except Exception:
+                        venue_number = None
+
+                    if venue_number is not None and "time_type" in g.columns:
+                        time_values = (
+                            g["time_type"]
+                            .dropna()
+                            .astype(str)
+                            .str.strip()
+                            .str.lower()
+                        )
+                        time_values = time_values[time_values.ne("")]
+                        if not time_values.empty:
+                            venue_time_types[venue_number] = time_values.iloc[0]
+
+                    if base_ready and seri_ready and venue_number is not None:
+                        ready_venues.add(venue_number)
+        except Exception as e:
+            print(f"⚠️ line ready check failed: {e}")
     watch_venue_ids = load_watch_venue_ids(date)
     latest_items = []
     root = SNAPSHOT_DIR
@@ -658,16 +725,25 @@ def write_latest_json(date: str):
 
         venue_number = int(str(venue_id).lstrip("v"))
 
-        latest_items.append({
+        item = {
             "venue_id": venue_id,
             "title": title,
-            "href": f"./public/latest/car7/{venue_id}/index.html",
             "publish_group": (
                 "watch"
                 if venue_number in watch_venue_ids
                 else "other"
             ),
-        })
+            "time_type": venue_time_types.get(venue_number),
+        }
+
+        if venue_number in ready_venues:
+            item["status"] = "ready"
+            item["href"] = f"./public/latest/car7/{venue_id}/index.html"
+        else:
+            item["status"] = "waiting"
+            item["message"] = "AI予想は後ほど公開予定"
+
+        latest_items.append(item)
 
     latest_json_path = root / "latest.json"
     latest_json_path.write_text(
@@ -704,20 +780,61 @@ def write_latest_json(date: str):
             if item.get("publish_group") == group_name
         ]
 
+        if group_name == "other":
+            time_order = {
+                "morning": 0,
+                "day": 1,
+                "night": 2,
+                "midnight": 3,
+            }
+
+            group_items.sort(
+                key=lambda item: (
+                    time_order.get(item.get("time_type"), 99),
+                    int(str(item["venue_id"]).lstrip("v")),
+                )
+            )
+
         cards = []
+        current_time_type = None
 
         for item in group_items:
             venue_id = item["venue_id"]
             title = item["title"]
 
-            cards.append(
-                f"""
-                <a class="venue-card" href="../{venue_id}/index.html">
-                  <div class="venue-title">{title}</div>
-                  <div class="venue-link">予想を見る →</div>
-                </a>
-                """
-            )
+            if group_name == "other":
+                time_type = item.get("time_type") or "other"
+
+                if time_type != current_time_type:
+                    cards.append(
+                        f"""
+                        <div class="time-type-heading">{time_type}</div>
+                        """
+                    )
+                    current_time_type = time_type
+
+            if item.get("status") == "ready":
+                cards.append(
+                    f"""
+                    <a class="venue-card" href="../{venue_id}/index.html">
+                      <div class="venue-title">{title}</div>
+                      <div class="venue-link">予想を見る →</div>
+                    </a>
+                    """
+                )
+            else:
+                message = item.get(
+                    "message",
+                    "AI予想は後ほど公開予定",
+                )
+                cards.append(
+                    f"""
+                    <div class="venue-card" style="cursor: default;">
+                      <div class="venue-title">{title}</div>
+                      <div class="venue-link">{message}</div>
+                    </div>
+                    """
+                )
 
         if cards:
             cards_html = "\n".join(cards)
@@ -796,6 +913,25 @@ def write_latest_json(date: str):
       color: inherit;
       text-decoration: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }}
+
+    .time-type-heading {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 8px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      color: #374151;
+      text-transform: uppercase;
+    }}
+
+    .time-type-heading::after {{
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #d1d5db;
     }}
 
     .venue-title {{
