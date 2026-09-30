@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v35/index.html"
     },
     {
+      "venue_id": "v53",
+      "title": "奈良 FⅡ オッズパーク杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
+    },
+    {
       "venue_id": "v62",
       "title": "広島 FⅠ ＮＩＰＰＯ杯／ＣＴＣ杯（最終日）",
       "publish_group": "other",
