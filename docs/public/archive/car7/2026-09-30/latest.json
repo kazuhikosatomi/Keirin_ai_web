@@ -8,6 +8,14 @@
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v35/index.html"
+    },
+    {
+      "venue_id": "v62",
+      "title": "広島 FⅠ ＮＩＰＰＯ杯／ＣＴＣ杯（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v62/index.html"
     }
   ]
 }
