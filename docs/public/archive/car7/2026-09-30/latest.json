@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v12/index.html"
     },
     {
+      "venue_id": "v22",
+      "title": "前橋 FⅡ 競輪データならＢｅｔｉｍｏ杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v22/index.html"
+    },
+    {
       "venue_id": "v35",
       "title": "平塚 FⅡ 平塚法人会杯（最終日）",
       "publish_group": "other",
