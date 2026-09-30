@@ -1825,16 +1825,16 @@
       const message = document.getElementById('transition-message');
 
       if (preopen) {
-        preopen.textContent = '現在プレオープン中です';
+        preopen.style.display = 'none';
       }
 
       if (title) {
-        title.textContent = 'サイトリニューアルしました';
+        title.textContent = '10/1 サイトリニューアルしました';
       }
 
       if (message) {
-        message.textContent =
-          '予想ロジックを変更し、レース予想に「AI1着率」「AI3連対率」などを追加しました。7車レースのAI予想も不定期で公開していきます。';
+        message.innerHTML =
+          '予想ロジックを変更し、レース予想に「<strong>AI1着率</strong>」「<strong>AI3連対率</strong>」などを追加しました。7車レースのAI予想も不定期で公開していきます。';
       }
 
       try {
