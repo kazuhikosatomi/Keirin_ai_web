@@ -99,9 +99,6 @@ run_final_check_before_exit() {
     echo "📄 final-check after all races: rebuild venue index pages with profit summary | $(date '+%Y-%m-%d %H:%M:%S')"
     $PYTHON scripts/public01/car9/build/build_venue_index_pages.py --date "$DATE"
 
-    echo "📊 final-check after all races: rebuild local profit index | $(date '+%Y-%m-%d %H:%M:%S')"
-    $PYTHON scripts/public01/car9/build/build_profit_index.py
-
     echo "🧱 final-check: snapshot → final | $(date '+%Y-%m-%d %H:%M:%S')"
     $PYTHON scripts/public01/car9/build/build_final_from_snapshot.py --force
 
@@ -116,6 +113,8 @@ run_final_check_before_exit() {
     echo "📦 final-check: local archive | date=$DATE | $(date '+%Y-%m-%d %H:%M:%S')"
     $PYTHON scripts/public01/car9/build/archive_day.py       --date "$DATE"       --force       --skip-no-grade
 
+    echo "📊 final-check after archive: rebuild local profit index | $(date '+%Y-%m-%d %H:%M:%S')"
+    $PYTHON scripts/public01/car9/build/build_profit_index.py
 
     if [ "$PUBLIC01_PUBLISH" = "1" ]; then
       echo "🚀 final-check: publish final/archive | $(date '+%Y-%m-%d %H:%M:%S')"
