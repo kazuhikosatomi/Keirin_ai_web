@@ -8,6 +8,14 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v63/index.html"
+    },
+    {
+      "venue_id": "v85",
+      "title": "佐世保 FⅡ けいりんラブ！ラブリン杯（2日目）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v85/index.html"
     }
   ]
 }
