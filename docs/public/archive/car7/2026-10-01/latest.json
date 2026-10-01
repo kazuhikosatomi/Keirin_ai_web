@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v63/index.html"
     },
     {
+      "venue_id": "v83",
+      "title": "久留米 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v83/index.html"
+    },
+    {
       "venue_id": "v85",
       "title": "佐世保 FⅡ けいりんラブ！ラブリン杯（2日目）",
       "publish_group": "other",
