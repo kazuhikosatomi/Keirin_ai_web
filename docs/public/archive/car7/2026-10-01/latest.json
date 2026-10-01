@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v34/index.html"
     },
     {
+      "venue_id": "v53",
+      "title": "奈良 FⅡ オッズパーク杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
+    },
+    {
       "venue_id": "v63",
       "title": "防府 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
       "publish_group": "other",
