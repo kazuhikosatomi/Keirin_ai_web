@@ -1,25 +1,25 @@
 {
-  "date": "2026-10-01",
+  "date": "2026-10-02",
   "items": [
     {
       "venue_id": "v12",
-      "title": "青森 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "青森 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v12/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v22",
-      "title": "前橋 FⅡ 競輪データならＢｅｔｉｍｏ杯（2日目）",
+      "title": "前橋 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v22/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v25",
-      "title": "大宮 FⅠ（初日）",
+      "title": "大宮 FⅠ スポーツニッポン新聞社杯（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -27,7 +27,7 @@
     },
     {
       "venue_id": "v34",
-      "title": "川崎 FⅠ（初日）",
+      "title": "川崎 FⅠ サンスポ杯 ラ・ピスタ新橋Ｃ（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -35,23 +35,15 @@
     },
     {
       "venue_id": "v53",
-      "title": "奈良 FⅡ オッズパーク杯（2日目）",
+      "title": "奈良 FⅡ オッズパーク杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v53/index.html"
-    },
-    {
-      "venue_id": "v63",
-      "title": "防府 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
-      "publish_group": "other",
-      "time_type": "morning",
-      "status": "ready",
-      "href": "./public/latest/car7/v63/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v83",
-      "title": "久留米 FⅡ（初日）",
+      "title": "久留米 FⅡ 競輪データならＢｅｔｉｍｏ杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -59,7 +51,7 @@
     },
     {
       "venue_id": "v85",
-      "title": "佐世保 FⅡ けいりんラブ！ラブリン杯（2日目）",
+      "title": "佐世保 FⅡ けいりんラブ！ラブリン杯（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
