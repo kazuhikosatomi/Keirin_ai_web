@@ -2,6 +2,14 @@
   "date": "2026-10-03",
   "items": [
     {
+      "venue_id": "v25",
+      "title": "大宮 FⅠ スポーツニッポン新聞社杯（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v25/index.html"
+    },
+    {
       "venue_id": "v31",
       "title": "松戸 FⅡ（初日）",
       "publish_group": "other",
