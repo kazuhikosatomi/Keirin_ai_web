@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v34/index.html"
     },
     {
+      "venue_id": "v35",
+      "title": "平塚 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v35/index.html"
+    },
+    {
       "venue_id": "v83",
       "title": "久留米 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
       "publish_group": "other",
