@@ -8,6 +8,14 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v31/index.html"
+    },
+    {
+      "venue_id": "v63",
+      "title": "防府 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v63/index.html"
     }
   ]
 }
