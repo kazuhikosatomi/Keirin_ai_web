@@ -8,6 +8,14 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v31/index.html"
+    },
+    {
+      "venue_id": "v47",
+      "title": "松阪 GⅢ 蒲生氏郷杯王座競輪（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v47/index.html"
     }
   ]
 }
