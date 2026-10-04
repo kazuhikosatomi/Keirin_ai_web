@@ -40,6 +40,14 @@
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v75/index.html"
+    },
+    {
+      "venue_id": "v84",
+      "title": "武雄 FⅡ オッズパーク杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v84/index.html"
     }
   ]
 }
