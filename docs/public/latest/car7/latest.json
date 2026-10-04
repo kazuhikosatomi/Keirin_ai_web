@@ -1,9 +1,9 @@
 {
-  "date": "2026-10-04",
+  "date": "2026-10-05",
   "items": [
     {
       "venue_id": "v13",
-      "title": "いわき平 FⅡ（初日）",
+      "title": "いわき平 FⅡ サンスポ・ソラモギ・しいたけＣ（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -11,7 +11,7 @@
     },
     {
       "venue_id": "v31",
-      "title": "松戸 FⅡ 第９回みんなの競輪カップ（2日目）",
+      "title": "松戸 FⅡ 第９回みんなの競輪カップ（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
@@ -19,23 +19,23 @@
     },
     {
       "venue_id": "v35",
-      "title": "平塚 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "平塚 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v35/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
-      "venue_id": "v47",
-      "title": "松阪 GⅢ 蒲生氏郷杯王座競輪（最終日）",
+      "venue_id": "v53",
+      "title": "奈良 FⅠ（初日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
-      "href": "./public/latest/car7/v47/index.html"
+      "href": "./public/latest/car7/v53/index.html"
     },
     {
       "venue_id": "v63",
-      "title": "防府 FⅡ（初日）",
+      "title": "防府 FⅡ 介護サービスのセービング杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
@@ -43,15 +43,15 @@
     },
     {
       "venue_id": "v73",
-      "title": "小松島 FⅡ ＣＴＣなら３分前まで買える杯（2日目）",
+      "title": "小松島 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v73/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v75",
-      "title": "松山 FⅠ（初日）",
+      "title": "松山 FⅠ サンケイスポーツ×ウィンチケ杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -59,11 +59,11 @@
     },
     {
       "venue_id": "v84",
-      "title": "武雄 FⅡ オッズパーク杯（2日目）",
+      "title": "武雄 FⅡ オッズパーク杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v84/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     }
   ]
 }
