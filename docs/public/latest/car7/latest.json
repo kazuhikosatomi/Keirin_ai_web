@@ -22,8 +22,8 @@
       "title": "平塚 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v35/index.html"
     },
     {
       "venue_id": "v53",
@@ -46,8 +46,8 @@
       "title": "小松島 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v73/index.html"
     },
     {
       "venue_id": "v75",
@@ -62,8 +62,8 @@
       "title": "武雄 FⅡ オッズパーク杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v84/index.html"
     }
   ]
 }
