@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v25/index.html"
     },
     {
+      "venue_id": "v44",
+      "title": "大垣 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v44/index.html"
+    },
+    {
       "venue_id": "v53",
       "title": "奈良 FⅠ Ｂｅｔｉｍｏ杯牛若丸賞ｉｎ奈良（2日目）",
       "publish_group": "other",
