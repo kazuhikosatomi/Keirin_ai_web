@@ -1,61 +1,61 @@
 {
-  "date": "2026-10-06",
+  "date": "2026-10-07",
   "items": [
     {
-      "venue_id": "v13",
-      "title": "いわき平 FⅡ サンスポ・ソラモギ・しいたけＣ（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v13/index.html"
-    },
-    {
       "venue_id": "v22",
-      "title": "前橋 FⅡ（初日）",
+      "title": "前橋 FⅡ 前検日コメならウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v22/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v25",
-      "title": "大宮 FⅠ（初日）",
+      "title": "大宮 FⅠ 日刊スポーツ杯争奪戦（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v25/index.html"
     },
     {
+      "venue_id": "v38",
+      "title": "静岡 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
+    },
+    {
       "venue_id": "v44",
-      "title": "大垣 FⅡ（初日）",
+      "title": "大垣 FⅡ 楽天Ｋドリームス杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
+    },
+    {
+      "venue_id": "v48",
+      "title": "四日市 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
       "status": "ready",
-      "href": "./public/latest/car7/v44/index.html"
+      "href": "./public/latest/car7/v48/index.html"
     },
     {
       "venue_id": "v53",
-      "title": "奈良 FⅠ Ｂｅｔｉｍｏ杯牛若丸賞ｉｎ奈良（2日目）",
+      "title": "奈良 FⅠ Ｂｅｔｉｍｏ杯牛若丸賞ｉｎ奈良（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v53/index.html"
     },
     {
-      "venue_id": "v63",
-      "title": "防府 FⅡ 介護サービスのセービング杯（最終日）",
+      "venue_id": "v74",
+      "title": "高知 FⅡ（初日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
-      "href": "./public/latest/car7/v63/index.html"
-    },
-    {
-      "venue_id": "v75",
-      "title": "松山 FⅠ サンケイスポーツ×ウィンチケ杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v75/index.html"
+      "href": "./public/latest/car7/v74/index.html"
     }
   ]
 }
