@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v25/index.html"
     },
     {
+      "venue_id": "v53",
+      "title": "奈良 FⅠ Ｂｅｔｉｍｏ杯牛若丸賞ｉｎ奈良（2日目）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
+    },
+    {
       "venue_id": "v63",
       "title": "防府 FⅡ 介護サービスのセービング杯（最終日）",
       "publish_group": "other",
