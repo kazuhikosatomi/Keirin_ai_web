@@ -2,6 +2,14 @@
   "date": "2026-10-06",
   "items": [
     {
+      "venue_id": "v13",
+      "title": "いわき平 FⅡ サンスポ・ソラモギ・しいたけＣ（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v13/index.html"
+    },
+    {
       "venue_id": "v25",
       "title": "大宮 FⅠ（初日）",
       "publish_group": "other",
