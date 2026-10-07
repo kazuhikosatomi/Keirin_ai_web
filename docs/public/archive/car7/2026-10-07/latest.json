@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v38/index.html"
     },
     {
+      "venue_id": "v48",
+      "title": "四日市 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
+    },
+    {
       "venue_id": "v53",
       "title": "奈良 FⅠ Ｂｅｔｉｍｏ杯牛若丸賞ｉｎ奈良（最終日）",
       "publish_group": "other",
