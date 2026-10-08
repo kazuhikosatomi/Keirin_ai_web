@@ -2,6 +2,14 @@
   "date": "2026-10-08",
   "items": [
     {
+      "venue_id": "v22",
+      "title": "前橋 FⅡ 前検日コメならウィンチケット杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v22/index.html"
+    },
+    {
       "venue_id": "v25",
       "title": "大宮 FⅠ 日刊スポーツ杯争奪戦（最終日）",
       "publish_group": "other",
