@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v38/index.html"
     },
     {
+      "venue_id": "v44",
+      "title": "大垣 FⅡ 楽天Ｋドリームス杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v44/index.html"
+    },
+    {
       "venue_id": "v48",
       "title": "四日市 FⅠ 萬古焼協賛 日刊スポーツ杯（2日目）",
       "publish_group": "other",
