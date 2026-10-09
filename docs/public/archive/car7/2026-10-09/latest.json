@@ -2,6 +2,14 @@
   "date": "2026-10-09",
   "items": [
     {
+      "venue_id": "v74",
+      "title": "高知 FⅡ けいりんラブ！ラブリン杯（最終日）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v74/index.html"
+    },
+    {
       "venue_id": "v84",
       "title": "武雄 FⅡ（初日）",
       "publish_group": "other",
