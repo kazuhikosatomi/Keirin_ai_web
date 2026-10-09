@@ -1,57 +1,49 @@
 {
-  "date": "2026-10-09",
+  "date": "2026-10-10",
   "items": [
     {
       "venue_id": "v34",
-      "title": "川崎 FⅡ（初日）",
+      "title": "川崎 FⅡ オッズパーク杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v34/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v35",
-      "title": "平塚 FⅠ 湘南しらす丸八丸杯（2日目）",
+      "title": "平塚 FⅠ 湘南しらす丸八丸杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v35/index.html"
     },
     {
-      "venue_id": "v38",
-      "title": "静岡 FⅡ 広告宣伝は静岡テレビセンター杯（最終日）",
-      "publish_group": "other",
-      "time_type": "day",
-      "status": "ready",
-      "href": "./public/latest/car7/v38/index.html"
-    },
-    {
-      "venue_id": "v48",
-      "title": "四日市 FⅠ 萬古焼協賛 日刊スポーツ杯（最終日）",
+      "venue_id": "v43",
+      "title": "岐阜 FⅡ（初日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
-      "href": "./public/latest/car7/v48/index.html"
+      "href": "./public/latest/car7/v43/index.html"
+    },
+    {
+      "venue_id": "v46",
+      "title": "富山 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v46/index.html"
     },
     {
       "venue_id": "v53",
-      "title": "奈良 FⅡ（初日）",
+      "title": "奈良 FⅡ 前検日コメならウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v53/index.html"
-    },
-    {
-      "venue_id": "v74",
-      "title": "高知 FⅡ けいりんラブ！ラブリン杯（最終日）",
-      "publish_group": "other",
-      "time_type": "morning",
-      "status": "ready",
-      "href": "./public/latest/car7/v74/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v84",
-      "title": "武雄 FⅡ（初日）",
+      "title": "武雄 FⅡ 第８回森うなぎ屋杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
