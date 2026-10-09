@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v38/index.html"
     },
     {
+      "venue_id": "v48",
+      "title": "四日市 FⅠ 萬古焼協賛 日刊スポーツ杯（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
+    },
+    {
       "venue_id": "v74",
       "title": "高知 FⅡ けいりんラブ！ラブリン杯（最終日）",
       "publish_group": "other",
