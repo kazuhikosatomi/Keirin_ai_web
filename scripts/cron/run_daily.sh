@@ -123,39 +123,39 @@ time_end
 
 # 7a. OddsPark 出走表のスクレイピング（当日・前日）
 # まずは WinTicket 系と並走。安定後に entry 主系を OddsPark へ切替予定。
-# 7b. OddsPark出走表取得 → H fallback
-# H fallbackは、その日のOddsPark取得が正常終了した場合だけ実行する。
+# 7b. OddsPark出走表取得 → S/H/B/racer_id fallback
+# S/H/B/racer_id fallbackは、その日のOddsPark取得が正常終了した場合だけ実行する。
 # これにより取得失敗時に古いOddsPark CSVを誤使用することを防ぐ。
 
 # 当日分
-time_start "OddsPark出走表取得 + H fallback 当日"
+time_start "OddsPark出走表取得 + S/H/B/racer_id fallback 当日"
 if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08scrape_oddspark_entry.py --date "$TODAY"; then
   echo "[OK] oddspark entry scrape completed (today)"
 
   if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08b_fill_entry_h_from_oddspark.py --date "$TODAY"; then
-    echo "[OK] oddspark H fallback completed (today)"
+    echo "[OK] oddspark S/H/B/racer_id fallback completed (today)"
   else
-    echo "[FAIL] oddspark H fallback failed (today)"
+    echo "[FAIL] oddspark S/H/B/racer_id fallback failed (today)"
   fi
 else
   echo "[FAIL] oddspark entry scrape failed (today)"
-  echo "[SKIP] oddspark H fallback skipped (today)"
+  echo "[SKIP] oddspark S/H/B/racer_id fallback skipped (today)"
 fi
 time_end
 
 # 前日分
-time_start "OddsPark出走表取得 + H fallback 前日"
+time_start "OddsPark出走表取得 + S/H/B/racer_id fallback 前日"
 if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08scrape_oddspark_entry.py --date "$YESTERDAY"; then
   echo "[OK] oddspark entry scrape completed (yesterday)"
 
   if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08b_fill_entry_h_from_oddspark.py --date "$YESTERDAY"; then
-    echo "[OK] oddspark H fallback completed (yesterday)"
+    echo "[OK] oddspark S/H/B/racer_id fallback completed (yesterday)"
   else
-    echo "[FAIL] oddspark H fallback failed (yesterday)"
+    echo "[FAIL] oddspark S/H/B/racer_id fallback failed (yesterday)"
   fi
 else
   echo "[FAIL] oddspark entry scrape failed (yesterday)"
-  echo "[SKIP] oddspark H fallback skipped (yesterday)"
+  echo "[SKIP] oddspark S/H/B/racer_id fallback skipped (yesterday)"
 fi
 time_end
 
