@@ -2,6 +2,14 @@
   "date": "2026-10-09",
   "items": [
     {
+      "venue_id": "v38",
+      "title": "静岡 FⅡ 広告宣伝は静岡テレビセンター杯（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
+    },
+    {
       "venue_id": "v74",
       "title": "高知 FⅡ けいりんラブ！ラブリン杯（最終日）",
       "publish_group": "other",
