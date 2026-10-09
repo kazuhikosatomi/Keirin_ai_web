@@ -30,112 +30,201 @@ echo "▶ YESTERDAY = $YESTERDAY"
 LOG_DATE=$(date +%F)
 RUN_LOG="/Users/satomi/keirin/GitHub/keirin_ai_web/logs/run_daily/run_daily_${LOG_DATE}.log"
 echo "=== run_daily.sh started at $(date '+%Y-%m-%d %H:%M:%S') ==="
+
+# =============================================================================
+# 朝処理 時刻計測
+# =============================================================================
+time_start() {
+  TIME_LABEL="$1"
+  TIME_STARTED_AT=$(date +%s)
+  echo "[TIME] $(date '+%Y-%m-%d %H:%M:%S') START | ${TIME_LABEL}"
+}
+
+time_end() {
+  local ended_at
+  local elapsed
+  ended_at=$(date +%s)
+  elapsed=$((ended_at - TIME_STARTED_AT))
+  echo "[TIME] $(date '+%Y-%m-%d %H:%M:%S') END   | ${TIME_LABEL} | ${elapsed} sec"
+}
+
 # cron側で RUN_LOG にリダイレクトしているため、ここで daily_tasks へ切り替えない
 # exec >> "/Users/satomi/keirin/GitHub/keirin_ai_web/logs/daily_tasks_${LOG_DATE}.log" 2>&1
 
 # 1. オッズのスクレイピング
+time_start "前日オッズ取得"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/01scrape_odds.py --date "$YESTERDAY" \
   && echo "[OK] odds scrape completed" || echo "[FAIL] odds scrape failed"
+time_end
 
 
 # 2. 結果のスクレイピング
+time_start "前日結果取得"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/02scrape_results.py --date "$YESTERDAY" \
   && echo "[OK] results scrape completed" || echo "[FAIL] results scrape failed"
+time_end
 
 
 # 3. グレード情報のスクレイピング
+time_start "前日グレード取得"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/03scrape_race_grade.py --date "$YESTERDAY" \
   && echo "[OK] race grade scrape completed" || echo "[FAIL] race grade scrape failed"
+time_end
+
 
 # 4. results に race_grade をマージ
+time_start "前日results gradeマージ"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/04merge_results_with_grade.py --date "$YESTERDAY" \
   && echo "[OK] merge results with grade completed" || echo "[FAIL] merge results with grade failed"
+time_end
 
 
 # 5. 出走表のスクレイピング（当日を引数に指定）
 # 当日分の出走表
+time_start "Chariloto出走表取得 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/05scrape_entry.py --date "$TODAY" \
   && echo "[OK] entry scrape completed (today)" || echo "[FAIL] entry scrape failed (today)"
+time_end
 
 
 # 前日分の出走表も取得し直す
+time_start "Chariloto出走表取得 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/05scrape_entry.py --date "$YESTERDAY" \
   && echo "[OK] entry scrape completed (yesterday)" || echo "[FAIL] entry scrape failed (yesterday)"
+time_end
 
 
 # 6. WINTICKET 出走表 S/H/B・発走時間のスクレイピング
 # 当日分
+time_start "WINTICKET出走表取得 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/06scrape_winticket_entry_shb.py --date "$TODAY" \
   && echo "[OK] winticket S/H/B scrape completed (today)" || echo "[FAIL] winticket S/H/B scrape failed (today)"
+time_end
 
 # 前日分
+time_start "WINTICKET出走表取得 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/06scrape_winticket_entry_shb.py --date "$YESTERDAY" \
   && echo "[OK] winticket S/H/B scrape completed (yesterday)" || echo "[FAIL] winticket S/H/B scrape failed (yesterday)"
+time_end
 
 # 7. WINTICKET S/H/B・発走時間を entry にマージ
 # 当日分
+time_start "WINTICKETマージ 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/07merge_winticket_shb_to_entry.py --date "$TODAY" \
   && echo "[OK] merge winticket S/H/B to entry completed (today)" || echo "[FAIL] merge winticket S/H/B to entry failed (today)"
+time_end
 
 # 前日分
+time_start "WINTICKETマージ 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/07merge_winticket_shb_to_entry.py --date "$YESTERDAY" \
   && echo "[OK] merge winticket S/H/B to entry completed (yesterday)" || echo "[FAIL] merge winticket S/H/B to entry failed (yesterday)"
+time_end
 
 
 # 7a. OddsPark 出走表のスクレイピング（当日・前日）
 # まずは WinTicket 系と並走。安定後に entry 主系を OddsPark へ切替予定。
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08scrape_oddspark_entry.py --date "$TODAY" \
-  && echo "[OK] oddspark entry scrape completed (today)" || echo "[FAIL] oddspark entry scrape failed (today)"
+# 7b. OddsPark出走表取得 → H fallback
+# H fallbackは、その日のOddsPark取得が正常終了した場合だけ実行する。
+# これにより取得失敗時に古いOddsPark CSVを誤使用することを防ぐ。
 
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08scrape_oddspark_entry.py --date "$YESTERDAY" \
-  && echo "[OK] oddspark entry scrape completed (yesterday)" || echo "[FAIL] oddspark entry scrape failed (yesterday)"
-
-
-# 7b. OddsPark開催カレンダーの time_type を正式entryへマージ
 # 当日分
-/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/09merge_calendar_time_type_to_entry.py --date "$TODAY" \
-  && echo "[OK] calendar time_type merge completed (today)" || echo "[FAIL] calendar time_type merge failed (today)"
+time_start "OddsPark出走表取得 + H fallback 当日"
+if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08scrape_oddspark_entry.py --date "$TODAY"; then
+  echo "[OK] oddspark entry scrape completed (today)"
+
+  if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08b_fill_entry_h_from_oddspark.py --date "$TODAY"; then
+    echo "[OK] oddspark H fallback completed (today)"
+  else
+    echo "[FAIL] oddspark H fallback failed (today)"
+  fi
+else
+  echo "[FAIL] oddspark entry scrape failed (today)"
+  echo "[SKIP] oddspark H fallback skipped (today)"
+fi
+time_end
 
 # 前日分
+time_start "OddsPark出走表取得 + H fallback 前日"
+if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08scrape_oddspark_entry.py --date "$YESTERDAY"; then
+  echo "[OK] oddspark entry scrape completed (yesterday)"
+
+  if /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/08b_fill_entry_h_from_oddspark.py --date "$YESTERDAY"; then
+    echo "[OK] oddspark H fallback completed (yesterday)"
+  else
+    echo "[FAIL] oddspark H fallback failed (yesterday)"
+  fi
+else
+  echo "[FAIL] oddspark entry scrape failed (yesterday)"
+  echo "[SKIP] oddspark H fallback skipped (yesterday)"
+fi
+time_end
+
+
+# 7c. OddsPark開催カレンダーの time_type を正式entryへマージ
+# 当日分
+time_start "time_typeマージ 当日"
+/Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/09merge_calendar_time_type_to_entry.py --date "$TODAY" \
+  && echo "[OK] calendar time_type merge completed (today)" || echo "[FAIL] calendar time_type merge failed (today)"
+time_end
+
+# 前日分
+time_start "time_typeマージ 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/fix/09merge_calendar_time_type_to_entry.py --date "$YESTERDAY" \
   && echo "[OK] calendar time_type merge completed (yesterday)" || echo "[FAIL] calendar time_type merge failed (yesterday)"
+time_end
 
 
 # 7c. feature_base master train 作成（前日分）
 # results が確定した前日分を正式feature_base master trainとして作成。
+time_start "feature_base train 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/feature_base/master/run_feature_base_train_master.py --date "$YESTERDAY" \
   && echo "[OK] feature_base master train completed (yesterday)" || echo "[FAIL] feature_base master train failed (yesterday)"
+time_end
 
 # 7d. feature_base master predict 作成（当日分）
 # 当日予測用。resultsを使わない正式feature_base master predictを作成。
+time_start "feature_base predict 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/feature_base/master/run_feature_base_predict_master.py --date "$TODAY" \
   && echo "[OK] feature_base master predict completed (today)" || echo "[FAIL] feature_base master predict failed (today)"
+time_end
 
 
 # 7d. core_b car9 作成（前日分・当日分）
 # 念のため前日分を再作成後、当日分を作成する。
+time_start "core_b car9 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/core_b/car9/run_core_b_car9_morning.py --date "$YESTERDAY" \
   && echo "[OK] core_b car9 completed (yesterday)" || echo "[FAIL] core_b car9 failed (yesterday)"
+time_end
 
+time_start "core_b car9 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/core_b/car9/run_core_b_car9_morning.py --date "$TODAY" \
   && echo "[OK] core_b car9 completed (today)" || echo "[FAIL] core_b car9 failed (today)"
+time_end
 
 # 7d-2. core_b car7 作成（前日分・当日分）
 # car9と同様、朝専用runnerでStep01〜03のみ実行する。
 # 当日results未取得でもStep04評価を行わないため正常終了できる。
+time_start "core_b car7 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/core_b/car7/run_core_b_car7_morning.py --date "$YESTERDAY" \
   && echo "[OK] core_b car7 completed (yesterday)" || echo "[FAIL] core_b car7 failed (yesterday)"
+time_end
 
+time_start "core_b car7 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/core_b/car7/run_core_b_car7_morning.py --date "$TODAY" \
   && echo "[OK] core_b car7 completed (today)" || echo "[FAIL] core_b car7 failed (today)"
+time_end
 
 # 7e. core_win car9 作成（前日分・当日分）
 # 念のため前日分を再作成後、当日分を作成する。
+time_start "core_win car9 前日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/core_win/car9/run_core_win_car9_morning.py --date "$YESTERDAY" --train-days 365 \
   && echo "[OK] core_win car9 completed (yesterday)" || echo "[FAIL] core_win car9 failed (yesterday)"
+time_end
 
+time_start "core_win car9 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/core_win/car9/run_core_win_car9_morning.py --date "$TODAY" --train-days 365 \
   && echo "[OK] core_win car9 completed (today)" || echo "[FAIL] core_win car9 failed (today)"
+time_end
 
 
 # 7f. chance01 car9 作成（当日分）
@@ -144,22 +233,26 @@ echo "=== run_daily.sh started at $(date '+%Y-%m-%d %H:%M:%S') ==="
 # （9車・L1除外・外国人含有レース除外）を確認し、
 # 対象ありの場合のみ Step01〜08 を実行する。
 # payout側でchance出力を利用できるよう、payoutより前に実行する。
+time_start "chance01 car9 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 \
   /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/chance01/car9/run_chance01_car9.py \
   --date "$TODAY" \
   && echo "[OK] chance01 car9 completed (today)" \
   || echo "[FAIL] chance01 car9 failed (today)"
+time_end
 
 
 # 7g. payout01 car9 Base30 作成（当日分）
 # commonの正式9車判定
 # （9車・L1除外・外国人含有レース除外）を事前確認。
 # 対象ありの場合のみ Step01〜06 → Step08 → Step09 を実行する。
+time_start "payout01 car9 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 \
   /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/payout01/car9/run_payout01_car9.py \
   --date "$TODAY" \
   && echo "[OK] payout01 car9 completed (today)" \
   || echo "[FAIL] payout01 car9 failed (today)"
+time_end
 
 
 ###############################################################################
@@ -176,9 +269,11 @@ echo "========================================"
 echo "🎯 START bet01 car9 daily"
 echo "========================================"
 
+time_start "bet01 car9 当日"
 bash /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/bet01/car9/run_morning_bet01_car9.sh "$TODAY" \
   && echo "[OK] run_morning_bet01_car9.sh completed" \
   || echo "[FAIL] run_morning_bet01_car9.sh failed"
+time_end
 fi
 
 # ========================================
@@ -190,9 +285,11 @@ echo "========================================"
 echo "🎯 START bet01 car7 daily"
 echo "========================================"
 
+time_start "bet01 car7 当日"
 bash /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/bet01/car7/run_morning_bet01_car7.sh "$TODAY" \
   && echo "[OK] run_morning_bet01_car7.sh completed" \
   || echo "[FAIL] run_morning_bet01_car7.sh failed"
+time_end
 
 # ========================================
 # chance01 car7 毎朝運用
@@ -203,11 +300,13 @@ echo "========================================"
 echo "🎯 START chance01 car7 daily"
 echo "========================================"
 
+time_start "chance01 car7 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 \
   /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/chance01/car7/run_chance01_car7.py \
   --date "$TODAY" \
   && echo "[OK] chance01 car7 completed (today)" \
   || echo "[FAIL] chance01 car7 failed (today)"
+time_end
 
 # ========================================
 # payout01 car7 毎朝運用
@@ -218,11 +317,13 @@ echo "========================================"
 echo "🎯 START payout01 car7 daily"
 echo "========================================"
 
+time_start "payout01 car7 当日"
 /Users/satomi/keirin/GitHub/keirin_ai_web/venv/bin/python3 \
   /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/payout01/car7/run_payout01_car7.py \
   --date "$TODAY" \
   && echo "[OK] payout01 car7 completed (today)" \
   || echo "[FAIL] payout01 car7 failed (today)"
+time_end
 
 # ========================================
 # public01 car7 毎朝運用
@@ -234,7 +335,9 @@ echo "========================================"
 echo "🌐 START public01 car7 morning"
 echo "========================================"
 
+time_start "public01 car7 当日"
 PUBLIC01_PUBLISH=1 bash /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/public01/car7/run/run_public01_car7_morning.sh "$TODAY"
+time_end
 PUBLIC01_CAR7_MORNING_RC=$?
 
 if [ "$PUBLIC01_CAR7_MORNING_RC" -eq 0 ]; then
@@ -288,7 +391,9 @@ echo "========================================"
 echo "🌐 START public01 car9 morning"
 echo "========================================"
 
+time_start "public01 car9 当日"
 PUBLIC01_PUBLISH=1 bash /Users/satomi/keirin/GitHub/keirin_ai_web/scripts/public01/car9/run/run_public01_car9_morning.sh "$TODAY"
+time_end
 PUBLIC01_MORNING_RC=$?
 
 if [ "$PUBLIC01_MORNING_RC" -eq 0 ]; then
