@@ -34,6 +34,14 @@
       "href": "./public/latest/car7/v48/index.html"
     },
     {
+      "venue_id": "v53",
+      "title": "奈良 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
+    },
+    {
       "venue_id": "v74",
       "title": "高知 FⅡ けいりんラブ！ラブリン杯（最終日）",
       "publish_group": "other",
