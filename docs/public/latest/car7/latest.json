@@ -6,8 +6,8 @@
       "title": "川崎 FⅡ オッズパーク杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v34/index.html"
     },
     {
       "venue_id": "v35",
@@ -38,8 +38,8 @@
       "title": "奈良 FⅡ 前検日コメならウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
     },
     {
       "venue_id": "v84",
