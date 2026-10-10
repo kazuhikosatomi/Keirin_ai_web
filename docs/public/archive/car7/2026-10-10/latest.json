@@ -2,12 +2,12 @@
   "date": "2026-10-10",
   "items": [
     {
-      "venue_id": "v84",
-      "title": "武雄 FⅡ 第８回森うなぎ屋杯（2日目）",
+      "venue_id": "v43",
+      "title": "岐阜 FⅡ（初日）",
       "publish_group": "other",
-      "time_type": "morning",
+      "time_type": "night",
       "status": "ready",
-      "href": "./public/latest/car7/v84/index.html"
+      "href": "./public/latest/car7/v43/index.html"
     }
   ]
 }
