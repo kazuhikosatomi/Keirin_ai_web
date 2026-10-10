@@ -1,25 +1,17 @@
 {
-  "date": "2026-10-10",
+  "date": "2026-10-11",
   "items": [
     {
       "venue_id": "v34",
-      "title": "川崎 FⅡ オッズパーク杯（2日目）",
+      "title": "川崎 FⅡ オッズパーク杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v34/index.html"
-    },
-    {
-      "venue_id": "v35",
-      "title": "平塚 FⅠ 湘南しらす丸八丸杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v35/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v43",
-      "title": "岐阜 FⅡ（初日）",
+      "title": "岐阜 FⅡ ＣＴＣなら３分前まで買える杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -27,7 +19,7 @@
     },
     {
       "venue_id": "v46",
-      "title": "富山 FⅠ（初日）",
+      "title": "富山 FⅠ 競輪データならＢｅｔｉｍｏ杯（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -35,15 +27,23 @@
     },
     {
       "venue_id": "v53",
-      "title": "奈良 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "奈良 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
+    },
+    {
+      "venue_id": "v81",
+      "title": "小倉 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
       "status": "ready",
-      "href": "./public/latest/car7/v53/index.html"
+      "href": "./public/latest/car7/v81/index.html"
     },
     {
       "venue_id": "v84",
-      "title": "武雄 FⅡ 第８回森うなぎ屋杯（2日目）",
+      "title": "武雄 FⅡ 第８回森うなぎ屋杯（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
