@@ -8,6 +8,14 @@
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v43/index.html"
+    },
+    {
+      "venue_id": "v46",
+      "title": "富山 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v46/index.html"
     }
   ]
 }
