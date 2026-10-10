@@ -2,6 +2,14 @@
   "date": "2026-10-10",
   "items": [
     {
+      "venue_id": "v34",
+      "title": "川崎 FⅡ オッズパーク杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v34/index.html"
+    },
+    {
       "venue_id": "v35",
       "title": "平塚 FⅠ 湘南しらす丸八丸杯（最終日）",
       "publish_group": "other",
