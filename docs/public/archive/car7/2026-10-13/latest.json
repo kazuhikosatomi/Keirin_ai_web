@@ -2,6 +2,14 @@
   "date": "2026-10-13",
   "items": [
     {
+      "venue_id": "v13",
+      "title": "いわき平 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v13/index.html"
+    },
+    {
       "venue_id": "v22",
       "title": "前橋 FⅡ（初日）",
       "publish_group": "other",
