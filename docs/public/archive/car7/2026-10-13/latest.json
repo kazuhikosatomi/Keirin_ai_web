@@ -32,6 +32,14 @@
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v81/index.html"
+    },
+    {
+      "venue_id": "v87",
+      "title": "熊本 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v87/index.html"
     }
   ]
 }
