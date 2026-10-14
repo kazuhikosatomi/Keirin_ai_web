@@ -8,14 +8,6 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v12/index.html"
-    },
-    {
-      "venue_id": "v25",
-      "title": "大宮 FⅡ ブリヂストンサイクル杯（最終日）",
-      "publish_group": "other",
-      "time_type": "morning",
-      "status": "ready",
-      "href": "./public/latest/car7/v25/index.html"
     }
   ]
 }
