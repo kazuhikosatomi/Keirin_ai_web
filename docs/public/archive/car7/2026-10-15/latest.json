@@ -16,6 +16,14 @@
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v53/index.html"
+    },
+    {
+      "venue_id": "v61",
+      "title": "玉野 FⅠ ＳＴ観音寺カップ＆ＣＴＣ杯（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v61/index.html"
     }
   ]
 }
