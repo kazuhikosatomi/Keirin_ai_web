@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v12/index.html"
     },
     {
+      "venue_id": "v22",
+      "title": "前橋 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v22/index.html"
+    },
+    {
       "venue_id": "v53",
       "title": "奈良 FⅠ ラブリン杯弁慶賞ｉｎ奈良（2日目）",
       "publish_group": "other",
