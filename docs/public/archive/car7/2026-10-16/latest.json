@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v12/index.html"
     },
     {
+      "venue_id": "v38",
+      "title": "静岡 FⅡ チャリロト杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
+    },
+    {
       "venue_id": "v48",
       "title": "四日市 FⅡ（初日）",
       "publish_group": "other",
