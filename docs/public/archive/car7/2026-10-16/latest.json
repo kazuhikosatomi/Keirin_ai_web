@@ -24,6 +24,14 @@
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v53/index.html"
+    },
+    {
+      "venue_id": "v86",
+      "title": "別府 FⅠ 仲間と繋がるＴＩＰＳＴＡＲ杯（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v86/index.html"
     }
   ]
 }
