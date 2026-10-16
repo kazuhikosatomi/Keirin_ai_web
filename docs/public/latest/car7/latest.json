@@ -14,16 +14,16 @@
       "title": "静岡 FⅡ チャリロト杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
     },
     {
       "venue_id": "v45",
       "title": "豊橋 FⅡ ＷＩＮＴＩＣＫＥＴ杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v45/index.html"
     },
     {
       "venue_id": "v48",
