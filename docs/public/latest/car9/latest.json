@@ -1,11 +1,11 @@
 {
-  "date": "2026-10-12",
+  "date": "2026-10-17",
   "items": [
     {
-      "venue_id": "v21",
-      "title": "弥彦 GⅠ 寛仁親王牌・世界選手権記念（最終日）",
+      "venue_id": "v27",
+      "title": "京王閣 GⅢ（初日）",
       "status": "ready",
-      "href": "./public/latest/car9/v21/index.html"
+      "href": "./public/latest/car9/v27/index.html"
     }
   ]
 }
