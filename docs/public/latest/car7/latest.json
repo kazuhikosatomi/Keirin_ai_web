@@ -1,25 +1,9 @@
 {
-  "date": "2026-10-17",
+  "date": "2026-10-18",
   "items": [
     {
-      "venue_id": "v38",
-      "title": "静岡 FⅡ チャリロト杯（最終日）",
-      "publish_group": "other",
-      "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v38/index.html"
-    },
-    {
-      "venue_id": "v45",
-      "title": "豊橋 FⅡ ＷＩＮＴＩＣＫＥＴ杯（最終日）",
-      "publish_group": "other",
-      "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v45/index.html"
-    },
-    {
       "venue_id": "v46",
-      "title": "富山 FⅡ（初日）",
+      "title": "富山 FⅡ けいりんラブ！ラブリン杯（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -27,15 +11,23 @@
     },
     {
       "venue_id": "v48",
-      "title": "四日市 FⅡ 稲藤日永うちわ杯（2日目）",
+      "title": "四日市 FⅡ 稲藤日永うちわ杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v48/index.html"
     },
     {
+      "venue_id": "v62",
+      "title": "広島 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v62/index.html"
+    },
+    {
       "venue_id": "v74",
-      "title": "高知 FⅠ（初日）",
+      "title": "高知 FⅠ 土佐の名人戦・日曜市１５０周年（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -43,11 +35,19 @@
     },
     {
       "venue_id": "v84",
-      "title": "武雄 FⅡ（初日）",
+      "title": "武雄 FⅡ けいりんラブ！ラブリン杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v84/index.html"
+    },
+    {
+      "venue_id": "v85",
+      "title": "佐世保 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v85/index.html"
     }
   ]
 }
