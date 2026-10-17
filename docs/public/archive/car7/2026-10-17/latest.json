@@ -2,6 +2,14 @@
   "date": "2026-10-17",
   "items": [
     {
+      "venue_id": "v38",
+      "title": "静岡 FⅡ チャリロト杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
+    },
+    {
       "venue_id": "v46",
       "title": "富山 FⅡ（初日）",
       "publish_group": "other",
