@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v48/index.html"
     },
     {
+      "venue_id": "v62",
+      "title": "広島 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v62/index.html"
+    },
+    {
       "venue_id": "v74",
       "title": "高知 FⅠ 土佐の名人戦・日曜市１５０周年（2日目）",
       "publish_group": "other",
