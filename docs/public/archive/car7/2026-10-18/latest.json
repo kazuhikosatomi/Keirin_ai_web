@@ -32,6 +32,14 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v84/index.html"
+    },
+    {
+      "venue_id": "v85",
+      "title": "佐世保 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v85/index.html"
     }
   ]
 }
