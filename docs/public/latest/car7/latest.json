@@ -1,17 +1,33 @@
 {
-  "date": "2026-10-20",
+  "date": "2026-10-21",
   "items": [
     {
       "venue_id": "v12",
-      "title": "青森 FⅡ ウィンチケット ニッカン・コム（2日目）",
+      "title": "青森 FⅡ ウィンチケット ニッカン・コム（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v12/index.html"
     },
     {
+      "venue_id": "v13",
+      "title": "いわき平 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v13/index.html"
+    },
+    {
+      "venue_id": "v22",
+      "title": "前橋 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v22/index.html"
+    },
+    {
       "venue_id": "v23",
-      "title": "取手 FⅡ スピードチャンネル・スカパー杯（2日目）",
+      "title": "取手 FⅡ スピードチャンネル・スカパー杯（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -19,7 +35,7 @@
     },
     {
       "venue_id": "v34",
-      "title": "川崎 FⅡ（初日）",
+      "title": "川崎 FⅡ けいりんラブ！ラブリン杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -27,27 +43,27 @@
     },
     {
       "venue_id": "v36",
-      "title": "小田原 FⅠ（初日）",
+      "title": "小田原 FⅠ スポーツニッポン新聞社杯争奪戦（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v36/index.html"
     },
     {
-      "venue_id": "v62",
-      "title": "広島 FⅡ くにまつ杯／チャリロト杯（最終日）",
+      "venue_id": "v47",
+      "title": "松阪 FⅡ（初日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
-      "href": "./public/latest/car7/v62/index.html"
+      "href": "./public/latest/car7/v47/index.html"
     },
     {
-      "venue_id": "v85",
-      "title": "佐世保 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
+      "venue_id": "v48",
+      "title": "四日市 FⅠ（初日）",
       "publish_group": "other",
-      "time_type": "midnight",
+      "time_type": "night",
       "status": "ready",
-      "href": "./public/latest/car7/v85/index.html"
+      "href": "./public/latest/car7/v48/index.html"
     }
   ]
 }
