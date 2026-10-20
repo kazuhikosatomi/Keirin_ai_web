@@ -38,16 +38,16 @@
       "title": "広島 FⅡ くにまつ杯／チャリロト杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v62/index.html"
     },
     {
       "venue_id": "v85",
       "title": "佐世保 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v85/index.html"
     }
   ]
 }
