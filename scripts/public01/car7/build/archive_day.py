@@ -63,6 +63,7 @@ def fix_archive_venue_index_links(archive_day_dir: Path) -> None:
 
         replacements = {
             '<a href="../../../../index_grade05.html">← トップへ戻る</a>': '<a href="{top_href}">← 一覧へ戻る</a>',
+            '<a href="../other/">← 一覧へ戻る</a>': '<a href="../index.html">← 一覧へ戻る</a>',
             '<a href="../../../../index.html">← 一覧へ戻る</a>': '<a href="{top_href}">← 一覧へ戻る</a>',
             '<a href="../../../../index.html">← トップページへ戻る</a>': '<a href="{top_href}">← 一覧へ戻る</a>',
             '<a href="../../../../index.html">← トップページに戻る</a>': '<a href="{top_href}">← 一覧へ戻る</a>',
