@@ -1,11 +1,11 @@
 {
-  "date": "2026-10-20",
+  "date": "2026-10-22",
   "items": [
     {
-      "venue_id": "v27",
-      "title": "京王閣 GⅢ ゴールドカップレース（最終日）",
-      "status": "ready",
-      "href": "./public/latest/car9/v27/index.html"
+      "venue_id": "v87",
+      "title": "熊本 GⅢ 火の国杯争奪戦（初日）",
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     }
   ]
 }
