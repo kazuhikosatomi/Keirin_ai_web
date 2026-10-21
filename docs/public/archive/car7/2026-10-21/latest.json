@@ -32,6 +32,14 @@
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v36/index.html"
+    },
+    {
+      "venue_id": "v48",
+      "title": "四日市 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
     }
   ]
 }
