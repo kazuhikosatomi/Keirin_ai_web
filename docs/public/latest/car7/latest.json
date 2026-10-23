@@ -1,57 +1,49 @@
 {
-  "date": "2026-10-23",
+  "date": "2026-10-24",
   "items": [
     {
-      "venue_id": "v13",
-      "title": "いわき平 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
+      "venue_id": "v12",
+      "title": "青森 FⅡ（初日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
-      "href": "./public/latest/car7/v13/index.html"
-    },
-    {
-      "venue_id": "v22",
-      "title": "前橋 FⅡ オッズパーク杯（最終日）",
-      "publish_group": "other",
-      "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v22/index.html"
+      "href": "./public/latest/car7/v12/index.html"
     },
     {
       "venue_id": "v25",
-      "title": "大宮 FⅡ 日本シンライサービス杯（2日目）",
+      "title": "大宮 FⅡ 日本シンライサービス杯（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v25/index.html"
     },
     {
+      "venue_id": "v34",
+      "title": "川崎 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v34/index.html"
+    },
+    {
+      "venue_id": "v42",
+      "title": "名古屋 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
+    },
+    {
       "venue_id": "v44",
-      "title": "大垣 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "大垣 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v44/index.html"
     },
     {
-      "venue_id": "v47",
-      "title": "松阪 FⅡ 前検日コメならウィンチケット杯（最終日）",
-      "publish_group": "other",
-      "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v47/index.html"
-    },
-    {
-      "venue_id": "v48",
-      "title": "四日市 FⅠ スポーツニッポン杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v48/index.html"
-    },
-    {
       "venue_id": "v53",
-      "title": "奈良 FⅠ（初日）",
+      "title": "奈良 FⅠ ＣＴＣなら３分前まで買える杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -59,11 +51,19 @@
     },
     {
       "venue_id": "v63",
-      "title": "防府 FⅡ（初日）",
+      "title": "防府 FⅡ みんなの競輪杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v63/index.html"
+    },
+    {
+      "venue_id": "v73",
+      "title": "小松島 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v73/index.html"
     }
   ]
 }
