@@ -6,16 +6,16 @@
       "title": "いわき平 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v13/index.html"
     },
     {
       "venue_id": "v22",
       "title": "前橋 FⅡ オッズパーク杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v22/index.html"
     },
     {
       "venue_id": "v25",
@@ -38,8 +38,8 @@
       "title": "松阪 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v47/index.html"
     },
     {
       "venue_id": "v48",
