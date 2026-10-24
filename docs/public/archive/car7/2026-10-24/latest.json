@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v25/index.html"
     },
     {
+      "venue_id": "v42",
+      "title": "名古屋 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
+    },
+    {
       "venue_id": "v44",
       "title": "大垣 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
