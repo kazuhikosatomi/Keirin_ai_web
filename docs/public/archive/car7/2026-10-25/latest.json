@@ -2,6 +2,14 @@
   "date": "2026-10-25",
   "items": [
     {
+      "venue_id": "v12",
+      "title": "青森 FⅡ Ｂｅｔｉｍｏ杯×赤競杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v12/index.html"
+    },
+    {
       "venue_id": "v42",
       "title": "名古屋 FⅡ チャリロト杯 リンカイカップ（2日目）",
       "publish_group": "other",
