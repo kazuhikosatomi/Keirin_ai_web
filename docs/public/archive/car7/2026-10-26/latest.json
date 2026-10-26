@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v36/index.html"
     },
     {
+      "venue_id": "v42",
+      "title": "名古屋 FⅡ チャリロト杯 リンカイカップ（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
+    },
+    {
       "venue_id": "v55",
       "title": "和歌山 FⅡ（初日）",
       "publish_group": "other",
