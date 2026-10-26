@@ -6,8 +6,8 @@
       "title": "青森 FⅡ Ｂｅｔｉｍｏ杯×赤競杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v12/index.html"
     },
     {
       "venue_id": "v27",
@@ -22,8 +22,8 @@
       "title": "川崎 FⅡ 前検コメはウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v34/index.html"
     },
     {
       "venue_id": "v36",
