@@ -2,6 +2,14 @@
   "date": "2026-10-26",
   "items": [
     {
+      "venue_id": "v27",
+      "title": "京王閣 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v27/index.html"
+    },
+    {
       "venue_id": "v36",
       "title": "小田原 FⅠ（初日）",
       "publish_group": "other",
