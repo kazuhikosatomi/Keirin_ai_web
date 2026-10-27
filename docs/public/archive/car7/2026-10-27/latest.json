@@ -2,6 +2,14 @@
   "date": "2026-10-27",
   "items": [
     {
+      "venue_id": "v36",
+      "title": "小田原 FⅠ 万葉の湯杯争奪戦（2日目）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v36/index.html"
+    },
+    {
       "venue_id": "v55",
       "title": "和歌山 FⅡ ＣＴＣは３分前杯（2日目）",
       "publish_group": "other",
