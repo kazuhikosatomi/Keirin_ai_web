@@ -1,9 +1,9 @@
 {
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "items": [
     {
       "venue_id": "v27",
-      "title": "京王閣 FⅠ 高木真備杯＆ベティモ杯＆日刊杯（2日目）",
+      "title": "京王閣 FⅠ 高木真備杯＆ベティモ杯＆日刊杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -11,23 +11,31 @@
     },
     {
       "venue_id": "v36",
-      "title": "小田原 FⅠ 万葉の湯杯争奪戦（2日目）",
+      "title": "小田原 FⅠ 万葉の湯杯争奪戦（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v36/index.html"
     },
     {
+      "venue_id": "v43",
+      "title": "岐阜 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v43/index.html"
+    },
+    {
       "venue_id": "v44",
-      "title": "大垣 FⅡ（初日）",
+      "title": "大垣 FⅡ 前検日コメならウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v44/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v55",
-      "title": "和歌山 FⅡ ＣＴＣは３分前杯（2日目）",
+      "title": "和歌山 FⅡ ＣＴＣは３分前杯（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
@@ -35,19 +43,27 @@
     },
     {
       "venue_id": "v83",
-      "title": "久留米 FⅡ（初日）",
+      "title": "久留米 FⅡ 楽天ケイドリームス杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v83/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v84",
-      "title": "武雄 FⅡ（初日）",
+      "title": "武雄 FⅡ サテライトみぞべカップ（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v84/index.html"
+    },
+    {
+      "venue_id": "v86",
+      "title": "別府 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v86/index.html"
     }
   ]
 }
