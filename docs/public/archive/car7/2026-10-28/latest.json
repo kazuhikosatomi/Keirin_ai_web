@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v55/index.html"
     },
     {
+      "venue_id": "v84",
+      "title": "武雄 FⅡ サテライトみぞべカップ（2日目）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v84/index.html"
+    },
+    {
       "venue_id": "v86",
       "title": "別府 FⅡ（初日）",
       "publish_group": "other",
