@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v24/index.html"
     },
     {
+      "venue_id": "v42",
+      "title": "名古屋 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
+    },
+    {
       "venue_id": "v43",
       "title": "岐阜 FⅠ 日刊スポーツ杯 ラブリン杯（最終日）",
       "publish_group": "other",
