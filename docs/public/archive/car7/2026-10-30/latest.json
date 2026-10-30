@@ -2,6 +2,14 @@
   "date": "2026-10-30",
   "items": [
     {
+      "venue_id": "v12",
+      "title": "青森 FⅠ ＪｏｍｏｎＧＰ日刊スポ杯ＯＰ杯（2日目）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v12/index.html"
+    },
+    {
       "venue_id": "v21",
       "title": "弥彦 FⅠ（初日）",
       "publish_group": "other",
