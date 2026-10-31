@@ -30,8 +30,8 @@
       "title": "西武園 FⅡ 競輪データならＢｅｔｉｍｏ杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v26/index.html"
     },
     {
       "venue_id": "v31",
@@ -46,8 +46,8 @@
       "title": "名古屋 FⅡ Ｋドリームス杯 ＪＰＦカップ（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
     },
     {
       "venue_id": "v87",
