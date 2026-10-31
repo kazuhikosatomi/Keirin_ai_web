@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v24/index.html"
     },
     {
+      "venue_id": "v31",
+      "title": "松戸 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v31/index.html"
+    },
+    {
       "venue_id": "v42",
       "title": "名古屋 FⅡ Ｋドリームス杯 ＪＰＦカップ（2日目）",
       "publish_group": "other",
