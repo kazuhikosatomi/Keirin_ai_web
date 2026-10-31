@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v21/index.html"
     },
     {
+      "venue_id": "v24",
+      "title": "宇都宮 FⅡ ＵＪＣＣロード杯・トータリ杯（2日目）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v24/index.html"
+    },
+    {
       "venue_id": "v87",
       "title": "熊本 FⅡ（初日）",
       "publish_group": "other",
