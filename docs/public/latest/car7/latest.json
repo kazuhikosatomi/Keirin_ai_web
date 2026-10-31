@@ -1,17 +1,9 @@
 {
-  "date": "2026-10-31",
+  "date": "2026-11-01",
   "items": [
     {
-      "venue_id": "v12",
-      "title": "青森 FⅠ ＪｏｍｏｎＧＰ日刊スポ杯ＯＰ杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v12/index.html"
-    },
-    {
       "venue_id": "v21",
-      "title": "弥彦 FⅠ 弥彦王冠記念・報知新聞賞（2日目）",
+      "title": "弥彦 FⅠ 弥彦王冠記念・報知新聞賞（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -19,7 +11,7 @@
     },
     {
       "venue_id": "v24",
-      "title": "宇都宮 FⅡ ＵＪＣＣロード杯・トータリ杯（2日目）",
+      "title": "宇都宮 FⅡ ＵＪＣＣロード杯・トータリ杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -27,31 +19,47 @@
     },
     {
       "venue_id": "v26",
-      "title": "西武園 FⅡ 競輪データならＢｅｔｉｍｏ杯（2日目）",
+      "title": "西武園 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v26/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v31",
-      "title": "松戸 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "松戸 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
       "href": "./public/latest/car7/v31/index.html"
     },
     {
+      "venue_id": "v36",
+      "title": "小田原 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v36/index.html"
+    },
+    {
       "venue_id": "v42",
-      "title": "名古屋 FⅡ Ｋドリームス杯 ＪＰＦカップ（2日目）",
+      "title": "名古屋 FⅡ Ｋドリームス杯 ＪＰＦカップ（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
+    },
+    {
+      "venue_id": "v83",
+      "title": "久留米 FⅠ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
       "status": "ready",
-      "href": "./public/latest/car7/v42/index.html"
+      "href": "./public/latest/car7/v83/index.html"
     },
     {
       "venue_id": "v87",
-      "title": "熊本 FⅡ（初日）",
+      "title": "熊本 FⅡ ＣＴＣなら３分前まで買える杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
