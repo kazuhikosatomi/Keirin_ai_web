@@ -8,6 +8,14 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v36/index.html"
+    },
+    {
+      "venue_id": "v87",
+      "title": "熊本 FⅡ ＣＴＣなら３分前まで買える杯（2日目）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v87/index.html"
     }
   ]
 }
