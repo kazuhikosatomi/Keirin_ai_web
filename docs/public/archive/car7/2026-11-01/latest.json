@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v36/index.html"
     },
     {
+      "venue_id": "v42",
+      "title": "名古屋 FⅡ Ｋドリームス杯 ＪＰＦカップ（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
+    },
+    {
       "venue_id": "v83",
       "title": "久留米 FⅠ（初日）",
       "publish_group": "other",
