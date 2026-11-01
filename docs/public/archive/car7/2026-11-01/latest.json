@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v24/index.html"
     },
     {
+      "venue_id": "v26",
+      "title": "西武園 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v26/index.html"
+    },
+    {
       "venue_id": "v31",
       "title": "松戸 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
