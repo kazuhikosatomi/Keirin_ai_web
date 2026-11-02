@@ -42,6 +42,14 @@
       "href": "./public/latest/car7/v83/index.html"
     },
     {
+      "venue_id": "v84",
+      "title": "武雄 FⅡ（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v84/index.html"
+    },
+    {
       "venue_id": "v87",
       "title": "熊本 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
       "publish_group": "other",
