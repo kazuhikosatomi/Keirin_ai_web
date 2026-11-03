@@ -24,6 +24,14 @@
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v45/index.html"
+    },
+    {
+      "venue_id": "v83",
+      "title": "久留米 FⅠ ウィンチケット杯×ＨＰＣＪＣ（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v83/index.html"
     }
   ]
 }
