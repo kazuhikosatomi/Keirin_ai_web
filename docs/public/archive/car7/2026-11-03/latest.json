@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v36/index.html"
     },
     {
+      "venue_id": "v38",
+      "title": "静岡 FⅡ 競輪データならＢｅｔｉｍｏ杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
+    },
+    {
       "venue_id": "v45",
       "title": "豊橋 FⅠ 競輪データならＢｅｔｉｍｏ杯（2日目）",
       "publish_group": "other",
