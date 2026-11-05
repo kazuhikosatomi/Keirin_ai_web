@@ -32,6 +32,14 @@
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v51/index.html"
+    },
+    {
+      "venue_id": "v86",
+      "title": "別府 FⅡ ＣＴＣは３分前杯（2日目）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v86/index.html"
     }
   ]
 }
