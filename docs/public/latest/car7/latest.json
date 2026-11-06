@@ -1,25 +1,17 @@
 {
-  "date": "2026-11-06",
+  "date": "2026-11-07",
   "items": [
     {
-      "venue_id": "v23",
-      "title": "取手 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（最終日）",
-      "publish_group": "other",
-      "time_type": "morning",
-      "status": "ready",
-      "href": "./public/latest/car7/v23/index.html"
-    },
-    {
-      "venue_id": "v25",
-      "title": "大宮 FⅠ サンケイスポーツ杯（最終日）",
+      "venue_id": "v21",
+      "title": "弥彦 FⅡ 来てくなんしょ！Ｓ会津杯（初日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
-      "href": "./public/latest/car7/v25/index.html"
+      "href": "./public/latest/car7/v21/index.html"
     },
     {
       "venue_id": "v27",
-      "title": "京王閣 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "京王閣 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
@@ -27,31 +19,31 @@
     },
     {
       "venue_id": "v51",
-      "title": "福井 FⅡ ＦＢＣ杯 福井アリーナ賞（2日目）",
+      "title": "福井 FⅡ ＦＢＣ杯 福井アリーナ賞（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v51/index.html"
     },
     {
-      "venue_id": "v81",
-      "title": "小倉 FⅡ チャリロト杯（2日目）",
+      "venue_id": "v74",
+      "title": "高知 FⅠ サリーズ杯・スポニチ杯（初日）",
       "publish_group": "other",
-      "time_type": "midnight",
+      "time_type": "day",
       "status": "ready",
-      "href": "./public/latest/car7/v81/index.html"
+      "href": "./public/latest/car7/v74/index.html"
     },
     {
-      "venue_id": "v86",
-      "title": "別府 FⅡ ＣＴＣは３分前杯（最終日）",
+      "venue_id": "v81",
+      "title": "小倉 FⅡ チャリロト杯（最終日）",
       "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v86/index.html"
+      "time_type": "midnight",
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v87",
-      "title": "熊本 FⅠ（初日）",
+      "title": "熊本 FⅠ チャリロト協賛松本秀人杯争奪戦（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
