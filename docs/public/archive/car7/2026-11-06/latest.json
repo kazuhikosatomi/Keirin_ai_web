@@ -34,6 +34,14 @@
       "href": "./public/latest/car7/v51/index.html"
     },
     {
+      "venue_id": "v81",
+      "title": "小倉 FⅡ チャリロト杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v81/index.html"
+    },
+    {
       "venue_id": "v86",
       "title": "別府 FⅡ ＣＴＣは３分前杯（最終日）",
       "publish_group": "other",
