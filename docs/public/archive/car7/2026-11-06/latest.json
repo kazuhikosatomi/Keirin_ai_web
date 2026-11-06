@@ -2,6 +2,14 @@
   "date": "2026-11-06",
   "items": [
     {
+      "venue_id": "v23",
+      "title": "取手 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（最終日）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v23/index.html"
+    },
+    {
       "venue_id": "v51",
       "title": "福井 FⅡ ＦＢＣ杯 福井アリーナ賞（2日目）",
       "publish_group": "other",
