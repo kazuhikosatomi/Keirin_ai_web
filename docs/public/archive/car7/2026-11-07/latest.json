@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v21/index.html"
     },
     {
+      "venue_id": "v27",
+      "title": "京王閣 FⅡ 前検日コメならウィンチケット杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v27/index.html"
+    },
+    {
       "venue_id": "v51",
       "title": "福井 FⅡ ＦＢＣ杯 福井アリーナ賞（最終日）",
       "publish_group": "other",
