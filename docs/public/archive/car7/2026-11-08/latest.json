@@ -24,6 +24,14 @@
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v74/index.html"
+    },
+    {
+      "venue_id": "v87",
+      "title": "熊本 FⅠ チャリロト協賛松本秀人杯争奪戦（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v87/index.html"
     }
   ]
 }
