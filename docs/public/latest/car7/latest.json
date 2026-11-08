@@ -1,9 +1,9 @@
 {
-  "date": "2026-11-08",
+  "date": "2026-11-09",
   "items": [
     {
       "venue_id": "v12",
-      "title": "青森 FⅡ ウィンチケット ニッカン・コム（初日）",
+      "title": "青森 FⅡ ウィンチケット ニッカン・コム（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
@@ -11,7 +11,7 @@
     },
     {
       "venue_id": "v21",
-      "title": "弥彦 FⅡ 来てくなんしょ！Ｓ会津杯（2日目）",
+      "title": "弥彦 FⅡ 来てくなんしょ！Ｓ会津杯（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -19,23 +19,31 @@
     },
     {
       "venue_id": "v24",
-      "title": "宇都宮 FⅡ ＣＴＣは３分前杯（初日）",
+      "title": "宇都宮 FⅡ ＣＴＣは３分前杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v24/index.html"
     },
     {
+      "venue_id": "v31",
+      "title": "松戸 FⅠ 第１６回サテライト船橋カップ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v31/index.html"
+    },
+    {
       "venue_id": "v53",
-      "title": "奈良 FⅡ 前検日コメはウィンチケット杯（初日）",
+      "title": "奈良 FⅡ 前検日コメはウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v53/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v74",
-      "title": "高知 FⅠ サリーズ杯・スポニチ杯（2日目）",
+      "title": "高知 FⅠ サリーズ杯・スポニチ杯（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -43,19 +51,19 @@
     },
     {
       "venue_id": "v75",
-      "title": "松山 FⅡ チャリ・ロト杯＆スポフィット杯（初日）",
+      "title": "松山 FⅡ チャリ・ロト杯＆スポフィット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v75/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
-      "venue_id": "v87",
-      "title": "熊本 FⅠ チャリロト協賛松本秀人杯争奪戦（最終日）",
+      "venue_id": "v84",
+      "title": "武雄 FⅠ 日本名輪会Ｃ佐々木昭彦杯（初日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
-      "href": "./public/latest/car7/v87/index.html"
+      "href": "./public/latest/car7/v84/index.html"
     }
   ]
 }
