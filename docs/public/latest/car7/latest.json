@@ -38,8 +38,8 @@
       "title": "奈良 FⅡ 前検日コメはウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
     },
     {
       "venue_id": "v74",
@@ -54,8 +54,8 @@
       "title": "松山 FⅡ チャリ・ロト杯＆スポフィット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v75/index.html"
     },
     {
       "venue_id": "v84",
