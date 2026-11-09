@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v24/index.html"
     },
     {
+      "venue_id": "v31",
+      "title": "松戸 FⅠ 第１６回サテライト船橋カップ（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v31/index.html"
+    },
+    {
       "venue_id": "v74",
       "title": "高知 FⅠ サリーズ杯・スポニチ杯（最終日）",
       "publish_group": "other",
