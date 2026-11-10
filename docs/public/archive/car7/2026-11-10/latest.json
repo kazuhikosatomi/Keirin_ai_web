@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v12/index.html"
     },
     {
+      "venue_id": "v24",
+      "title": "宇都宮 FⅡ ＣＴＣは３分前杯（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v24/index.html"
+    },
+    {
       "venue_id": "v25",
       "title": "大宮 FⅡ テレ玉杯（初日）",
       "publish_group": "other",
