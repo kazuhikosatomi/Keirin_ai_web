@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v25/index.html"
     },
     {
+      "venue_id": "v31",
+      "title": "松戸 FⅠ 第１６回サテライト船橋カップ（最終日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v31/index.html"
+    },
+    {
       "venue_id": "v46",
       "title": "富山 FⅡ 楽天ケイドリームス杯（2日目）",
       "publish_group": "other",
