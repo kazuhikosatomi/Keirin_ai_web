@@ -16,6 +16,14 @@
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v46/index.html"
+    },
+    {
+      "venue_id": "v51",
+      "title": "福井 FⅠ 中日スポーツ杯ブルーサンダー賞（2日目）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v51/index.html"
     }
   ]
 }
