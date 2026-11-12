@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v46/index.html"
     },
     {
+      "venue_id": "v48",
+      "title": "四日市 FⅠ スポーツ報知杯（2日目）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
+    },
+    {
       "venue_id": "v51",
       "title": "福井 FⅠ 中日スポーツ杯ブルーサンダー賞（2日目）",
       "publish_group": "other",
