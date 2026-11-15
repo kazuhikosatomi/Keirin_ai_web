@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v34/index.html"
     },
     {
+      "venue_id": "v42",
+      "title": "名古屋 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v42/index.html"
+    },
+    {
       "venue_id": "v46",
       "title": "富山 FⅠ 富山競輪ファンクラブ杯（初日）",
       "publish_group": "other",
