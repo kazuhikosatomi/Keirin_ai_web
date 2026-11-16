@@ -1,57 +1,57 @@
 {
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "items": [
     {
-      "venue_id": "v34",
-      "title": "川崎 FⅠ 報知新聞社杯 ＴＩＰＳＴＡＲ杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v34/index.html"
-    },
-    {
-      "venue_id": "v42",
-      "title": "名古屋 FⅡ 前検日コメならウィンチケット杯（最終日）",
+      "venue_id": "v24",
+      "title": "宇都宮 FⅡ 前検日コメならウィンチケット杯（初日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
-      "href": "./public/latest/car7/v42/index.html"
+      "href": "./public/latest/car7/v24/index.html"
+    },
+    {
+      "venue_id": "v38",
+      "title": "静岡 FⅡ 第９回古代建設杯（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v38/index.html"
     },
     {
       "venue_id": "v46",
-      "title": "富山 FⅠ 富山競輪ファンクラブ杯（2日目）",
+      "title": "富山 FⅠ 富山競輪ファンクラブ杯（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v46/index.html"
     },
     {
-      "venue_id": "v53",
-      "title": "奈良 FⅡ チャリロト杯ｉｎ奈良（最終日）",
-      "publish_group": "other",
-      "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v53/index.html"
-    },
-    {
       "venue_id": "v73",
-      "title": "小松島 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（初日）",
+      "title": "小松島 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v73/index.html"
     },
     {
-      "venue_id": "v84",
-      "title": "武雄 FⅡ ＣＴＣなら３分前まで買える杯（最終日）",
+      "venue_id": "v74",
+      "title": "高知 FⅡ 競輪データならＢｅｔｉｍｏ杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v74/index.html"
+    },
+    {
+      "venue_id": "v75",
+      "title": "松山 FⅡ ラブリン杯（初日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
-      "href": "./public/latest/car7/v84/index.html"
+      "href": "./public/latest/car7/v75/index.html"
     },
     {
       "venue_id": "v86",
-      "title": "別府 FⅠ 競輪データならＢｅｔｉｍо杯（2日目）",
+      "title": "別府 FⅠ 競輪データならＢｅｔｉｍо杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
