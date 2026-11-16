@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v46/index.html"
     },
     {
+      "venue_id": "v53",
+      "title": "奈良 FⅡ チャリロト杯ｉｎ奈良（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v53/index.html"
+    },
+    {
       "venue_id": "v73",
       "title": "小松島 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（初日）",
       "publish_group": "other",
