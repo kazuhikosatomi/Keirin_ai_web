@@ -1,9 +1,9 @@
 {
-  "date": "2026-11-18",
+  "date": "2026-11-19",
   "items": [
     {
       "venue_id": "v24",
-      "title": "宇都宮 FⅡ 前検日コメならウィンチケット杯（2日目）",
+      "title": "宇都宮 FⅡ 前検日コメならウィンチケット杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
@@ -11,7 +11,7 @@
     },
     {
       "venue_id": "v26",
-      "title": "西武園 FⅠ ＫＥＩＲＩＮフェスティバル（初日）",
+      "title": "西武園 FⅠ ＫＥＩＲＩＮフェスティバル（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -19,7 +19,7 @@
     },
     {
       "venue_id": "v38",
-      "title": "静岡 FⅡ 第９回古代建設杯（2日目）",
+      "title": "静岡 FⅡ 第９回古代建設杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -27,31 +27,31 @@
     },
     {
       "venue_id": "v44",
-      "title": "大垣 FⅠ ＫＥＩＲＩＮフェスティバル（初日）",
+      "title": "大垣 FⅠ ＫＥＩＲＩＮフェスティバル（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v44/index.html"
     },
     {
-      "venue_id": "v73",
-      "title": "小松島 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（最終日）",
+      "venue_id": "v51",
+      "title": "福井 FⅡ オッズパーク杯 福井アリーナ賞（初日）",
       "publish_group": "other",
-      "time_type": "day",
+      "time_type": "morning",
       "status": "ready",
-      "href": "./public/latest/car7/v73/index.html"
+      "href": "./public/latest/car7/v51/index.html"
     },
     {
       "venue_id": "v74",
-      "title": "高知 FⅡ 競輪データならＢｅｔｉｍｏ杯（2日目）",
+      "title": "高知 FⅡ 競輪データならＢｅｔｉｍｏ杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v74/index.html"
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
     },
     {
       "venue_id": "v75",
-      "title": "松山 FⅡ ラブリン杯（2日目）",
+      "title": "松山 FⅡ ラブリン杯（最終日）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
