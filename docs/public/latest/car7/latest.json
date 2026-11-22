@@ -1,53 +1,77 @@
 {
-  "date": "2026-11-22",
+  "date": "2026-11-23",
   "items": [
     {
-      "venue_id": "v22",
-      "title": "前橋 FⅡ ニッカン・コム杯（最終日）",
+      "venue_id": "v26",
+      "title": "西武園 FⅡ 楽天Ｋドリームス杯（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v26/index.html"
+    },
+    {
+      "venue_id": "v34",
+      "title": "川崎 FⅡ 前検コメはウィンチケット杯（初日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
-      "href": "./public/latest/car7/v22/index.html"
+      "href": "./public/latest/car7/v34/index.html"
     },
     {
       "venue_id": "v36",
-      "title": "小田原 FⅠ ＫＥＩＲＩＮフェスティバル（2日目）",
+      "title": "小田原 FⅠ ＫＥＩＲＩＮフェスティバル（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v36/index.html"
     },
     {
-      "venue_id": "v42",
-      "title": "名古屋 FⅡ 前検日コメならウィンチケット杯（最終日）",
-      "publish_group": "other",
-      "time_type": "midnight",
-      "status": "ready",
-      "href": "./public/latest/car7/v42/index.html"
-    },
-    {
       "venue_id": "v45",
-      "title": "豊橋 FⅠ ＫＥＩＲＩＮフェスティバル（2日目）",
+      "title": "豊橋 FⅠ ＫＥＩＲＩＮフェスティバル（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v45/index.html"
     },
     {
+      "venue_id": "v48",
+      "title": "四日市 FⅡ オッズパーク杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
+    },
+    {
       "venue_id": "v53",
-      "title": "奈良 FⅡ Ｋドリームス杯京紅葉賞ｉｎ奈良（初日）",
+      "title": "奈良 FⅡ Ｋドリームス杯京紅葉賞ｉｎ奈良（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v53/index.html"
     },
     {
+      "venue_id": "v61",
+      "title": "玉野 FⅡ オッズパーク杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v61/index.html"
+    },
+    {
       "venue_id": "v62",
-      "title": "広島 FⅡ くにまつ杯／ラブリン杯（初日）",
+      "title": "広島 FⅡ くにまつ杯／ラブリン杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v62/index.html"
+    },
+    {
+      "venue_id": "v84",
+      "title": "武雄 FⅡ 九州佐賀国際空港”むっぴー”杯（初日）",
+      "publish_group": "other",
+      "time_type": "morning",
+      "status": "ready",
+      "href": "./public/latest/car7/v84/index.html"
     }
   ]
 }
