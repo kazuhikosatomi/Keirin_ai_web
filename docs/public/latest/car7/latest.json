@@ -6,8 +6,8 @@
       "title": "前橋 FⅡ ニッカン・コム杯（最終日）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v22/index.html"
     },
     {
       "venue_id": "v36",
