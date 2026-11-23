@@ -26,6 +26,14 @@
       "href": "./public/latest/car7/v45/index.html"
     },
     {
+      "venue_id": "v48",
+      "title": "四日市 FⅡ オッズパーク杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
+    },
+    {
       "venue_id": "v53",
       "title": "奈良 FⅡ Ｋドリームス杯京紅葉賞ｉｎ奈良（2日目）",
       "publish_group": "other",
