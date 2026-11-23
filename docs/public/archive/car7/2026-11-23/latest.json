@@ -2,6 +2,14 @@
   "date": "2026-11-23",
   "items": [
     {
+      "venue_id": "v26",
+      "title": "西武園 FⅡ 楽天Ｋドリームス杯（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v26/index.html"
+    },
+    {
       "venue_id": "v36",
       "title": "小田原 FⅠ ＫＥＩＲＩＮフェスティバル（最終日）",
       "publish_group": "other",
