@@ -14,8 +14,8 @@
       "title": "川崎 FⅡ 前検コメはウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v34/index.html"
     },
     {
       "venue_id": "v38",
@@ -30,8 +30,8 @@
       "title": "四日市 FⅡ オッズパーク杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
     },
     {
       "venue_id": "v53",
@@ -46,8 +46,8 @@
       "title": "玉野 FⅡ オッズパーク杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
-      "status": "waiting",
-      "message": "AI予想は後ほど公開予定"
+      "status": "ready",
+      "href": "./public/latest/car7/v61/index.html"
     },
     {
       "venue_id": "v62",
