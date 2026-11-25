@@ -18,6 +18,14 @@
       "href": "./public/latest/car7/v38/index.html"
     },
     {
+      "venue_id": "v48",
+      "title": "四日市 FⅡ オッズパーク杯（最終日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v48/index.html"
+    },
+    {
       "venue_id": "v51",
       "title": "福井 FⅠ 日刊スポーツ杯市田佳寿浩カップ（初日）",
       "publish_group": "other",
