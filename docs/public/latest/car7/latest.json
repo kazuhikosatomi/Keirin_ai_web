@@ -1,69 +1,69 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "items": [
     {
-      "venue_id": "v26",
-      "title": "西武園 FⅡ 楽天Ｋドリームス杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v26/index.html"
-    },
-    {
-      "venue_id": "v34",
-      "title": "川崎 FⅡ 前検コメはウィンチケット杯（最終日）",
+      "venue_id": "v31",
+      "title": "松戸 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（初日）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
-      "href": "./public/latest/car7/v34/index.html"
+      "href": "./public/latest/car7/v31/index.html"
     },
     {
       "venue_id": "v38",
-      "title": "静岡 FⅠ けいりんラブ！ラブリン杯（2日目）",
+      "title": "静岡 FⅠ けいりんラブ！ラブリン杯（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v38/index.html"
     },
     {
-      "venue_id": "v48",
-      "title": "四日市 FⅡ オッズパーク杯（最終日）",
+      "venue_id": "v46",
+      "title": "富山 FⅡ チャリロト杯（初日）",
       "publish_group": "other",
-      "time_type": "midnight",
+      "time_type": "day",
       "status": "ready",
-      "href": "./public/latest/car7/v48/index.html"
+      "href": "./public/latest/car7/v46/index.html"
+    },
+    {
+      "venue_id": "v47",
+      "title": "松阪 FⅠ 伊勢うどんかいだ食品杯 ＷＴ杯（初日）",
+      "publish_group": "other",
+      "time_type": "night",
+      "status": "ready",
+      "href": "./public/latest/car7/v47/index.html"
     },
     {
       "venue_id": "v51",
-      "title": "福井 FⅠ 日刊スポーツ杯市田佳寿浩カップ（初日）",
+      "title": "福井 FⅠ 日刊スポーツ杯市田佳寿浩カップ（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
       "href": "./public/latest/car7/v51/index.html"
     },
     {
-      "venue_id": "v61",
-      "title": "玉野 FⅡ オッズパーク杯（最終日）",
+      "venue_id": "v73",
+      "title": "小松島 FⅡ おはようチャリロト杯（初日）",
       "publish_group": "other",
-      "time_type": "midnight",
+      "time_type": "morning",
       "status": "ready",
-      "href": "./public/latest/car7/v61/index.html"
+      "href": "./public/latest/car7/v73/index.html"
     },
     {
       "venue_id": "v75",
-      "title": "松山 FⅠ 九州スポーツ杯×ラブリン杯（2日目）",
+      "title": "松山 FⅠ 九州スポーツ杯×ラブリン杯（最終日）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
       "href": "./public/latest/car7/v75/index.html"
     },
     {
-      "venue_id": "v84",
-      "title": "武雄 FⅡ 九州佐賀国際空港”むっぴー”杯（最終日）",
+      "venue_id": "v83",
+      "title": "久留米 FⅡ 前検日コメならウィンチケット杯（初日）",
       "publish_group": "other",
-      "time_type": "morning",
+      "time_type": "midnight",
       "status": "ready",
-      "href": "./public/latest/car7/v84/index.html"
+      "href": "./public/latest/car7/v83/index.html"
     }
   ]
 }
