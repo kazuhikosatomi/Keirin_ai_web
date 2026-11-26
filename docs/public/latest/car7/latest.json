@@ -1,25 +1,25 @@
 {
-  "date": "2026-11-26",
+  "date": "2026-11-27",
   "items": [
     {
       "venue_id": "v31",
-      "title": "松戸 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（初日）",
+      "title": "松戸 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
       "status": "ready",
       "href": "./public/latest/car7/v31/index.html"
     },
     {
-      "venue_id": "v38",
-      "title": "静岡 FⅠ けいりんラブ！ラブリン杯（最終日）",
+      "venue_id": "v35",
+      "title": "平塚 FⅠ メモれ！ＤＭＭ競輪杯（初日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
-      "href": "./public/latest/car7/v38/index.html"
+      "href": "./public/latest/car7/v35/index.html"
     },
     {
       "venue_id": "v46",
-      "title": "富山 FⅡ チャリロト杯（初日）",
+      "title": "富山 FⅡ チャリロト杯（2日目）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -27,7 +27,7 @@
     },
     {
       "venue_id": "v47",
-      "title": "松阪 FⅠ 伊勢うどんかいだ食品杯 ＷＴ杯（初日）",
+      "title": "松阪 FⅠ 伊勢うどんかいだ食品杯 ＷＴ杯（2日目）",
       "publish_group": "other",
       "time_type": "night",
       "status": "ready",
@@ -35,7 +35,7 @@
     },
     {
       "venue_id": "v51",
-      "title": "福井 FⅠ 日刊スポーツ杯市田佳寿浩カップ（2日目）",
+      "title": "福井 FⅠ 日刊スポーツ杯市田佳寿浩カップ（最終日）",
       "publish_group": "other",
       "time_type": "day",
       "status": "ready",
@@ -43,27 +43,27 @@
     },
     {
       "venue_id": "v73",
-      "title": "小松島 FⅡ おはようチャリロト杯（初日）",
+      "title": "小松島 FⅡ おはようチャリロト杯（2日目）",
       "publish_group": "other",
       "time_type": "morning",
       "status": "ready",
       "href": "./public/latest/car7/v73/index.html"
     },
     {
-      "venue_id": "v75",
-      "title": "松山 FⅠ 九州スポーツ杯×ラブリン杯（最終日）",
-      "publish_group": "other",
-      "time_type": "night",
-      "status": "ready",
-      "href": "./public/latest/car7/v75/index.html"
-    },
-    {
       "venue_id": "v83",
-      "title": "久留米 FⅡ 前検日コメならウィンチケット杯（初日）",
+      "title": "久留米 FⅡ 前検日コメならウィンチケット杯（2日目）",
       "publish_group": "other",
       "time_type": "midnight",
+      "status": "waiting",
+      "message": "AI予想は後ほど公開予定"
+    },
+    {
+      "venue_id": "v85",
+      "title": "佐世保 FⅡ 佐世保ベースカップ（初日）",
+      "publish_group": "other",
+      "time_type": "morning",
       "status": "ready",
-      "href": "./public/latest/car7/v83/index.html"
+      "href": "./public/latest/car7/v85/index.html"
     }
   ]
 }
