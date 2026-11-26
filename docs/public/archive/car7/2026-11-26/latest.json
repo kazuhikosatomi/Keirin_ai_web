@@ -2,6 +2,14 @@
   "date": "2026-11-26",
   "items": [
     {
+      "venue_id": "v31",
+      "title": "松戸 FⅡ 仲間と繋がるＴＩＰＳＴＡＲ杯（初日）",
+      "publish_group": "other",
+      "time_type": "midnight",
+      "status": "ready",
+      "href": "./public/latest/car7/v31/index.html"
+    },
+    {
       "venue_id": "v38",
       "title": "静岡 FⅠ けいりんラブ！ラブリン杯（最終日）",
       "publish_group": "other",
