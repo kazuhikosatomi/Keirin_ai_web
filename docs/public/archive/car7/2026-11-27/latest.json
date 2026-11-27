@@ -10,6 +10,14 @@
       "href": "./public/latest/car7/v46/index.html"
     },
     {
+      "venue_id": "v51",
+      "title": "福井 FⅠ 日刊スポーツ杯市田佳寿浩カップ（最終日）",
+      "publish_group": "other",
+      "time_type": "day",
+      "status": "ready",
+      "href": "./public/latest/car7/v51/index.html"
+    },
+    {
       "venue_id": "v73",
       "title": "小松島 FⅡ おはようチャリロト杯（2日目）",
       "publish_group": "other",
